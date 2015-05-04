@@ -23,16 +23,21 @@
 /lamps -> CRUD API, REST 100%
 /feed/lamps -> Listening for changes in the engine, useful for handling server->client communication
 ```
+## What's the port for now?
+```
+8888, 127.0.0.1:8888 or 10.1.2.55:8888
+```
+
+
 ## Where should client/interface go?
 ```
 templates/index.html
 ```
 ## Accessing database
 
+If you need to access database for debuging purposes, web admin is here
+
 ```
-http://127.0.0.1:8080
+http://127.0.0.1:8080 or http://10.1.2.55:8080
 ```
 
-
-
-# rethink-lms
