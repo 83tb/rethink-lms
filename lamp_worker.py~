@@ -63,7 +63,7 @@ conn = r.connect( "localhost").repl()
 
 lamps_table = r.db("engine").table("lamps")
 
-cursor = lamps_table.changes().run(conn)
+curs = lamps_table.changes().run(conn)
 
 for feed in cursor:
     lamp = feed['new_val']
