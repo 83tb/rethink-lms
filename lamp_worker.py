@@ -58,13 +58,19 @@ def setDim(lamp_number, dim_level):
     executeCommand('On',lamp_number,range(dim_level,dim_level+1))
     executeCommand('On',lamp_number,range(dim_level,dim_level+1))
 
+import rethinkdb as r
+r.connect( "localhost").repl()
 
+lamps = r.table("lamps")
 
+curs = yield self.lamps.changes().run(self.db)
 
-
-
-            # setDim(lamp.hardware.address, lamp.wanted_l_level)    
-    
-            # lamp.change_required = False
+while (yield curs.fetch_next()):
+    feed = yield curs.next()
+    lamp = feed['new_val']
+    if lamp['change_required'] = True:
+        setDim(lamp.hardware.address, lamp.wanted_l_level)    
+        lamp['change_required'] = False
+        lamps.update(lamp).run()
   
   
