@@ -86,37 +86,16 @@ class LampsHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         resource_doc = self.request.body
-        print resource_doc
-
-
         lamp = json.loads(resource_doc.replace("'", "\""))
-
-        # to_basestring is necessary for Python 3's json encoder,
-        # which doesn't accept byte strings.
-        start = time()
         lamps = (yield self.lamps.insert(lamp).run(self.db))
-        time_taken = time() - start
-        logging.warn("DBINSERT: %s seconds" % time_taken)
         lamp['id'] = lamps['generated_keys'][0]
-        # lamp["html"] = lamp['body']
         self.write(lamp)
         
     @gen.coroutine
     def patch(self):
         resource_doc = self.request.body
-        print resource_doc
-
-
         lamp = json.loads(resource_doc.replace("'", "\""))
-
-        # to_basestring is necessary for Python 3's json encoder,
-        # which doesn't accept byte strings.
-        start = time()
         lamps = (yield self.lamps.update(lamp).run(self.db))
-        time_taken = time() - start
-        logging.warn("DBINSERT: %s seconds" % time_taken)
-
-        # lamp["html"] = lamp['body']
         self.write(lamp)
 
 class LampFeedHandler(BaseHandler):
