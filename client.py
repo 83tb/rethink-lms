@@ -71,6 +71,7 @@ for lu in ls:
 """
 
 bbox = [[0,1],[0,1],[0,1],[0,1]]
+print bbox
 
 geo_url = "http://10.1.2.55:8888/geolamps"
 geo_lamps = requests.get(geo_url, data=json.dumps(bbox))
