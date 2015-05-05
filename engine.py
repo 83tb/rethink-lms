@@ -79,10 +79,10 @@ class GeoLampsHandler(BaseHandler):
         resource_doc = self.request.body
 
         bbox_json = json.loads(resource_doc.replace("'", "\""))
-        bbox = r.polygon(bbox_json)
+        bbox = r.polygon(bbox_json[0],bbox_json[1],bbox_json[2],bbox_json[3])
 
 
-        curs = yield self.lamps.get_intersecting(bbox[0],bbox[1],bbox[2],bbox[3], index='location').run(self.db)
+        curs = yield self.lamps.get_intersecting(bbox, index='location').run(self.db)
         lamps = []
         while (yield curs.fetch_next()):
             item = yield curs.next()
