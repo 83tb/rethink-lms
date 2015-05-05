@@ -89,7 +89,7 @@ class LampsHandler(BaseHandler):
         print resource_doc
         lamp = json.loads(resource_doc.replace("'", "\""))
         lamps = (yield self.lamps.insert(lamp).run(self.db))
-        lamp['id'] = lamps['generated_keys'][0]
+        # lamp['id'] = lamps['generated_keys'][0]
         self.write(lamp)
         
     @gen.coroutine

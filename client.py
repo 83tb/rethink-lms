@@ -12,7 +12,7 @@ print lamps.json()['response'][1]
 a = lamps.json()['response'][0]
 print a
 
-po = requests.post(url=url, data=a)
+po = requests.post(url=url, data=json.dumps(a))
 
 
 
