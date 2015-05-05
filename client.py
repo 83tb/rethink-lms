@@ -1,7 +1,7 @@
 import requests
 import json
 from random import randint
-
+"""
 url = "http://10.1.2.55:8888/lamps"
 lamps = requests.get(url)
 
@@ -68,9 +68,11 @@ ls = lamps.json()['response']
 for lu in ls:
     print lu
 
-
+"""
 
 bbox = [[0,1],[0,1],[0,1],[0,1]]
 
 geo_url = "http://10.1.2.55:8888/geolamps"
-geo_lamps = requests.get(url, data=bbox)
+geo_lamps = requests.get(geo_url, data=json.dumps(bbox))
+
+print geo_lamps.text
