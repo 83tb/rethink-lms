@@ -72,12 +72,11 @@ class LampsHandler(BaseHandler):
 
     @gen.coroutine
     def get(self):
-        curs = yield self.lamps.run(self.db)
+        curs = yield self.lamps.to_geojson.run(self.db)
         lamps = []
         while (yield curs.fetch_next()):
             item = yield curs.next()
             # item['location'] = item['location'].to_geojson()
-
             lamps.append(item)
 
         self.write(dict(lamps=lamps))
