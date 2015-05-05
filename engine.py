@@ -80,7 +80,7 @@ class LampsHandler(BaseHandler):
 
             lamps.append(item)
 
-        self.write(dict(lamps=lamps))
+        self.write(dict(response=lamps))
 
 
     @gen.coroutine
