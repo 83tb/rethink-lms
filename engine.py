@@ -33,6 +33,7 @@ def setup_db(db_name="engine", tables=['lamps',]):
         connection.close()
 
 
+
 class EngineApp(tornado.web.Application):
 
     def __init__(self, db):
@@ -42,6 +43,7 @@ class EngineApp(tornado.web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/lamps", LampsHandler),
+            (r"/geolamps", GeoLampsHandler),
             (r"/feed/lamps", LampFeedHandler),
         ]
 
@@ -70,11 +72,30 @@ class MainHandler(BaseHandler):
     def get(self):
         return self.render('index.html')
 
+class GeoLampsHandler(BaseHandler):
+
+    @gen.coroutine
+    def get(self):
+        resource_doc = self.request.body
+
+        bbox = r.polygon(json.dumps(resource_doc))
+
+        curs = yield self.lamps.get_intersecting(bbox, index='location').run(self.db)
+        lamps = []
+        while (yield curs.fetch_next()):
+            item = yield curs.next()
+            # item['location'] = item['location'].to_geojson()
+
+            lamps.append(item)
+
+        self.write(dict(response=lamps))
+
 
 class LampsHandler(BaseHandler):
 
     @gen.coroutine
     def get(self):
+        # r.table('parks').get_intersecting(circle1, index='area').run(conn)
         curs = yield self.lamps.run(self.db)
         lamps = []
         while (yield curs.fetch_next()):
