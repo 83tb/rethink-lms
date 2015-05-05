@@ -78,9 +78,10 @@ bbox = [ [-122.423246,37.779388],
         [-121.886420,37.779388]]
 
 
-print bbox
+
 
 geo_url = "http://10.1.2.55:8888/geolamps"
 geo_lamps = requests.get(geo_url, data=json.dumps(bbox))
 
+print "Lamps within the bounding box: "
 print geo_lamps.text
