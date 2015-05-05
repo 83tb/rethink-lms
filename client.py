@@ -3,11 +3,7 @@ import json
 from random import randint
 
 url = "http://10.1.2.55:8888/lamps"
-
-
 lamps = requests.get(url)
-
-
 
 l = {
 
