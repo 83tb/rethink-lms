@@ -23,10 +23,12 @@ def setup_db(db_name="engine", tables=['lamps',]):
             r.db(db_name).table_create(tbl, durability="hard").run(connection)
         logging.info('Database setup completed.')
 
-        r.db(db_name).table('lamps').index_create('location', geo=True).run(connection)
+
 
     except r.RqlRuntimeError:
         logging.warn('Database/Table already exists.')
+    else:
+        r.db(db_name).table('lamps').index_create('location', geo=True).run(connection)
     finally:
         connection.close()
 
