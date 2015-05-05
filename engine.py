@@ -86,6 +86,7 @@ class LampsHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         resource_doc = self.request.body
+        print resource_doc
         lamp = json.loads(resource_doc.replace("'", "\""))
         lamps = (yield self.lamps.insert(lamp).run(self.db))
         lamp['id'] = lamps['generated_keys'][0]
@@ -123,16 +124,10 @@ def main():
     db_name = "engine"
     setup_db(db_name)
     r.set_loop_type("tornado")
-
     db = yield r.connect("localhost", db=db_name)
-    #Single db connection for everything thanks a lot Ben and Jeese
     http_server = httpserver.HTTPServer(EngineApp(db))
     http_server.listen(options.port)
 
-
-# r.db('engine').table('lamps').get_nearest(r.point(-122.422876,37.777128), index='location')
-# r.db('engine').table('lamps').indexCreate('location')
-# r.table('geo').index_create('location', geo=True)
 
 if __name__ == "__main__":
     IOLoop.current().run_sync(main)
