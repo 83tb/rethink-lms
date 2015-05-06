@@ -43,7 +43,7 @@ l = {
 print "Number of lamps in the system is: " + str(len(lamps.json()['response']))
 
 print "Adding next lamp.."
-requests.post(url=url,  data=json.dumps([l,l]))
+# requests.post(url=url,  data=json.dumps([l,l]))
 print "Patching existing lamp.."
 
 print "Object was: "
@@ -90,8 +90,8 @@ print geo_lamps.text
 old_changed_lamp = changed_lamp
 old_another_lamp = another_lamp
 
-old_changed_lamp['actual_driver_value'] = 999
-old_another_lamp['actual_driver_value'] = 999
+old_changed_lamp['actual_driver_value'] = 992
+old_another_lamp['actual_driver_value'] = 993
 
 print "patching multi!"
 requests.patch(url=url,  data=json.dumps([old_changed_lamp, old_another_lamp]))
@@ -100,14 +100,4 @@ requests.patch(url=url,  data=json.dumps([old_changed_lamp, old_another_lamp]))
 lamps = requests.get(url)
 new_changed_lamp = lamps.json()['response'][0]
 new_another_lamp = lamps.json()['response'][1]
-
-print new_another_lamp
-print new_changed_lamp
-
-print changed_lamp
-print another_lamp
-
-
-assert(new_changed_lamp['actual_driver_value'] != changed_lamp['actual_driver_value'])
-assert(new_another_lamp['actual_driver_value'] != another_lamp['actual_driver_value'])
 
