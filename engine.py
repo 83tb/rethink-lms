@@ -127,6 +127,7 @@ class LampsHandler(BaseHandler):
     @gen.coroutine
     def patch(self):
         resource_doc = self.request.body
+        print resource_doc
         if isinstance(resource_doc, list):
             print "dupa"
             for lamp_json in resource_doc:
