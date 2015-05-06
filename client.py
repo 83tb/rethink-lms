@@ -54,8 +54,8 @@ changed_lamp['wanted_l_level'] = randint(0, 244)
 print "Object now is: "
 print changed_lamp
 
-print "patching!"
-requests.patch(url=url,  data=json.dumps(changed_lamp))
+# print "patching!"
+# requests.patch(url=url,  data=json.dumps(changed_lamp))
 
 print "veryfying: "
 lamps = requests.get(url)
@@ -87,17 +87,25 @@ print "Lamps within the bounding box: "
 print geo_lamps.text
 
 
-changed_lamp['actual_driver_value'] = 999
-another_lamp['actual_driver_value'] = 999
+old_changed_lamp = changed_lamp
+old_another_lamp = another_lamp
+
+old_changed_lamp['actual_driver_value'] = 999
+old_another_lamp['actual_driver_value'] = 999
 
 print "patching multi!"
-requests.patch(url=url,  data=json.dumps([changed_lamp, another_lamp]))
+requests.patch(url=url,  data=json.dumps([old_changed_lamp, old_another_lamp]))
 
 
 lamps = requests.get(url)
 new_changed_lamp = lamps.json()['response'][0]
 new_another_lamp = lamps.json()['response'][1]
 
+print new_another_lamp
+print new_changed_lamp
+
+print changed_lamp
+print another_lamp
 
 
 assert(new_changed_lamp['actual_driver_value'] != changed_lamp['actual_driver_value'])
