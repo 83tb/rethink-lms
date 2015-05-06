@@ -71,7 +71,7 @@ for feed in cursor:
     print feed
     print "EOF"
     if lamp['change_required'] == True:
-        setDim(lamp['hardware']['address'], lamp['wanted_l_level'])
+        setDim(lamp['hardware']['address'], lamp['special_l_level'])
         lamp['change_required'] = False
         lamps_table.update(lamp).run()
   
