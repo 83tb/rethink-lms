@@ -109,21 +109,19 @@ class LampsHandler(BaseHandler):
         self.write(dict(response=lamps))
 
 
+
     @gen.coroutine
     def post(self):
-        resource_doc = self.request.body
-        print resource_doc
+        resource_doc = json.loads(self.request.body)
+
         if isinstance(resource_doc, list):
             for lamp_json in resource_doc:
-                lamp = json.loads(lamp_json.replace("'", "\""))
+                lamp = lamp_json
                 lamps = (yield self.lamps.insert(lamp).run(self.db))
 
-
         else:
-            lamp = json.loads(resource_doc.replace("'", "\""))
+            lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.insert(lamp).run(self.db))
-
-
         
     @gen.coroutine
     def patch(self):
@@ -135,7 +133,7 @@ class LampsHandler(BaseHandler):
                 lamps = (yield self.lamps.update(lamp).run(self.db))
 
         else:
-            lamp = json.loads(resource_doc.replace("'", "\""))
+            lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.update(lamp).run(self.db))
 
 
