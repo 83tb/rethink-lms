@@ -43,7 +43,7 @@ l = {
 print "Number of lamps in the system is: " + str(len(lamps.json()['response']))
 
 print "Adding next lamp.."
-requests.post(url=url,  data=json.dumps(l))
+requests.post(url=url,  data=json.dumps([l,l]))
 print "Patching existing lamp.."
 
 print "Object was: "

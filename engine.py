@@ -112,6 +112,7 @@ class LampsHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         resource_doc = self.request.body
+        print resource_doc
         if isinstance(resource_doc, list):
             for lamp_json in resource_doc:
                 lamp = json.loads(lamp_json.replace("'", "\""))
@@ -129,7 +130,6 @@ class LampsHandler(BaseHandler):
         resource_doc = json.loads(self.request.body)
 
         if isinstance(resource_doc, list):
-            print "dupa"
             for lamp_json in resource_doc:
                 lamp = lamp_json
                 lamps = (yield self.lamps.update(lamp).run(self.db))
