@@ -87,5 +87,16 @@ print "Lamps within the bounding box: "
 print geo_lamps.text
 
 
+changed_lamp['actual_driver_value'] = 999
+another_lamp['actual_driver_value'] = 999
+
 print "patching multi!"
 requests.patch(url=url,  data=json.dumps([changed_lamp, another_lamp]))
+
+changed_lamp = lamps.json()['response'][0]
+another_lamp = lamps.json()['response'][1]
+
+
+print changed_lamp
+print another_lamp
+
