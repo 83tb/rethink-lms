@@ -112,19 +112,30 @@ class LampsHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         resource_doc = self.request.body
-        print isinstance(resource_doc, list)
-        lamp = json.loads(resource_doc.replace("'", "\""))
-        lamps = (yield self.lamps.insert(lamp).run(self.db))
-        # print lamps
-        lamp['id'] = lamps['generated_keys'][0]
-        self.write(lamp)
+        if isinstance(resource_doc, list):
+            for lamp_json in resource_doc:
+                lamp = json.loads(lamp_json.replace("'", "\""))
+                lamps = (yield self.lamps.insert(lamp).run(self.db))
+
+
+        else:
+            lamp = json.loads(resource_doc.replace("'", "\""))
+            lamps = (yield self.lamps.insert(lamp).run(self.db))
+
+
         
     @gen.coroutine
     def patch(self):
         resource_doc = self.request.body
-        lamp = json.loads(resource_doc.replace("'", "\""))
-        lamps = (yield self.lamps.update(lamp).run(self.db))
-        self.write(lamp)
+        if isinstance(resource_doc, list):
+            for lamp_json in resource_doc:
+                lamp = json.loads(lamp_json.replace("'", "\""))
+                lamps = (yield self.lamps.update(lamp).run(self.db))
+
+        else:
+            lamp = json.loads(resource_doc.replace("'", "\""))
+            lamps = (yield self.lamps.update(lamp).run(self.db))
+
 
 class LampFeedHandler(BaseHandler):
 
