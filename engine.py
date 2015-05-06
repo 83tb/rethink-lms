@@ -126,12 +126,12 @@ class LampsHandler(BaseHandler):
         
     @gen.coroutine
     def patch(self):
-        resource_doc = self.request.body
-        print resource_doc
+        resource_doc = json.loads(self.request.body)
+
         if isinstance(resource_doc, list):
             print "dupa"
             for lamp_json in resource_doc:
-                lamp = json.loads(lamp_json.replace("'", "\""))
+                lamp = lamp_json
                 lamps = (yield self.lamps.update(lamp).run(self.db))
 
         else:
