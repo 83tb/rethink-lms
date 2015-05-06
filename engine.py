@@ -112,7 +112,7 @@ class LampsHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         resource_doc = self.request.body
-        print resource_doc
+        print len(resource_doc)
         lamp = json.loads(resource_doc.replace("'", "\""))
         lamps = (yield self.lamps.insert(lamp).run(self.db))
         # print lamps
