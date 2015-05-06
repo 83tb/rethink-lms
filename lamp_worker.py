@@ -67,9 +67,6 @@ cursor = lamps_table.changes().run(conn)
 
 for feed in cursor:
     lamp = feed['new_val']
-    print "THIS IS LAMP OBJECT FOR LAMP WORKER"
-    print feed
-    print "EOF"
     if lamp['change_required'] == True:
         setDim(lamp['hardware']['address'], lamp['special_l_level'])
         lamp['change_required'] = False
