@@ -93,10 +93,13 @@ another_lamp['actual_driver_value'] = 999
 print "patching multi!"
 requests.patch(url=url,  data=json.dumps([changed_lamp, another_lamp]))
 
-changed_lamp = lamps.json()['response'][0]
-another_lamp = lamps.json()['response'][1]
+
+lamps = requests.get(url)
+new_changed_lamp = lamps.json()['response'][0]
+new_another_lamp = lamps.json()['response'][1]
 
 
-print changed_lamp
-print another_lamp
+
+assert(new_changed_lamp['actual_driver_value'] != changed_lamp['actual_driver_value'])
+assert(new_another_lamp['actual_driver_value'] != another_lamp['actual_driver_value'])
 
