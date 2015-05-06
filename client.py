@@ -85,3 +85,7 @@ geo_lamps = requests.get(geo_url, data=json.dumps(bbox))
 
 print "Lamps within the bounding box: "
 print geo_lamps.text
+
+
+print "patching multi!"
+requests.patch(url=url,  data=json.dumps([changed_lamp, another_lamp]))
