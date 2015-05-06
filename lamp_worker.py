@@ -58,6 +58,10 @@ def setDim(lamp_number, dim_level):
     executeCommand('On',lamp_number,range(dim_level,dim_level+1))
     executeCommand('On',lamp_number,range(dim_level,dim_level+1))
 
+def Off(lamp_number, dim_level):
+    executeCommand('Off',lamp_number,range(dim_level,dim_level+1))
+    executeCommand('Off',lamp_number,range(dim_level,dim_level+1))
+
 import rethinkdb as r
 conn = r.connect( "localhost").repl()
 
@@ -68,7 +72,10 @@ cursor = lamps_table.changes().run(conn)
 for feed in cursor:
     lamp = feed['new_val']
     if lamp['change_required'] == True:
-        setDim(lamp['hardware']['address'], lamp['special_l_level'])
+        if lamp['special_l_level']==0:
+            Off(lamp['hardware']['address'], lamp['special_l_level'])
+        else:
+            setDim(lamp['hardware']['address'], lamp['special_l_level'])
         lamp['change_required'] = False
         lamps_table.update(lamp).run()
   
