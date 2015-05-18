@@ -115,8 +115,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<ul id="locationsList" class="">
 					<li ng-repeat="loc in locations" ><a href="#/?c={{loc.lat}}:{{loc.lon}}:{{loc.zoom}}{{(loc.rotation) && '&r=' + loc.rotation}}">{{loc.title}}</a>
 				</ul>
-				<pre ng-bind="view | json"></pre>
-				<h1>Center map example</h1>
 				<form>
 					Latitude : <input type="number" step="any" ng-model="center.lat" />
 					Longitude : <input type="number" step="any" ng-model="center.lon" />
