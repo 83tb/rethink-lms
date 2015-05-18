@@ -71,8 +71,10 @@ cursor = lamps_table.changes().run(conn)
 
 for feed in cursor:
     lamp = feed['new_val']
+    print "Something changed and need to be changed? " + str(lamp['change_required'])
     if lamp['change_required'] == True:
-        if lamp['special_l_level']==0:
+        print lamp['special_l_setting']
+        if lamp['special_l_setting']==0:
             Off(lamp['hardware']['address'], lamp['special_l_setting'])
         else:
             setDim(lamp['hardware']['address'], lamp['special_l_setting'])
