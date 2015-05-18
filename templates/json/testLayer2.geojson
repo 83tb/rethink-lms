@@ -1,0 +1,308 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"id": "pointP_01",
+			"properties": {
+				"groupL": 1,
+				"lampStatus": 1,
+				"lampLux": 737,
+				"lampBrightness":0.39 
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					20.8118337392807,
+					52.1752344413543
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "MultiP_02",
+			"properties": {
+				"groupL": 2,
+				"lampStatus": 1,
+				"lampLux": 737,
+				"lampBrightness": 0.5,
+        "identifier": "126_A2L17", 
+        "label": "MLP A2", 
+				"level": 17
+			},
+			"geometry": {
+				"type": "MultiPolygon",
+				"coordinates":
+								[
+									[
+										[
+											[
+												20.811978578567505,
+												52.17653715198821
+											],
+											[
+												20.811463594436646,
+												52.17638582897406
+											],
+											[
+												20.811983942985535,
+												52.17575092462969
+											],
+											[
+												20.812472105026245,
+												52.17588580144022
+											],
+											[
+												20.811978578567505,
+												52.17653715198821
+											]
+										]
+									],
+									[
+										[
+											[
+												20.810701847076416,
+												52.17608976071832
+											],
+											[
+												20.810267329216003,
+												52.17596475352977
+											],
+											[
+												20.810621380805966,
+												52.175458141853085
+											],
+											[
+												20.811012983322144,
+												52.17556341228678
+											],
+											[
+												20.810701847076416,
+												52.17608976071832
+											]
+										]
+									]
+								]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "poligon_03",
+			"properties": {
+        "identifier": "984_A2L17", 
+				"groupL": 3,
+				"lampStatus": 2,
+				"lampLux": 737,
+				"lampBrightness": 0.5 
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[
+							20.812531113624573,
+							52.17581342856834
+						],
+						[
+							20.810734033584595,
+							52.17524431051766
+						],
+						[
+							20.81083595752716,
+							52.17514890851334
+						],
+						[
+							20.812600851058956,
+							52.17572460715557
+						],
+						[
+							20.812531113624573,
+							52.17581342856834
+						]
+					]
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "poligon_04",
+			"properties": {
+        "identifier": "843_A2L17", 
+				"groupL": 3,
+				"lampStatus": 1,
+				"lampLux": 737,
+				"lampBrightness": 0.5 
+			},
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[
+							20.8110773563385,
+							52.175859484045894
+						],
+						[
+							20.8110773563385,
+							52.17608976071832
+						],
+						[
+							20.811506509780884,
+							52.17608976071832
+						],
+						[
+							20.811506509780884,
+							52.175859484045894
+						],
+						[
+							20.8110773563385,
+							52.175859484045894
+						]
+					]
+				]
+			}
+		},
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.815872371653256, 52.175248828722204]
+            }, 
+            "properties": {
+                "identifier": "Lamp 126", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 3, 
+                "working_l_setting": 45, 
+                "special_l_setting": 333, 
+                "presence_l_setting": 234, 
+                "wanted_l_level": 67434, 
+                "actual_driver_value": 345, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.816029308711933, 52.175291989779]
+            }, 
+            "properties": {
+                "identifier": "Lamp 984", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 4, 
+                "working_l_setting": 3555, 
+                "special_l_setting": 3222, 
+                "presence_l_setting": 56478, 
+                "wanted_l_level": 6969, 
+                "actual_driver_value": 69567, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.81623260244344, 52.17534823719936]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 843", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 5, 
+                "working_l_setting": 5795959, 
+                "special_l_setting": 5685858, 
+                "presence_l_setting": 5956734, 
+                "wanted_l_level": 36367, 
+                "actual_driver_value": 6969, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.816013433268637, 52.175119624524]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 844", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 6, 
+                "working_l_setting": 36267, 
+                "special_l_setting": 3457457, 
+                "presence_l_setting": 4045747, 
+                "wanted_l_level": 2747747432, 
+                "actual_driver_value": 247476, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.816152625326705, 52.1751552066537]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 845", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 7, 
+                "working_l_setting": 223624644, 
+                "special_l_setting": 2346363, 
+                "presence_l_setting": 423126780, 
+                "wanted_l_level": 26707, 
+                "actual_driver_value": 23696, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.81634292232971, 52.17520540597991]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 846", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 8, 
+                "working_l_setting": 24473636475897, 
+                "special_l_setting": 2678065, 
+                "presence_l_setting": 40787580, 
+                "wanted_l_level": 26790670, 
+                "actual_driver_value": 243676, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        }
+	]
+}

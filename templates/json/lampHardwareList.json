@@ -1,0 +1,56 @@
+[
+    {
+        "identifier": "Devel Lamp 126",
+        "protocol": "madli", 
+        "building": "stn", 
+        "is_sensor": false, 
+        "type": "madli lamp", 
+        "computer_ip": "10.1.2.55", 
+        "address": "126"
+    },
+    {
+        "identifier": "Devel Lamp 984", 
+        "protocol": "madli", 
+        "building": "stn", 
+        "is_sensor": false, 
+        "type": "madli lamp", 
+        "computer_ip": "10.1.2.55", 
+        "address": "984"
+    },
+    {
+        "identifier": "Test Lamp 843", 
+        "protocol": "madli", 
+        "building": "stn", 
+        "is_sensor": false, 
+        "type": "madli lamp", 
+        "computer_ip": "10.1.2.55", 
+        "address": "843"
+    },
+    {
+        "identifier": "Test Lamp 844", 
+        "protocol": "madli", 
+        "building": "stn", 
+        "is_sensor": false, 
+        "type": "madli lamp", 
+        "computer_ip": "10.1.2.55", 
+        "address": "844"
+    },
+    {
+        "identifier": "Test Lamp 845", 
+        "protocol": "madli", 
+        "building": "stn", 
+        "is_sensor": false, 
+        "type": "madli lamp", 
+        "computer_ip": "10.1.2.55", 
+        "address": "845"
+    },
+    {
+        "identifier": "Test Lamp 846", 
+        "protocol": "madli", 
+        "building": "stn", 
+        "is_sensor": false, 
+        "type": "madli lamp", 
+        "computer_ip": "10.1.2.55", 
+        "address": "846"
+    }
+]

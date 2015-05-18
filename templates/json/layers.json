@@ -1,0 +1,54 @@
+{"response": [
+	{
+		"name": "OpenStreet Map",
+		"active": false,
+		"opacity": 0.5,
+		"source": {
+			"type": "OSM"
+		}
+	},
+	{
+		"name": "OpenCycle Map",
+		"active": false,
+		"source": {
+			"type": "OSM",
+			"url": "http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+			"attribution": "All maps &copy; <a href=\"http://www.opencyclemap.org/\">OpenCycleMap</a>"
+		}
+	},
+	{
+		"name": "Mapbox",
+		"active": true,
+		"opacity": 0.5,
+		"source": {
+			"type": "TileJSON",
+			"url": "http://api.tiles.mapbox.com/v3/stndev.idlelalf.jsonp"
+		}
+	},
+	{
+		"name": "Mapbox GeoJSON",
+		"active": true,
+		"source": {
+			"type": "GeoJSON",
+			"url": "http://a.tiles.mapbox.com/v3/stndev.idlelalf/markers.geojson"
+		}
+	},
+	{
+		"name": "lampsLayerPoly",
+		"active": true,
+		"topLayer": true,
+		"source": {
+			"type": "GeoJSON",
+			"url": "./json/testLayer2.geojson"
+		},
+		"style": {
+			"fill": {
+				"color": "rgba(255, 0, 0, 0.6)"
+			},
+			"stroke": {
+				"color": "white",
+				"width": 3
+			}
+		}
+	}
+]}

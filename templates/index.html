@@ -1,15 +1,160 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 miko
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html ng-app="lmsUI">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Engine Sample Index/title>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!--<link rel="stylesheet" href="./js/lib/bower_components/openlayers3/build/ol.css" type="text/css">-->
+		<link rel="stylesheet" href="./js/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.css" type="text/css">
+		<link rel="stylesheet" href="./js/lib/angular-openlayers-directive/dist/angular-openlayers-directive.css" type="text/css">
+		<link rel="stylesheet" href="./css/main.css" type="text/css">
+
+    <!--<script src="./js/lib/bower_components/openlayers3/build/ol.js"></script>-->
+    <script src="./js/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.js"></script>
+    <script src="./js/lib/angular-openlayers-directive/bower_components/angular/angular.min.js"></script>
+    <script src="./js/lib/angular-openlayers-directive/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="./js/lib/angular-openlayers-directive/dist/angular-openlayers-directive.js" ></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/panelControler.js"></script>
+    <script src="./js/styleFunction.js"></script>
   </head>
   <body>
-    <div id="body">
+		<form id="warehousePanel" ng-controller="lmsControlPanel">
+			<!--<form id="warehousePanel">-->
+			<!--
+						<fieldset id="wControls">
+							<button id="getLampData">Get Data!</button>
+							<button id="regetData">Rifresz</button>
+						</fieldset>
+			-->
+			<fieldset id="lampsControls" data-ng-disabled="adjustment.disabled">
+				<!--
+				id
+				identifier
+				actual_driver_value
+				wanted_l_level
+				working_flag
+				working_l_setting
+				presence_flag
+				presence_l_setting
+				special_flag
+				special_l_setting
+				change_required
+				group
+				hardware.building
+				hardware.protocol
+				hardware.is_sensor
+				hardware.computer_ip
+				hardware.address
+				hardware.type
+				location.type
+				location.coordinates
+				-->
+				Disabled: {{ adjustment.disabled }}
+				<label for="lampStatus">Lamp:</label>
+				<select name="lampStatus" id="lampStatus" data-role="slider"  ng-model="adjustment.driver_value">
+					<option value="{{ adjustment.driver_value}}">On</option>
+					<option value="0">Off</option>
+				</select>
+				<label for="driver_value">Brightness:</label>
+				<input type="range" name="driver_value" id="driver_value" class="lampSlider driverValue" value="0" min="0" max="1" step="0.01" ng-model="adjustment.driver_value"  />
+				{{ adjustment.driver_value * 100 | number : 0 }}%
+				<label for="lampFlag">Flag: </label>
+				<input type="radio" name="lampFlag" ng-model="adjustment.flag" value="working_flag" />Working
+				<input type="radio" name="lampFlag" ng-model="adjustment.flag" value="presence_flag" />Presence
+				<input type="radio" name="lampFlag" ng-model="adjustment.flag" value="special_flag" />Special
+				<button ng-click="setAdjs()">Set!</button>
+			</fieldset>
+			adjustment.driver_value
+			adjustment.flag
 
-      Hello world!
+			Time
+			Day
+			Repeat event
+			From - to Date
+			From - to Time
+			days of week
+			<pre>{{ adjustment}}</pre>
+		</form>
+		<div ng-controller="lmsController">
+			<div id="compass"><span class="compass-icon">iii</span><span id="mouse-position"></span></div>
 
-    </div>
-    </body>
+			<openlayers ol-center="center" ol-defaults="defaults"  ol-view="view" height="400">
+				<ol-control name="{{ control.name}}" ng-repeat="control in ctrl.controls"></ol-control>
+				<ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in layers|filter: { active: true}"></ol-layer>
+				<ol-layer ol-layer-properties="lampsLayer"></ol-layer>
+				<ol-marker ng-repeat="marker in markers" ol-marker-properties="marker" lat="marker.lat" lon="marker.lon"></ol-marker>
+			</openlayers>
+
+			<input type="button" value="patchData" ng-click="patchDataOld()" />
+			<input type="button" value="postDataFile" ng-click="postDataFile()" />
+			<input type="button" value="logExtent" ng-click="logExtent()" />
+			<input type="button" value="setExt" ng-click="setExt()" />
+
+			<input type="input" style="width: 300px;" ng-model="markers[0].label.message" />
+			<button ng-repeat="layer in layers" ng-click="changeLayer(layer)" class="btn btn-default" ng-bind="layer.name"></button>
+
+			<aside id="sidePanel">
+				<ul id="locationsList" class="">
+					<li ng-repeat="loc in locations" ><a href="#/?c={{loc.lat}}:{{loc.lon}}:{{loc.zoom}}{{(loc.rotation) && '&r=' + loc.rotation}}">{{loc.title}}</a>
+				</ul>
+				<pre ng-bind="view | json"></pre>
+				<h1>Center map example</h1>
+				<form>
+					Latitude : <input type="number" step="any" ng-model="center.lat" />
+					Longitude : <input type="number" step="any" ng-model="center.lon" />
+					Zoom : <input type="number" step="any" ng-model="center.zoom" />
+					Rotation: <input type="number" step="any" ng-model="view.rotation" />
+					Degrees: {{ degrees}} <input type="range" min="-180" max="180" ng-change="degreesToRadians()" ng-model="degrees" />
+					OffsetFactor: {{ offsetFactor}} <input type="range" min="-1" max="1" step="0.01" ng-model="offsetFactor" /><br/>
+					<button ng-click="center.autodiscover = true">Discover position</button>
+				</form>
+
+			</aside>
+
+			<div style="display: none;">
+				<div id="marker" title="Marker">
+					<svg id="SVGIcon" height="200" width="510">
+					<polygon points="0,0 0,200 150,200 150,100 250,100 250,0" style="fill:#7d3d8a;stroke:purple;stroke-width:1" />
+					<rect class="lampBri" id="rect1" x="10" y="10" width="100" height="10"
+								style="stroke:#428bca; fill:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+					<rect class="lampLux" id="rect1" x="10" y="35" width="56" height="10"
+								style="stroke:#f0ad4e; fill:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+					</svg>
+				</div>
+
+				<div id="overlaybox" class="info overlay">
+					<div>{{popupFeatureProperties.identifier}}
+						<div ng-show="popupFeatureProperties.presence_flag">{{popupFeatureProperties.presence_l_setting}}</div>
+						<div ng-show="popupFeatureProperties.special_flag">{{popupFeatureProperties.special_l_setting}}</div>
+						<div ng-show="popupFeatureProperties.working_flag">{{popupFeatureProperties.working_l_setting}}</div>
+						{{popupFeatureProperties.group}}
+						{{popupFeatureProperties.virtual_sensor}}
+						{{popupFeatureProperties.hardware}}
+						{{popupFeatureProperties.wanted_l_level}}
+						{{popupFeatureProperties.actual_driver_value}}
+						{{popupFeatureProperties.change_required}}
+						<!--<pre>{{popupFeatureProperties | json}}</pre>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

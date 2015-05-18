@@ -1,0 +1,175 @@
+{
+    "type": "FeatureCollection", 
+    "features": [
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [
+                    7.6904296875, 
+                    16.696472167969
+                ]
+            }, 
+            "properties": {
+                "identifier": "teeeee", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 2, 
+                "working_l_setting": 233, 
+                "special_l_setting": 25, 
+                "presence_l_setting": 27, 
+                "wanted_l_level": 29, 
+                "actual_driver_value": 0, 
+                "presence_flag": false, 
+                "special_flag": false, 
+                "working_flag": false, 
+                "change_required": false
+            }
+        },
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.815872371653256, 52.175248828722204]
+            }, 
+            "properties": {
+                "identifier": "Lamp 126", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 3, 
+                "working_l_setting": 244, 
+                "special_l_setting": 26, 
+                "presence_l_setting": 40, 
+                "wanted_l_level": 26, 
+                "actual_driver_value": 26, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.816029308711933, 52.175291989779]
+            }, 
+            "properties": {
+                "identifier": "Lamp 984", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 4, 
+                "working_l_setting": 244, 
+                "special_l_setting": 26, 
+                "presence_l_setting": 40, 
+                "wanted_l_level": 26, 
+                "actual_driver_value": 26, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.81623260244344, 52.17534823719936]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 843", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 5, 
+                "working_l_setting": 244, 
+                "special_l_setting": 26, 
+                "presence_l_setting": 40, 
+                "wanted_l_level": 26, 
+                "actual_driver_value": 26, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.816013433268637, 52.175119624524]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 844", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 6, 
+                "working_l_setting": 244, 
+                "special_l_setting": 26, 
+                "presence_l_setting": 40, 
+                "wanted_l_level": 26, 
+                "actual_driver_value": 26, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.816152625326705, 52.1751552066537]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 845", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 7, 
+                "working_l_setting": 244, 
+                "special_l_setting": 26, 
+                "presence_l_setting": 40, 
+                "wanted_l_level": 26, 
+                "actual_driver_value": 26, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        },
+
+        {
+            "id": "", 
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [20.81634292232971, 52.17520540597991]
+            }, 
+            "properties": {
+                "identifier": "Lamp Test 846", 
+                "group": [], 
+                "virtual_sensor": null, 
+                "hardware": 8, 
+                "working_l_setting": 244, 
+                "special_l_setting": 26, 
+                "presence_l_setting": 40, 
+                "wanted_l_level": 26, 
+                "actual_driver_value": 26, 
+                "presence_flag": false, 
+                "special_flag": true, 
+                "working_flag": true, 
+                "change_required": true
+            }
+        }
+
+    ]
+}
