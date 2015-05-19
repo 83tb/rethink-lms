@@ -6,14 +6,14 @@ from metro.libmadli import getCommandNumber
 def shxNR(arg, serObj):
     hexstr = arg
     #print "Sending: " + hexstr
-    return sendHexNoReturn(hexstr, serObj) 
- 
+    return sendHexNoReturn(hexstr, serObj)
+
 
 def shx(arg, serObj):
-    
+
     hexstr = arg
     #print "Sending: " + hexstr
-    return sendHex(hexstr, serObj) 
+    return sendHex(hexstr, serObj)
 
 import serial
 
@@ -48,12 +48,12 @@ def executeCommand(command_string, device_number, memory_range):
     for memory_address in memory_range:
         #print memory_addres
         hexstr = makeCommand(command_number,0,device_number,memory_address)
-        
+
         if command_string == "SetAddr" or command_string == "WriteAddr":
             value = shxNR(hexstr,serObj)
-        else: 
+        else:
             value =  shx(hexstr,serObj)
-    
+
 def setDim(lamp_number, dim_level):
     executeCommand('On',lamp_number,range(dim_level,dim_level+1))
     executeCommand('On',lamp_number,range(dim_level,dim_level+1))
@@ -80,5 +80,5 @@ for feed in cursor:
             setDim(lamp['hardware']['address'], lamp['special_l_setting'])
         lamp['change_required'] = False
         lamps_table.update(lamp).run()
-  
-  
+
+
