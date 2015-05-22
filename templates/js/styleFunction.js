@@ -17,18 +17,24 @@
  */
 
 
+/*
+ * check this out http://stackoverflow.com/questions/30268100/where-can-i-find-a-thorough-description-of-implementing-custom-ol-style-style-in
+ * http://stackoverflow.com/questions/29959377/openlayers-3-stroke-style
+ */
 var styleFunction = (function () {
 
-	var styles = {
-		bgColor: [205, 220, 1, 1],
-		lineColor: [80, 192, 233, 1],
-		width: 6
+	var styles = function (blue) {
+		return {
+			bgColor: [205, 220, blue, 1],
+			lineColor: [80, 192, 233, 1],
+			width: 6
 //		width
 //		on
 //		off
 //		error
 //		alert
 // selected
+		};
 	};
 //	console.log('STYLING TOP feature.getProperties()');
 
@@ -67,17 +73,17 @@ var styleFunction = (function () {
 						width: styleSet.width / 3
 					})
 				}),
-				text: new ol.style.Text({
-					font: '12px Calibri,sans-serif',
-					text: label,
-					fill: new ol.style.Fill({
-						color: 'red'
-					}),
-					stroke: new ol.style.Stroke({
-						color: 'black',
-						width: 2
-					})
-				}),
+								text: new ol.style.Text({
+									font: '12px Calibri,sans-serif',
+									text: label,
+									fill: new ol.style.Fill({
+										color: 'red'
+									}),
+									stroke: new ol.style.Stroke({
+										color: 'black',
+										width: 2
+									})
+								}),
 				zIndex: Infinity
 			})];
 	};
@@ -90,7 +96,7 @@ var styleFunction = (function () {
 //		console.log(feature.get('actual_driver_value'));
 		var blue = 255 - feature.get('actual_driver_value');
 		//[205, 220, blue, 1]
-		return drawStyle(styles, feature.get('identifier'));
+		return drawStyle(styles(blue), feature.get('identifier'));
 	};
 })();
 

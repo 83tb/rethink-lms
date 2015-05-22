@@ -29,32 +29,100 @@ body {
   /*	height: 80%;
 		width: 100%;*/
 }
-/*.ol-scale-line, .ol-scale-line:not([ie8andbelow]) {
-	background: black;
-	padding: 5px;
-	bottom: auto;
-	left: auto;
-	right: 8px;
-	top: 58px;
+.icon {
+  display: inline-block;
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+  background: transparent url(../data/sprite-744a47d8e7557a935eed556a66605e5e.png) no-repeat 0 0;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+.ol-control {
+  background: transparent;
+}
+.ol-control button {
+  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.ol-control button:hover,
+.ol-control button:focus {
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+.ol-scale-line,
+.ol-scale-line:not([ie8andbelow]) {
+  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px;
+  /*	bottom: auto;
+		left: auto;
+		right: 8px;
+		top: 58px;*/
 }
 .ol-full-screen {
-	left: auto;
-	right: 40px;
+  left: auto;
+  right: .5em;
+  top: 3em;
+}
+.ol-control-location {
+  bottom: auto;
+  left: .5em;
+  right: suto;
+  top: 4em;
+}
+.icon.geolocate {
+  background-position: -80px 0;
+}
+.ol-zoom-extent {
+  top: 6em;
+  left: .5em;
 }
 .ol-zoomslider {
-	top: 7.5em;
-}*/
-#compass .compass-icon {
-  display: block;
+  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 8em;
+  left: .5em;
+}
+.ol-rotate button {
   background: red;
-  height: 20px;
-  width: 10px;
   cursor: pointer;
+  height: 32px;
+  width: 32px;
+}
+.ol-rotate .ol-compass {
+  background: url(../data/Compass_Nord-32.png);
+  height: 32px;
+  width: 32px;
+  text-indent: 10em;
+}
+.ol-custom-overviewmap,
+.ol-custom-overviewmap.ol-uncollapsible {
+  bottom: .5em;
+  left: auto;
+  right: .5em;
+  top: auto;
+}
+.ol-custom-overviewmap .ol-overviewmap-map {
+  border: none;
+  width: 300px;
+}
+.ol-custom-overviewmap .ol-overviewmap-box {
+  border: 2px solid red;
+}
+.ol-custom-overviewmap:not(.ol-collapsed) {
+  border: 1px solid black;
+}
+.ol-custom-overviewmap:not(.ol-collapsed) button {
+  bottom: 1px;
+  left: auto;
+  right: 2px;
+  top: auto;
 }
 #sidePanel {
   /*#locationsList {*/
   position: absolute;
-  top: 155px;
+  bottom: 1px;
   right: 10px;
   list-style: none;
   width: 20%;

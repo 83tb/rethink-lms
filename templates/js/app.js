@@ -54,49 +54,33 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		angular.extend($scope, {
 			fStyle: styleFunction,
 			selectStyle: styleFunctionS,
-			changesLog: {
-				lampStatus: 0,
-				lampBrightness: 0
-			},
-			view: {
-				rotation: 0
-			},
+			controls: [
+				{name: 'attribution', active: 'false'},
+				{name: 'fullscreen', active: true},
+//				{name: 'mouseposition', active: true},
+				{name: 'scaleline', active: true},
+				{name: 'zoom', active: true},
+				{name: 'zoomslider', active: true},
+				{name: 'rotate', active: true, autoHide: false},
+				{name: 'zoomtoextent', active: true, extent: [
+						813079.7791264898, 5929220.284081122,
+						848966.9639063801, 5936863.986909639
+					], label: 'E1', tipLabel: 'Some label'},
+				{name: 'overviewmap', active: true, control: controlOverview},
+//				{name: 'layerSwitcher', active: true, control: layerSwitcher},
+				{name: 'locate', active: true, control: new controlLocate()},
+			],
 			degrees: 0,
 			defaults: {
-				layers: {
-					main: {
-						name: 'MapboxDefault',
-						source: {
-							type: 'TileJSON',
-							url: 'http://api.tiles.mapbox.com/v3/stndev.idlelalf.jsonp'
-						}
-					}
-				},
 				controls: {
 					attribution: false,
-					rotate: {
-						name: "rotate",
-						active: true,
-						autoHide: false
-					},
-					zoom: true,
-//								fullscreen: true,
-//								mousePosition: true,
-//								OverviewMap: true
-//								ScaleLine
-//								ZoomSlider
-//								ZoomToExtent
+					rotate: true
 				},
 				interactions: {
 					mouseWheelZoom: true,
 					doubleClickZoom: false
 //								select: //true
 //									selectFn
-				},
-				view: {
-					maxZoom: 24,
-					minZoom: 10,
-					rotation: 0
 				},
 				events: {
 					map: [
@@ -107,6 +91,12 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 						'mousemove',
 						'click'
 					]
+				},
+				view: {
+					rotation: 0,
+					maxZoom: 24, //def 28
+					minZoom: 10, // def 2
+					extent: undefined
 				}
 			},
 			offset: 0,
@@ -121,12 +111,6 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 				windowBounds: []
 			},
 			layers: [],
-			changeLayer: function (layer) {
-				$scope.layers.map(function (l) {
-					console.log(layer.active);
-					l.active = (l === layer);
-				});
-			},
 			lampsLayer: {},
 			markers: []
 		});
@@ -158,10 +142,8 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 
 		$scope.setLampsLayer = function (data) {
 			// we don't need this any more(?)
-			$scope.lData = data;
-			console.log('setLampsLayer $scope.lData');
-			console.log($scope.lData);
-			// not used anyware
+			console.log('setLampsLayer data');
+			console.log(data);
 
 			if (!$scope.appHelpers.isResponse(data))
 				return;
@@ -237,7 +219,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			//set from url&r=rotation =>  Math.PI / rotation
 			var rotation = $location.search().r
 			if (rotation) {
-				$scope.view.rotation = rotation * Math.PI / 180;
+				$scope.defaults.view.rotation = rotation * Math.PI / 180;
 			}
 			$location.search({c: centerHash});
 //			console.log($scope.center);
@@ -260,19 +242,12 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		});
 
 		$scope.degreesToRadians = function () {
-			$scope.view.rotation = parseFloat($scope.degrees, 10).toFixed(2) * (Math.PI / 180);
+			$scope.defaults.view.rotation = parseFloat($scope.degrees, 10).toFixed(2) * (Math.PI / 180);
 		};
 
-		$scope.logExtent = function () {
-			olData.getMap().then(function (map) {
-				curextent = map.getView().calculateExtent(map.getSize());
-				$scope.curextent = ol.extent.applyTransform(curextent, ol.proj.getTransform("EPSG:3857", "EPSG:4326"));
-			});
-			$scope.setMarkers();
-		}
-		$scope.setMarkers = function () {
+		$scope.setMarkers = function (bounds) {
 			$scope.markers = [];
-			angular.forEach($scope.center.windowBounds, function (point, key) {
+			angular.forEach(bounds, function (point, key) {
 				var colors = ['#f05222', '#7CBA01', '#00A6F0', '#FFB901'];
 				var marker = {
 					name: key,
@@ -286,14 +261,15 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 					style: {
 						image: {
 							circle: {
-								radius: 50,
+								radius: 5,
 								fill: new ol.style.Fill({
 									color: colors[key],
 									opacity: 0.6
 								}),
 								stroke: new ol.style.Stroke({
-									color: '#ffcc00',
-									opacity: 0.4
+									color: colors[key], //#ffcc00',
+									opacity: 0.4,
+									width: 45
 								})
 							}
 						}
@@ -304,11 +280,15 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			});
 //			console.log('$scope.markers');
 //			console.log($scope.markers);
+//			console.log('$scope.center.windowBounds');
+//			console.log($scope.center.windowBounds);
+//			console.log('bounds');
+//			console.log(bounds);
 		}
 
-		$scope.$watch('view.rotation', function (value) {
-			console.log('rotated ' + ($scope.view.rotation * 180 / Math.PI).toFixed(2));
-			$scope.degrees = ($scope.view.rotation * 180 / Math.PI).toFixed(2);
+		$scope.$watch('defaults.view.rotation', function (value) {
+			console.log('rotated ' + ($scope.defaults.view.rotation * 180 / Math.PI).toFixed(2));
+			$scope.degrees = ($scope.defaults.view.rotation * 180 / Math.PI).toFixed(2);
 
 			olData.getMap().then(function (map) {
 				curextent = map.getView().calculateExtent(map.getSize());
@@ -344,96 +324,10 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 //							}
 //						});
 //					});
-
-		$scope.patchDataOld = function () {
-			$http.get('http://10.1.2.55:8888/lamps').success(function (data) {
-				console.log(data)
-//							// this callback will be called asynchronously
-//							// when the response is available
-//							$scope.newLamps = [];
-//							$scope.tldata = data.lamps;
-//
-//							$http.get('lampHardwareList.json').success(function (data) {
-//								$scope.hdata = data;
-//
-//								var i = 0;
-//
-//								angular.forEach($scope.tldata, function (lamp, key) {
-//									newLamp = {};
-//									delete $scope.hdata[key].identifier;
-//									delete lamp.properties.virtual_sensor;
-//									angular.extend(newLamp,
-//													{
-//														id: "",
-//														location: {
-//															'$reql_type$': "GEOMETRY"
-//														}
-//													},
-//													lamp.properties
-//									);
-//									newLamp.hardware = $scope.hdata[key];
-//									angular.extend(newLamp.location, lamp.geometry);
-//
-//									$scope.newLamps.push(newLamp);
-//									i++;
-//
-//								});
-//								$scope.newLampsSet = {lamps: $scope.newLamps};
-//								console.log($scope.newLampsSet);
-//							});
-//							var pdata = {response: []};//{}
-				var pdata = [];
-//							var rlamp = data.response[Math.floor((Math.random() * 6))];
-				var rlamp = data.response[0];
-				console.log(rlamp.identifier)
-				console.log(rlamp)
-				trueFalse = function () {
-					return !!Math.floor(Math.random() * 2);
-				};
-				angular.forEach(data.response, function (rl) {
-					var rdata = {
-						id: rl.id,
-//								group: [],
-						working_l_setting: 0, //Math.floor((Math.random() * 244) + 1),
-						special_l_setting: 0, //Math.floor((Math.random() * 244) + 1),
-						presence_l_setting: 0, //Math.floor((Math.random() * 244) + 1),
-						presence_flag: false, //trueFalse(),
-						special_flag: false, //trueFalse(),
-						working_flag: false, //trueFalse(),
-						change_required: true
-					};
-//							angular.extend(rlamp, rdata);
-					console.log(rdata)
-					pdata.push(rdata)
-//							pdata = rdata;
-				});
-
-				console.log(pdata)
-//							return;
-				$scope.pdata = pdata;
-//							console.log(vdata);
-
-				$http.patch('http://10.1.2.55:8888/lamps', pdata).
-								success(function (data, status, headers, config) {
-									// this callback will be called asynchronously
-									// when the response is available
-									console.log(data);
-									$http.get('http://10.1.2.55:8888/lamps').success(function (data) {
-										console.log(data)
-									});
-								}).
-								error(function (data, status, headers, config) {
-									// called asynchronously if an error occurs
-									// or server returns response with an error status.
-									console.log(data);
-								});
-			}).
-							error(function (data, status, headers, config) {
-								// called asynchronously if an error occurs
-								// or server returns response with an error status.
-								console.log(data);
-							});
-		};
+		$scope.$watch('center.autodiscover', function () {
+			console.log('center.autodiscover');
+			console.log($scope.center.autodiscover);
+		});
 
 		$scope.postDataFile = function () {
 			$http.get('./json/lampsListOUT.json').success(function (data) {
@@ -522,7 +416,6 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 
 
 //		$scope.centerJSON = function () {
-//		$scope.$watch('changesLog', function () {
 //		$scope.$watch('adjsServis', function(){
 		$scope.$on('adjustmentsUpdate', function () {
 			if (angular.equals({}, $scope.lampsLayer))
@@ -723,23 +616,9 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		});
 
 		$scope.offsetFactor = 0.05;
-		$scope.extentPlus = [];
 		$scope.center.windowBounds = false;
-//		$scope.$on('centerUrlHash', function () {
-
-
-//ol.View.prototype.calculateExtent = function(size) {
-//  var center = this.getCenter();
-//  goog.asserts.assert(goog.isDef(center));
-//  var resolution = this.getResolution();
-//  goog.asserts.assert(goog.isDef(resolution));
-//  var rotation = this.getRotation();
-//  goog.asserts.assert(goog.isDef(rotation));
-//  return ol.extent.getForViewAndSize(center, resolution, rotation, size);
-//};
-
-
-		$scope.$watch('center.bounds', function () {
+		$scope.$on('$locationChangeSuccess', function () {
+//		$scope.$watch('center.bounds', function () {
 			if ($scope.appHelpers.isValidBounds($scope.center.bounds)) {
 				// add some margin... get scale or 1/zoom
 				olData.getMap().then(function (map) {
@@ -747,29 +626,30 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 					var msize = map.getSize();
 					wsize[0] = parseInt(msize[0] * (1 + parseInt($scope.offsetFactor)));
 					wsize[1] = parseInt(msize[1] * (1 + parseInt($scope.offsetFactor)));
-//					console.log(1 + parseInt($scope.offsetFactor));
 //					console.log(msize);
 //					console.log(wsize);
 					var extentPlus = map.getView().calculateExtent(wsize);
 					// or ol.extent.buffer()???
-					$scope.extentPlus = ol.extent.applyTransform(extentPlus, ol.proj.getTransform("EPSG:3857", "EPSG:4326"));
+					extentPlus = ol.extent.applyTransform(extentPlus, ol.proj.getTransform("EPSG:3857", "EPSG:4326"));
 					$scope.center.windowBounds = [
 						//0 lb
-						[$scope.extentPlus[0], $scope.extentPlus[1]],
+						[extentPlus[0], extentPlus[1]],
 						//1 lt
-						[$scope.extentPlus[0], $scope.extentPlus[3]],
+						[extentPlus[0], extentPlus[3]],
 						//2 rt
-						[$scope.extentPlus[2], $scope.extentPlus[3]],
+						[extentPlus[2], extentPlus[3]],
 						//3 rb
-						[$scope.extentPlus[2], $scope.extentPlus[1]]
+						[extentPlus[2], extentPlus[1]]
 					];
+					$scope.$emit('getLamps');
+					$scope.setMarkers($scope.center.windowBounds);
+//					console.log("extentPlus");
+//					console.log(extentPlus);
+//					console.log("$scope.center.bounds");
+//					console.log($scope.center.bounds);
+//					console.log("$scope.center.windowBounds");
+//					console.log($scope.center.windowBounds);
 				});
-//				console.log("$scope.extentPlus");
-//				console.log($scope.extentPlus);
-//				console.log("$scope.center.bounds");
-//				console.log($scope.center.bounds);
-//				console.log("$scope.center.windowBounds");
-//				console.log($scope.center.windowBounds);
 			}
 			;
 		});
@@ -777,7 +657,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 
 		// move to service
 		// watch to on (emit getLampsEvent)
-		$scope.$watch('center.windowBounds', function () {
+		$scope.$on('getLamps', function () {
 			if ($scope.appHelpers.isValidBounds($scope.center.windowBounds)) {
 //				console.log("windowBounds on windowBounds");
 //				console.log($scope.center.windowBounds);
@@ -787,10 +667,6 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 					url: 'http://10.1.2.55:8888/geolamps',
 					data: $scope.center.windowBounds
 				}).success(function (data) {
-//					console.log("data on windowBounds");
-//					console.log(data);
-//					console.log('$scope.appHelpers.isResponse(data)');
-//					console.log($scope.appHelpers.isResponse(data));
 					if ($scope.appHelpers.isResponse(data)) {
 						$scope.setLampsLayer(data);
 						// redraw layer
@@ -809,6 +685,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 								// this callback will be called asynchronously
 								// when the response is available
 								console.log(data);
+								$scope.$emit('getLamps');
 							}).
 							error(function (data, status, headers, config) {
 								// called asynchronously if an error occurs
@@ -817,24 +694,61 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 							});
 		};
 
+		$scope.olLayers = [];
 		$scope.$on('redrawLamps', function () {
 			console.log('Redraw $scope.lampsLayer');
+			var olLayers = []
 			// Refresh layer
 			olData.getMap().then(function (map) {
 				var layers = map.getLayers();
 				// .map(layer.get('name') === 'lampsLayer')
-				layers.forEach(function (layer) {
+				layers.forEach(function (layer, i) {
 					if (layer.get('name') === 'lampsLayer') {
 						var lSource = layer.getSource();
-						var nf = lSource.readFeatures($scope.lampsSrc);//$scope.lData);
+						var nf = lSource.readFeatures($scope.lampsSrc);
 						lSource.clear(); //remove existing features
 						lSource.addFeatures(nf);
 						layer.setStyle($scope.lampsLayer.style);
+						//
+						// Make this clean to reset style or ramove/add layer
+						//
+//						map.removeLayer(layer);
+//						map.addLayer(layer);
 					}
+					if (layer.get('markers') && layer.get('name') !== 'markers') {
+						layer.set('name', 'markers');
+					}
+					olLayers.push(layer.get('name'));
 				});
+				$scope.olLayers = olLayers;//layers.getArray();
+				console.log('$scope.olLayers');
+				console.log($scope.olLayers);
 			});
-			$scope.setMarkers();
 		});
+
+
+		olData.getMap().then(function (map) {
+//			var geolocation = new ol.Geolocation({
+//				tracking: true
+//			});
+////			var pos = geolocation.getPosition();
+//////			map.getView().setCenter(pos);
+////			geolocation.on('change', function (evt) {
+////				console.log(pos);
+////			});
+//			geolocation.on('change', function () {
+//					console.log('geolocation.getPosition()');
+//					console.log(geolocation.getPosition());
+//			});
+		});
+
+//		olData.getMap().then(function (map) {
+//			var layerSwitcher = new ol.control.LayerSwitcher({
+//				tipLabel: 'Légende' // Optional label for button
+//			});
+//			map.addControl(layerSwitcher);
+//			angular.forEach(map.getLayers(), function(){})
+//		});
 
 
 //						TO DO????
