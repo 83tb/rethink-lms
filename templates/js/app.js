@@ -82,16 +82,6 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 //								select: //true
 //									selectFn
 				},
-				events: {
-					map: [
-						'singleclick',
-						'pointermove'
-					],
-					layers: [
-						'mousemove',
-						'click'
-					]
-				},
 				view: {
 					rotation: 0,
 					maxZoom: 24, //def 28
@@ -297,33 +287,6 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 
 		});
 
-		$scope.$on('openlayers.map.singleclick', function (event, data) {
-			var prj = ol.proj.transform([data.coord[0], data.coord[1]], data.projection, 'EPSG:4326').map(function (c) {
-				return c.toFixed(8);
-			});
-			console.log('[' + prj + ']');
-		});
-		$scope.$on('openlayers.layers.lampsLayer.click', function (event, feature) {
-			console.log('lampsLayer.click');
-//						$scope.$apply(function (scope) {
-//							if (feature) {
-//								console.log(feature.getProperties());
-//							}
-//						});
-		});
-//					$scope.$on('openlayers.layers.lampsLayer.click', function (event, feature) {
-//						$scope.$apply(function (scope) {
-//							if (feature) {
-//								console.log(feature.getProperties());
-//								feature.setStyle(olHelpers.createStyle({
-//									fill: {
-//										color: '#FFF'
-//									}
-//								}));
-//								//								$scope.mouseClickCountry = feature ? $scope.countries[feature.getId()].name : '';
-//							}
-//						});
-//					});
 		$scope.$watch('center.autodiscover', function () {
 			console.log('center.autodiscover');
 			console.log($scope.center.autodiscover);
