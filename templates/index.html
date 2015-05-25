@@ -47,13 +47,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="./js/panelControler.js"></script>
     <script src="./js/styleFunction.js"></script>
     <script src="./js/olControls.js"></script>
-
+		<script src="js/luxMeter.js" type="text/javascript"></script>
+		
   </head>
   <body>
 		<div class="wrapper" ng-controller="lmsController">
 			<header class="main-header">
 				<button class="btn btn-default ng-scope" data-toggle="control-sidebar">Toggle Right Sidebar</button>
 			</header>
+			<ng-include src="'./partials/topInfoBox.html'"></ng-include>
 			<!-- The Right Sidebar -->
 			<aside class="control-sidebar control-sidebar-light">
 				<ng-include src="'./partials/sideControlPanel.html'"></ng-include>
