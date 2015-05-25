@@ -17,6 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+// chenge to directive
 app.controller('lmsLuxMeter', ['$scope', function($scope){
 			var lux;
 			var luxTooBig = 0;
