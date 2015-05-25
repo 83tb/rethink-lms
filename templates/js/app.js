@@ -84,7 +84,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 				},
 				view: {
 					rotation: 0,
-					maxZoom: 24, //def 28
+					maxZoom: 26, //def 28
 					minZoom: 10, // def 2
 					extent: undefined
 				}
@@ -104,31 +104,6 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			lampsLayer: {},
 			markers: []
 		});
-		$scope.markers = []
-//			{
-//							stn: {
-//								name: 'stn',
-//								lat: 52.175248828722204,
-//								lon: 20.815872371653256,
-//								label: {
-//									message: 'loading...',
-//									show: true,
-//									showOnMouseOver: true
-//								},
-//								style: {
-//									image: {
-//										icon: {
-//											anchor: [0, 0], //[0.5, 1],
-//											anchorXUnits: 'fraction',
-//											anchorYUnits: 'fraction',
-//											opacity: 0.90,
-//											src: 'data/priority-high.png'
-//										}
-//									}
-//								}
-//							}
-//		};
-
 
 		$scope.setLampsLayer = function (data) {
 			// we don't need this any more(?)

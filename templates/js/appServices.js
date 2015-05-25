@@ -17,6 +17,30 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+//		$scope.markers = []
+//			{
+//							stn: {
+//								name: 'stn',
+//								lat: 52.175248828722204,
+//								lon: 20.815872371653256,
+//								label: {
+//									message: 'loading...',
+//									show: true,
+//									showOnMouseOver: true
+//								},
+//								style: {
+//									image: {
+//										icon: {
+//											anchor: [0, 0], //[0.5, 1],
+//											anchorXUnits: 'fraction',
+//											anchorYUnits: 'fraction',
+//											opacity: 0.90,
+//											src: 'data/priority-high.png'
+//										}
+//									}
+//								}
+//							}
+//		};
 //	Not used ae the moment
 //			$scope.defaults {
 //				events: {
