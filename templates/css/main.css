@@ -121,9 +121,9 @@ body {
 }
 #sidePanel {
   /*#locationsList {*/
-  position: absolute;
-  bottom: 1px;
-  right: 10px;
+  /*	position: absolute;
+	bottom: 1px;
+	right: 10px;*/
   list-style: none;
   width: 20%;
 }

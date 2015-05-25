@@ -16,7 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var app = angular.module('lmsUI', ['openlayers-directive']);
+var app = angular.module('lmsUI', [
+	'openlayers-directive',
+	'ngRoute',
+//	'ngResource',
+//      'powerLedUI.filters',
+//      'powerLedUI.services',
+//      'powerLedUI.directives',
+//      'powerLedUI.controllers'
+]);
+
+app.run(function ($rootScope) {
+	$rootScope.appName = 'Power Led';
+	$rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
+		$rootScope.title = currentRoute.title;
+	});
+});
+
+//app.config(['$routeProvider', function ($routeProvider) {
+//		$routeProvider.when('/', {
+//			templateUrl: 'partials/mapMainBox.html',
+//			controller: 'lmsController',
+//			title: 'Warehouse'
+//		});
+////		$routeProvider.when('/terminal', {
+////			templateUrl: 'partials/terminalView.html',
+////			controller: 'terminalCtrl',
+////			title: 'Terminal'
+////		});
+//		$routeProvider.otherwise({
+//			redirectTo: '/'
+//		});
+//	}]);
+
+
+
 
 app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'olData', 'olHelpers', 'adjsServis',
 	function ($scope, $location, $timeout, $http, olData, olHelpers, adjsServis) {
