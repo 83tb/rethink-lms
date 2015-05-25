@@ -39,7 +39,7 @@
 app.factory('adjsServis', ['$rootScope', function ($rootScope) {
 		var adjustments = {
 			"disabled": true,
-			"driver_value": 0.89,
+			"driver_value": 80,
 			"flag": 'special_flag',
 			"enable": function () {
 				adjustments.disabled = false;
@@ -71,9 +71,12 @@ app.controller('lmsControlPanel', ['$scope', 'adjsServis', function ($scope, adj
 							updateAdjs()
 							);
 			console.log($scope.adjustment);
-		}, true);
+		});
 
 		updateAdjs();
 
+//		$scope.$watch('adjustment', function () {
+//			console.log($scope.adjustment);
+//		}, true);
 		$scope.setAdjs = adjsServis.setAdjs
 	}]);

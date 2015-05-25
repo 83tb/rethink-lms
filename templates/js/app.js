@@ -24,10 +24,12 @@ var app = angular.module('lmsUI', [
 //      'powerLedUI.services',
 //      'powerLedUI.directives',
 //      'powerLedUI.controllers'
+	'angular-icheck',
+	'ui.bootstrap-slider'
 ]);
 
 app.run(function ($rootScope) {
-	$rootScope.appName = 'Power Led';
+	$rootScope.appName = 'lmsUI';
 	$rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
 		$rootScope.title = currentRoute.title;
 	});
@@ -55,6 +57,16 @@ app.run(function ($rootScope) {
 app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'olData', 'olHelpers', 'adjsServis',
 	function ($scope, $location, $timeout, $http, olData, olHelpers, adjsServis) {
 //		$scope.adjustments = adjsServis;
+		angular.extend($scope, {
+			"user": {
+				"name": 'User Name',
+				"status": "Online",
+				"img": './data/account.png',
+				"messages": 7,
+				"notifications": 8,
+				"tasks": 9
+			}
+		});
 
 		angular.extend($scope, {
 			appHelpers: {
@@ -136,6 +148,8 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			},
 			layers: [],
 			lampsLayer: {},
+//			layers: {},
+//			//lampsLayer: {},
 			markers: []
 		});
 
@@ -198,7 +212,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 					type: 'GeoJSON',
 					geojson: {
 						object: $scope.lampsSrc,
-						projection: 'EPSG:3857'
+//						projection: 'EPSG:3857'
 					}
 				},
 				style: $scope.fStyle
@@ -215,6 +229,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		}
 
 		$scope.$on("centerUrlHash", function (event, centerHash) {
+			// set location by name and set location active!
 			//set from url&r=rotation =>  Math.PI / rotation
 			var rotation = $location.search().r
 			if (rotation) {
@@ -228,17 +243,18 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			});
 		});
 
-		$scope.$watch("center.zoom", function (zoom) {
-			$scope.layers.map(function (l) {
-				if (l.name === 'lampsLayer') {
-					if (16 < zoom && zoom < 18) {
-//						l.source.url = "./json/testLayer1.geojson";
-					} else if (18 <= zoom) {
-//						l.source.url = "./json/testLayer2_1.geojson";
-					}
-				}
-			});
-		});
+//		//Zoom shitcher
+//		$scope.$watch("center.zoom", function (zoom) {
+//			$scope.layers.map(function (l) {
+//				if (l.name === 'lampsLayer') {
+//					if (16 < zoom && zoom < 18) {
+////						l.source.url = "./json/testLayer1.geojson";
+//					} else if (18 <= zoom) {
+////						l.source.url = "./json/testLayer2_1.geojson";
+//					}
+//				}
+//			});
+//		});
 
 		$scope.degreesToRadians = function () {
 			$scope.defaults.view.rotation = parseFloat($scope.degrees, 10).toFixed(2) * (Math.PI / 180);
@@ -400,7 +416,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			console.log('on adjustmentsUpdate - $scope.selectedFeatures');
 			console.log($scope.selectedFeatures);
 
-			driver_value = Math.round(255 * parseFloat(adjsServis.driver_value));
+			driver_value = Math.round(255 * parseFloat(adjsServis.driver_value/100));
 			dataSet = [];
 			var prioritySet = function () {
 				switch (adjsServis.flag) {
@@ -570,6 +586,11 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		$http.get('./json/layers.json').success(function (data) {
 			console.log('Set layers maps');
 			$scope.layers = data.response;
+//			angular.forEach(data.response, function(dataLayer){
+//				var layer = {};
+//				layer[dataLayer.name] = dataLayer;
+//				angular.extend($scope.layers, layer);
+//			});
 		});
 
 		$http.get('./json/locations.json').success(function (data) {

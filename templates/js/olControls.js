@@ -11,8 +11,8 @@ var controlLocate = function (opt_options) {
 	var location = 0;
 
 	var button = document.createElement('button');
-	button.innerHTML = 'N';
-	button.className = "icon geolocate";
+//	button.innerHTML = 'N';
+	button.className = "icon geolocate fa fa-location-arrow";
 
 	var this_ = this;
 	var handleRotateNorth = function (e) {

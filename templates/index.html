@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title ng-bind="$root.appName + ' - ' + $root.title">Power Led</title>
+		<title ng-bind="$root.appName + ' - ' + $root.title">lmsUI</title>
 		<!-- To do: set title to match current location if from list! -->
-		
+
 		<!--<link rel="stylesheet" href="./js/lib/bower_components/openlayers3/build/ol.css" type="text/css">-->
 		<link rel="stylesheet" href="./js/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.css" type="text/css">
 		<link rel="stylesheet" href="./js/lib/angular-openlayers-directive/dist/angular-openlayers-directive.css" type="text/css">
@@ -37,44 +37,255 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<script src="./js/lib/angular-openlayers-directive/dist/angular-openlayers-directive.js" ></script>
 
 		<!--AdminLTE Style-->
+		<link href="js/lib/Font-Awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
 		<script src="js/lib/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
 		<link href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<script src="js/lib/AdminLTE/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 		<link href="js/lib/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+		<link href="js/lib/AdminLTE/dist/css/skins/skin-blue.min.css" rel="stylesheet" type="text/css"/>
 		<script src="js/lib/AdminLTE/dist/js/app.min.js" type="text/javascript"></script>
+		<!-- plugins -->
+		<link href="js/lib/AdminLTE/plugins/iCheck/flat/aero.css" rel="stylesheet" type="text/css"/>
+		<script src="js/lib/AdminLTE/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+		<link href="js/lib/AdminLTE/plugins/bootstrap-slider/slider.css" rel="stylesheet" type="text/css"/>
+		<script src="js/lib/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>
 
     <script src="./js/app.js"></script>
     <script src="./js/panelControler.js"></script>
     <script src="./js/styleFunction.js"></script>
     <script src="./js/olControls.js"></script>
 		<script src="js/luxMeter.js" type="text/javascript"></script>
+		<!-- plugins -->
+		<script src="js/angular-icheck.js" type="text/javascript"></script>
+		<script src="js/lib/angular-bootstrap-slider/slider.js" type="text/javascript"></script>
 		
+
   </head>
-  <body>
+  <body class="skin-blue sidebar-mini">
 		<div class="wrapper" ng-controller="lmsController">
 			<header class="main-header">
-				<button class="btn btn-default ng-scope" data-toggle="control-sidebar">Toggle Right Sidebar</button>
+				<a href="./index.html" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>lms</b>UI</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>LightMS</b>UI</span>
+        </a>
+				<nav class="navbar" role="navigation" style="border: 0;max-height: 50px;">
+          <!-- Sidebar toggle button-->
+					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-envelope-o"></i>
+                  <span class="label label-success">{{user.messages}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">You have {{user.messages}} messages</li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
+												<li><!-- start message -->
+													<a href="#">
+														<div class="pull-left">
+															<img src="{{user.img}}" class="img-circle" alt="User Image">
+														</div>
+														<h4>
+															Support Team
+															<small><i class="fa fa-clock-o"></i> 5 mins</small>
+														</h4>
+														<p>Why not buy a new awesome theme?</p>
+													</a>
+												</li><!-- end message -->
+											</ul><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
+                  </li>
+                  <li class="footer"><a href="#">See All Messages</a></li>
+                </ul>
+              </li>
+              <!-- Notifications: style can be found in dropdown.less -->
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-bell-o"></i>
+                  <span class="label label-warning">{{user.notifications}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">You have {{user.notifications}} notifications</li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
+												<li>
+													<a href="#">
+														<i class="fa fa-users text-aqua"></i> {{user.notifications}} new members joined today
+													</a>
+												</li>
+											</ul><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
+                  </li>
+                  <li class="footer"><a href="#">View all</a></li>
+                </ul>
+              </li>
+              <!-- Tasks: style can be found in dropdown.less -->
+              <li class="dropdown tasks-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-flag-o"></i>
+                  <span class="label label-danger">{{user.tasks}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">You have {{user.tasks}} tasks</li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
+												<li><!-- Task item -->
+													<a href="#">
+														<h3>
+															Design some buttons
+															<small class="pull-right">20%</small>
+														</h3>
+														<div class="progress xs">
+															<div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+																<span class="sr-only">20% Complete</span>
+															</div>
+														</div>
+													</a>
+												</li><!-- end task item -->
+											</ul><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
+                  </li>
+                  <li class="footer">
+                    <a href="#">View all tasks</a>
+                  </li>
+                </ul>
+              </li>
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="{{user.img}}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">{{user.name}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="{{user.img}}" class="img-circle" alt="User Image">
+                    <p>
+                      {{user.name}}
+                      <small>{{user.role}}</small>
+                    </p>
+                  </li>
+                  <!-- Menu Body -->
+                  <li class="user-body">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Followers</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Sales</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Friends</a>
+                    </div>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+							<li>
+								<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i>Toggle Right Sidebar</a>
+							</li>
+            </ul>
+          </div>
+        </nav>
 			</header>
-			<ng-include src="'./partials/topInfoBox.html'"></ng-include>
-			<!-- The Right Sidebar -->
-			<aside class="control-sidebar control-sidebar-light">
-				<ng-include src="'./partials/sideControlPanel.html'"></ng-include>
-			</aside>
-			<div class="control-sidebar-bg"></div>
+
+			<!--Sidebar-wrapper-->
+			<div class="sidebar-wrapper">
+				<aside class="main-sidebar">
+					<!-- Inner sidebar -->
+					<section class="sidebar">
+						<!-- user panel (Optional) -->
+						<div class="user-panel">
+							<div class="pull-left image">
+								<img src="{{user.img}}" class="img-circle" alt="User Image" />
+							</div>
+							<div class="pull-left info">
+								<p>User Name</p>
+								<a href="#"><i class="fa fa-circle text-success"></i>{{user.status}}</a>
+							</div>
+						</div><!-- /.user-panel -->
+
+						<!-- Search Form (Optional) -->
+						<form action="#" method="get" class="sidebar-form">
+							<div class="input-group">
+								<input type="text" name="q" class="form-control" placeholder="Search..."/>
+								<span class="input-group-btn">
+									<button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+								</span>
+							</div>
+						</form><!-- /.sidebar-form -->
+
+						<!-- Sidebar Menu -->
+						<ul class="sidebar-menu">
+							<li class="header">HEADER</li>
+							<li class="treeview active"><a href="#">
+									<i class="fa fa-map-marker"></i> <span>Locations</span> <i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu menu-open">
+									<ng-include src="'./partials/lmsLocationList.html'"></ng-include>
+								</ul>
+							</li>
+						</ul><!-- /.sidebar-menu -->
+
+					</section><!-- /.sidebar -->
+				</aside><!-- /.main-sidebar -->
+			</div>
+			<!--//.sidebar-wrapper-->
 
 			<div class="content-wrapper">
-				<!--<div ng-view></div>-->
-				<ng-include src="'./partials/mapMainBox.html'"></ng-include>
-				<ng-include src="'./partials/mapLayersList.html'"></ng-include>
-				<ng-include src="'./partials/mapSupplement.html'"></ng-include>
+				<div class="content">
+					<ng-include src="'./partials/lmsInfoBox.html'"></ng-include>
+					<div class="box">
+						<div class="box-header with-border">
+							<h3 class="box-title">Default Box Example</h3>
+							<div class="box-tools pull-right">
+								<!-- Buttons, labels, and many other things can be placed here! -->
+								<!-- Here is a label for example -->
+								<span class="label label-primary">Label</span>
+							</div><!-- /.box-tools -->
+						</div><!-- /.box-header -->
+						<div class="box-body">
+							<!--<div ng-view></div>-->
+							<ng-include src="'./partials/mapMainBox.html'"></ng-include>
+							<ng-include src="'./partials/mapLayersList.html'"></ng-include>
+							<ng-include src="'./partials/mapSupplement.html'"></ng-include>
+						</div><!-- /.box-body -->
+						<div class="box-footer">
+							The footer of the box
+						</div><!-- box-footer -->
+					</div><!-- /.box -->
+				</div>
 			</div>
 			<!--//.content-wrapper-->
 
-			<div class="sidebar-wrapper">
-				<ng-include src="'./partials/sideLocationList.html'"></ng-include>
-			</div>
-			<!--//.sidebar-wrapper-->
+			<!-- The Right Sidebar -->
+			<aside class="control-sidebar control-sidebar-light">
+<!--				<ng-include src="'./partials/lmsControlPanel.html'"></ng-include>-->
+			</aside>
+			<div class="control-sidebar-bg"></div>
 		</div>
 		<!-- //.wrapper -->
+
+		<footer class="main-footer">
+			<div class="pull-right hidden-xs">
+				<b>Version</b> 0.1
+			</div>
+			<strong>Copyright © 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+		</footer>
 	</body>
 </html>
