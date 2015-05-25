@@ -48,5 +48,5 @@ var controlOverview = new ol.control.OverviewMap({
 	],
 	collapseLabel: '\u00BB',
 	label: '\u00AB',
-	collapsed: false
+	collapsed: true
 });
