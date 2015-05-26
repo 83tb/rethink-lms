@@ -20,11 +20,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <div class="col-md-9 col-sm-8 col-xs-12">
 	<div class="info-box" ng-controller="lmsControlPanel">
 		<!-- Apply any bg-* class to to the icon to color it -->
-		<span class="info-box-icon" ng-class="adjustment.disabled ? 'bg-gray disabled' : 'bg - aqua'"><i class="fa fa-tachometer"></i></span>
+		<span class="info-box-icon" ng-class="adjustment.isDisabled ? 'bg-gray disabled' : 'bg - aqua'"><i class="fa fa-tachometer"></i></span>
 		<div class="info-box-content">
-			<form id="lmsControlPanel">
-				<fieldset id="lampsControls" data-ng-disabled="adjustment.disabled">
-					<!--
+			<md-content id="lmsControlPanel">
+				<h3></h3>
+				<div layout>
+					<label for="lampFlag">Flag: </label>
+					<md-radio-group ng-disabled="adjustment.isDisabled" ng-model="adjustment.flag" class="md-primary">
+						<md-radio-button ng-disabled="adjustment.isDisabled" name="lampFlag" class="md-primary" value="working_flag">Working</md-radio-button>
+						<md-radio-button ng-disabled="adjustment.isDisabled" name="lampFlag" class="md-primary" value="presence_flag">Presence</md-radio-button>
+						<md-radio-button ng-disabled="adjustment.isDisabled" name="lampFlag" class="md-primary" value="special_flag">Special</md-radio-button>
+					</md-radio-group>
+
+					<label for="lampStatus">Lamp:</label>
+					<md-switch name="lampStatus" id="lampStatus" class="md-primary" ng-disabled="adjustment.isDisabled" ng-model="adjustment.driver_value" ng-true-value="100" ng-false-value="0" aria-label="Lamp On/Off">Lamp: {{ adjustment.driver_value}}</md-switch>
+
+					<div flex="10" layout layout-align="center center">
+						<span class="md-body-1"><label for="driver_value">Brightness: {{ adjustment.driver_value | number : 0 }}%</label></span>
+					</div>
+					<md-slider flex md-discrete ng-disabled="adjustment.isDisabled" ng-model="adjustment.driver_value" step="1" min="1" max="100" aria-label="% brightness" id="brightSlider" class="md-primary"></md-slider>
+					<div flex="20" layout layout-align="center center">
+						<input type="number" ng-disabled="adjustment.isDisabled" ng-model="adjustment.driver_value" aria-label="% brightness" aria-controls="brightSlider">
+					</div>
+
+					<section layout="row" layout-sm="column" layout-align="center center">
+						<md-button ng-disabled="adjustment.isDisabled" class="md-primary" ng-click="setAdjs()">Set!</md-button>
+					</section>
+				</div>
+			</md-content>
+
+			<!--
 					id
 					identifier
 					actual_driver_value
@@ -45,36 +70,76 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 					hardware.type
 					location.type
 					location.coordinates
-					-->
-					
-					<!-- use http://www.codeproject.com/Tips/854988/Create-an-ON-OFF-switch-using-Angular-JS-and-FontA or some angular strict not Icheck, -->
-					<label for="lampFlag">Flag: </label>
-					<input type="radio" data-icheck name="lampFlag" class="form-control" ng-model="adjustment.flag" value="working_flag" data-ng-disabled="adjustment.disabled"/>Working
-					<input type="radio" data-icheck name="lampFlag" class="form-control" ng-model="adjustment.flag" value="presence_flag" data-ng-disabled="adjustment.disabled"/>Presence
-					<input type="radio" data-icheck name="lampFlag" class="form-control" ng-model="adjustment.flag" value="special_flag" data-ng-disabled="adjustment.disabled"/>Special
-					
-					<!-- chenge to radio???? -->
-					<label for="lampStatus">Lamp:</label>
-					<select name="lampStatus" id="lampStatus" class="form-control" data-role="slider"  ng-model="adjustment.driver_value">
-						<option ng-value="{{ adjustment.driver_value}}">On</option>
-						<option value="0">Off</option>
-					</select>
+			-->
 
-					<label for="driver_value">Brightness: {{ adjustment.driver_value | number : 0 }}%</label>
-					<!--<input type="range" name="driver_value" id="driver_value" class="form-control lampSlider driverValue" value="0" min="0" max="1" step="0.01" ng-model="adjustment.driver_value"  />-->
-					<input slider slider-tooltip="hide" data-slider-id="aqua" type="range" name="driver_value"  data-ng-disabled="adjustment.disabled" id="driver_value" class="form-control lampSlider driverValue" value="0" min="0" max="100" step="1" ng-model="adjustment.driver_value"  />
-					<button type="submit" class="btn btn-primary" ng-click="setAdjs()">Set!</button>
-				</fieldset>
-				<!--				adjustment.driver_value
-								adjustment.flag
-				
-								Time
-								Day
-								Repeat event
-								From - to Date
-								From - to Time
-								days of week-->
+			<!--				adjustment.driver_value
+							adjustment.flag
+			
+							Time
+							Day
+							Repeat event
+							From - to Date
+							From - to Time
+							days of week-->
 			</form>
 		</div><!-- /.info-box-content -->
 	</div><!-- /.info-box -->
 </div><!-- /.col -->
+<!--				adjustment.driver_value
+				adjustment.flag
+
+				Time
+				Day
+				Repeat event
+				From - to Date
+				From - to Time
+				days of week-->
+<!--
+
+
+
+
+			<form id="lmsControlPanel">
+				<fieldset id="lampsControls" data-ng-disabled="adjustment.disabled">
+<!--
+id
+identifier
+actual_driver_value
+wanted_l_level
+working_flag
+working_l_setting
+presence_flag
+presence_l_setting
+special_flag
+special_l_setting
+change_required
+group
+hardware.building
+hardware.protocol
+hardware.is_sensor
+hardware.computer_ip
+hardware.address
+hardware.type
+location.type
+location.coordinates
+
+
+use http://www.codeproject.com/Tips/854988/Create-an-ON-OFF-switch-using-Angular-JS-and-FontA or some angular strict not Icheck
+<label for="lampFlag">Flag: </label>
+<input type="radio" data-icheck name="lampFlag" class="form-control" ng-model="adjustment.flag" value="working_flag" data-ng-disabled="adjustment.disabled"/>Working
+<input type="radio" data-icheck name="lampFlag" class="form-control" ng-model="adjustment.flag" value="presence_flag" data-ng-disabled="adjustment.disabled"/>Presence
+<input type="radio" data-icheck name="lampFlag" class="form-control" ng-model="adjustment.flag" value="special_flag" data-ng-disabled="adjustment.disabled"/>Special
+
+<label for="lampStatus">Lamp:</label>
+<select name="lampStatus" id="lampStatus" class="form-control" data-role="slider"  ng-model="adjustment.driver_value">
+	<option ng-value="{{ adjustment.driver_value}}">On</option>
+	<option value="0">Off</option>
+</select>
+
+<label for="driver_value">Brightness: {{ adjustment.driver_value | number : 0 }}%</label>
+<!--<input type="range" name="driver_value" id="driver_value" class="form-control lampSlider driverValue" value="0" min="0" max="1" step="0.01" ng-model="adjustment.driver_value"  />-->
+<!--<input slider slider-tooltip="hide" data-slider-id="aqua" type="range" name="driver_value"  data-ng-disabled="adjustment.disabled" id="driver_value" class="form-control lampSlider driverValue" value="0" min="0" max="100" step="1" ng-model="adjustment.driver_value"  />-->
+<!--<button type="submit" class="btn btn-primary" ng-click="setAdjs()">Set!</button>-->
+<!--</fieldset>-->
+
+<!--</form>-->

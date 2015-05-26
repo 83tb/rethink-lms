@@ -38,16 +38,16 @@
 
 app.factory('adjsServis', ['$rootScope', function ($rootScope) {
 		var adjustments = {
-			"disabled": true,
+			"isDisabled": true,
 			"driver_value": 80,
 			"flag": 'special_flag',
 			"enable": function () {
-				adjustments.disabled = false;
+				adjustments.isDisabled = false;
 				$rootScope.$broadcast('adjustmentsEnabled');
 				console.log("Adjs form enable");
 			},
 			"disable": function () {
-				adjustments.disabled = true;
+				adjustments.isDisabled = true;
 				$rootScope.$broadcast('adjustmentsDisabled');
 				console.log("Adjs form disable");
 			},

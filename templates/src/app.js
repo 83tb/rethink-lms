@@ -24,8 +24,7 @@ var app = angular.module('lmsUI', [
 //      'powerLedUI.services',
 //      'powerLedUI.directives',
 //      'powerLedUI.controllers'
-	'angular-icheck',
-	'ui.bootstrap-slider'
+	'ngMaterial'
 ]);
 
 app.run(function ($rootScope) {
@@ -33,6 +32,14 @@ app.run(function ($rootScope) {
 	$rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
 		$rootScope.title = currentRoute.title;
 	});
+});
+
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue')
+    .accentPalette('cyan')
+		.warnPalette('deep-orange')
+//		.backgroundPalette('blue-grey')
 });
 
 //app.config(['$routeProvider', function ($routeProvider) {
