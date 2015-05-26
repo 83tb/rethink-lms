@@ -707,6 +707,8 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 						//
 //						map.removeLayer(layer);
 //						map.addLayer(layer);
+//break;
+//continue;
 					}
 					if (layer.get('markers') && layer.get('name') !== 'markers') {
 						layer.set('name', 'markers');

@@ -1,4 +1,5 @@
 {
-  "directory": "app/lib/",
-  "analytics": true
+  "directory": "src/lib/",
+  "analytics": true,
+  "interactive": true
 }

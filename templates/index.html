@@ -23,41 +23,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<title ng-bind="$root.appName + ' - ' + $root.title">lmsUI</title>
 		<!-- To do: set title to match current location if from list! -->
 
-		<!--<link rel="stylesheet" href="./js/lib/bower_components/openlayers3/build/ol.css" type="text/css">-->
-		<link rel="stylesheet" href="./js/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.css" type="text/css">
-		<link rel="stylesheet" href="./js/lib/angular-openlayers-directive/dist/angular-openlayers-directive.css" type="text/css">
+
+<!-- reset css -->
+
+		<link rel="stylesheet" href="./src/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.css" type="text/css">
+		<link rel="stylesheet" href="./src/lib/angular-openlayers-directive/dist/angular-openlayers-directive.css" type="text/css">
 		<link rel="stylesheet" href="./css/main.css" type="text/css">
 
-    <!--<script src="./js/lib/bower_components/openlayers3/build/ol.js"></script>-->
-    <script src="./js/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.js"></script>
+
+<!--
+
+Move js to body END!!!!!!
+
+
+-->
+
+
+    <script src="./src/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol.js"></script>
     <!--<script src="./js/lib/angular-openlayers-directive/bower_components/openlayers3/build/ol-debug.js"></script>-->
-    <script src="./js/lib/angular-openlayers-directive/bower_components/angular/angular.min.js"></script>
-    <script src="./js/lib/angular-openlayers-directive/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-		<script src="./js/lib/angular-openlayers-directive/bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
-		<script src="./js/lib/angular-openlayers-directive/dist/angular-openlayers-directive.js" ></script>
+    <script src="./src/lib/angular-openlayers-directive/bower_components/angular/angular.min.js"></script>
+    <script src="./src/lib/angular-openlayers-directive/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="./src/lib/angular-openlayers-directive/bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
+		<script src="./src/lib/angular-openlayers-directive/dist/angular-openlayers-directive.js" ></script>
 
 		<!--AdminLTE Style-->
-		<link href="js/lib/Font-Awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-		<script src="js/lib/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
-		<link href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/lib/AdminLTE/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-		<link href="js/lib/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
-		<link href="js/lib/AdminLTE/dist/css/skins/skin-blue.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/lib/AdminLTE/dist/js/app.min.js" type="text/javascript"></script>
+		<link href="src/lib/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+		<script src="src/lib/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
+		<link href="src/lib/admin-lte/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<script src="src/lib/admin-lte/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+		<link href="src/lib/admin-lte/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+		<link href="src/lib/admin-lte/dist/css/skins/skin-blue.min.css" rel="stylesheet" type="text/css"/>
+		<script src="src/lib/admin-lte/dist/js/app.min.js" type="text/javascript"></script>
 		<!-- plugins -->
-		<link href="js/lib/AdminLTE/plugins/iCheck/flat/aero.css" rel="stylesheet" type="text/css"/>
-		<script src="js/lib/AdminLTE/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-		<link href="js/lib/AdminLTE/plugins/bootstrap-slider/slider.css" rel="stylesheet" type="text/css"/>
-		<script src="js/lib/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>
+		<link href="src/lib/admin-lte/plugins/iCheck/flat/aero.css" rel="stylesheet" type="text/css"/>
+		<script src="src/lib/admin-lte/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+		<link href="src/lib/admin-lte/plugins/bootstrap-slider/slider.css" rel="stylesheet" type="text/css"/>
+		<script src="src/lib/admin-lte/plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>
 
-    <script src="./js/app.js"></script>
-    <script src="./js/panelControler.js"></script>
-    <script src="./js/styleFunction.js"></script>
-    <script src="./js/olControls.js"></script>
-		<script src="js/luxMeter.js" type="text/javascript"></script>
+    <script src="./src/app.js"></script>
+    <script src="./src/controllers/panelController.js"></script>
+    <script src="./src/olExt/styleFunction.js"></script>
+    <script src="./src/olExt/olControls.js"></script>
+		<script src="./src/directives/luxMeter.js" type="text/javascript"></script>
 		<!-- plugins -->
-		<script src="js/angular-icheck.js" type="text/javascript"></script>
-		<script src="js/lib/angular-bootstrap-slider/slider.js" type="text/javascript"></script>
+		<script src="./src/directives/angular-icheck.js" type="text/javascript"></script>
+		<script src="src/lib/angular-bootstrap-slider/slider.js" type="text/javascript"></script>
 		
 
   </head>
@@ -72,9 +82,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </a>
 				<nav class="navbar" role="navigation" style="border: 0;max-height: 50px;">
           <!-- Sidebar toggle button-->
-					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+					<span class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
-          </a>
+          </span>
+          <!--
+          
+          
+          If you can't deliver a page on mouse click, it's not a hyperlink
+          <span class="link" role="link"></span>
+          
+          also add alt=" to img ;)
+          
+          
+          
+          
+          
+          -->
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
