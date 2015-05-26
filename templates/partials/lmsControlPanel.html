@@ -20,33 +20,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <div class="col-md-9 col-sm-8 col-xs-12">
 	<div class="info-box" ng-controller="lmsControlPanel">
 		<!-- Apply any bg-* class to to the icon to color it -->
-		<span class="info-box-icon" ng-class="adjustment.isDisabled ? 'bg-gray disabled' : 'bg - aqua'"><i class="fa fa-tachometer"></i></span>
+		<span class="info-box-icon" ng-class="adj.isDisabled.form ? 'bg-gray disabled' : 'bg-aqua'"><i class="fa fa-tachometer"></i></span>
 		<div class="info-box-content">
 			<md-content id="lmsControlPanel">
-				<h3></h3>
-				<div layout>
-					<label for="lampFlag">Flag: </label>
-					<md-radio-group ng-disabled="adjustment.isDisabled" ng-model="adjustment.flag" class="md-primary">
-						<md-radio-button ng-disabled="adjustment.isDisabled" name="lampFlag" class="md-primary" value="working_flag">Working</md-radio-button>
-						<md-radio-button ng-disabled="adjustment.isDisabled" name="lampFlag" class="md-primary" value="presence_flag">Presence</md-radio-button>
-						<md-radio-button ng-disabled="adjustment.isDisabled" name="lampFlag" class="md-primary" value="special_flag">Special</md-radio-button>
-					</md-radio-group>
+				<section layout>
+					<div flex layout>
+						<div flex="10" layout layout-align="center center" >
+							<label for="lampFlag">Flag: </label>
+						</div>
+						<md-radio-group flex layout layout-align="center center" ng-disabled="adj.isDisabled.form" ng-model="adj.flag" class="md-primary">
+							<md-radio-button ng-disabled="adj.isDisabled.working" name="lampFlag" class="md-primary" value="working_flag">Working</md-radio-button>
+							<md-radio-button ng-disabled="adj.isDisabled.presence" name="lampFlag" class="md-primary" value="presence_flag">Presence</md-radio-button>
+							<md-radio-button ng-disabled="adj.isDisabled.special" name="lampFlag" class="md-primary" value="special_flag">Special</md-radio-button>
+						</md-radio-group>
+					</div>
 
-					<label for="lampStatus">Lamp:</label>
-					<md-switch name="lampStatus" id="lampStatus" class="md-primary" ng-disabled="adjustment.isDisabled" ng-model="adjustment.driver_value" ng-true-value="100" ng-false-value="0" aria-label="Lamp On/Off">Lamp: {{ adjustment.driver_value}}</md-switch>
+					<div flex layout>
+						<div flex="15" layout layout-align="center center" >
+							<label for="lampStatus">Lamp:</label>
+						</div>
+						<md-switch flex name="lampStatus" id="lampStatus" class="md-primary" ng-disabled="adj.isDisabled.form" ng-model="adj.driver_state" ng-change="updateState(adj.driver_state)" ng-true-value="'On'" ng-false-value="'Off'" aria-label="Lamp On/Off"> {{ adj.driver_state}}</md-switch>
+					</div>
+				</section>
 
+				<section layout>
+					<div flex="15" layout layout-align="center center">
+						<label for="driver_value">Brightness: </label>
+					</div>
+					<md-slider flex md-discrete ng-disabled="adj.isDisabled.form" ng-model="adj.driver_value" ng-change="updateState()" step="1" min="0" max="100" aria-label="% brightness" id="brightSlider" class="md-primary"></md-slider>
 					<div flex="10" layout layout-align="center center">
-						<span class="md-body-1"><label for="driver_value">Brightness: {{ adjustment.driver_value | number : 0 }}%</label></span>
+						<input type="number" ng-disabled="adj.isDisabled.form" ng-model="adj.driver_value" aria-label="% brightness" aria-controls="brightSlider">
 					</div>
-					<md-slider flex md-discrete ng-disabled="adjustment.isDisabled" ng-model="adjustment.driver_value" step="1" min="1" max="100" aria-label="% brightness" id="brightSlider" class="md-primary"></md-slider>
-					<div flex="20" layout layout-align="center center">
-						<input type="number" ng-disabled="adjustment.isDisabled" ng-model="adjustment.driver_value" aria-label="% brightness" aria-controls="brightSlider">
-					</div>
+				</section>
 
-					<section layout="row" layout-sm="column" layout-align="center center">
-						<md-button ng-disabled="adjustment.isDisabled" class="md-primary" ng-click="setAdjs()">Set!</md-button>
-					</section>
-				</div>
+				<section layout="row" layout-sm="column" layout-align="center center">
+					<md-button ng-disabled="adj.isDisabled.form" class="md-primary" ng-click="setAdjs()">Set!</md-button>
+				</section>
 			</md-content>
 
 			<!--

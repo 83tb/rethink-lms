@@ -38,16 +38,24 @@
 
 app.factory('adjsServis', ['$rootScope', function ($rootScope) {
 		var adjustments = {
-			"isDisabled": true,
-			"driver_value": 80,
+			"isDisabled": {
+				"form": true,
+				"special": true,
+				"working": true,
+				"presence": true,
+			},
 			"flag": 'special_flag',
+			"driver_value": 0,
+			"driver_state": 'Off',
 			"enable": function () {
-				adjustments.isDisabled = false;
+				adjustments.isDisabled.form = false;
+				adjustments.isDisabled.special = false;
 				$rootScope.$broadcast('adjustmentsEnabled');
 				console.log("Adjs form enable");
 			},
 			"disable": function () {
-				adjustments.isDisabled = true;
+				adjustments.isDisabled.form = true;
+				adjustments.isDisabled.special = true;
 				$rootScope.$broadcast('adjustmentsDisabled');
 				console.log("Adjs form disable");
 			},
@@ -61,22 +69,37 @@ app.factory('adjsServis', ['$rootScope', function ($rootScope) {
 
 app.controller('lmsControlPanel', ['$scope', 'adjsServis', function ($scope, adjsServis) {
 		var updateAdjs = function () {
-			$scope.adjustment = adjsServis;
+			$scope.adj = adjsServis;
+			updateState();
 		};
+		var updateState = function (state) {
+			if (state === undefined) {
+				state = false;
+				if ($scope.adj.driver_value > 0) {
+					$scope.adj.driver_state = 'On';
+				}else{
+					$scope.adj.driver_state = 'Off';
+				}
+				return;
+			}
+			if (state === "Off") {
+				$scope.adj.driver_value = 0;
+				return;
+			}else if (state === "On" && $scope.adj.driver_value === 0) {
+				$scope.adj.driver_value++;
+			}
+		}
+
 
 		$scope.$on('adjustmentsEnabled', function () {
 			//$scope.$watch('adjustment', function () {
 			console.log("$scope.adjsServis just changed!!!");
-			$scope.$apply(
-							updateAdjs()
-							);
-			console.log($scope.adjustment);
+			$scope.$apply(updateAdjs());
+			console.log($scope);
 		});
 
 		updateAdjs();
 
-//		$scope.$watch('adjustment', function () {
-//			console.log($scope.adjustment);
-//		}, true);
-		$scope.setAdjs = adjsServis.setAdjs
+		$scope.setAdjs = adjsServis.setAdjs;
+		$scope.updateState = updateState;
 	}]);
