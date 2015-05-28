@@ -52,17 +52,17 @@ var styleFunction = (function () {
 					color: styleSet.lineColor, //[80, 192, 233, 1], //'#50C0E9'
 					width: styleSet.width
 				}),
-				image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-//				anchor: [0.5, 46],
-					anchorXUnits: 'fraction',
-					anchorYUnits: 'pixels',
-					opacity: 0.75,
-					src: 'data/light-bulb-0-32x32.png',
-//				src: 'data/shop.svg',
-//				img: $('#SVGIcon'),
-					rotation: -50,
-					rotateWithView: true
-				})),
+//				image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+////				anchor: [0.5, 46],
+//					anchorXUnits: 'fraction',
+//					anchorYUnits: 'pixels',
+//					opacity: 0.75,
+//					src: 'data/light-bulb-0-32x32.png',
+////				src: 'data/shop.svg',
+////				img: $('#SVGIcon'),
+//					rotation: -50,
+//					rotateWithView: true
+//				})),
 				image: new ol.style.Circle({
 					radius: styleSet.width * 2,
 					fill: new ol.style.Fill({
@@ -73,17 +73,17 @@ var styleFunction = (function () {
 						width: styleSet.width / 3
 					})
 				}),
-								text: new ol.style.Text({
-									font: '12px Calibri,sans-serif',
-									text: label,
-									fill: new ol.style.Fill({
-										color: 'red'
-									}),
-									stroke: new ol.style.Stroke({
-										color: 'black',
-										width: 2
-									})
-								}),
+				text: new ol.style.Text({
+					font: '12px Calibri,sans-serif',
+					text: label,
+					fill: new ol.style.Fill({
+						color: 'red'
+					}),
+					stroke: new ol.style.Stroke({
+						color: 'black',
+						width: 2
+					})
+				}),
 				zIndex: Infinity
 			})];
 	};
@@ -92,20 +92,40 @@ var styleFunction = (function () {
 	return function (feature, resolution) {
 //		console.log('STYLING feature.getProperties()')
 //		console.log(feature.getProperties())
-//		console.log('feature.get(actual_driver_value)');
-//		console.log(feature.get('actual_driver_value'));
+		console.log('feature.get(actual_driver_value)');
+		console.log(feature.get('actual_driver_value'));
 		var blue = 255 - feature.get('actual_driver_value');
-		//[205, 220, blue, 1]
+		console.log([205, 220, blue, 1]);
 		return drawStyle(styles(blue), feature.get('identifier'));
 	};
 })();
 
 var styleFunctionS = (function () {
 	return function (feature, resolution) {
+		var styleSet = {
+			bgColor: [205, 220, 1, 1],
+			lineColor: [80, 192, 233, 1],
+			width: 6
+		};
 		var colorBreath = function () {
 			return [255, 255, 255, 0];
 		};
-		return [new ol.style.Style({
+		return [
+			// style below default style
+			new ol.style.Style({
+				stroke: new ol.style.Stroke({
+					color: 'pink',
+					width: 4
+				}),
+				image: new ol.style.Circle({
+					radius: styleSet.width * 2.5,
+					stroke: new ol.style.Stroke({
+						color: 'pink',
+						width: 7
+					})
+				})
+			}),
+			new ol.style.Style({
 				fill: new ol.style.Fill({
 					color: 'grey'
 				}),
@@ -113,28 +133,39 @@ var styleFunctionS = (function () {
 					color: colorBreath(), //'red',
 					width: 2
 				}),
-				image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-					anchor: [0.5, 46],
-					anchorXUnits: 'fraction',
-					anchorYUnits: 'pixels',
-					opacity: 0.75,
-					src: 'data/light-bulb-1-32x32.png',
-//								src: 'data/shop.svg',
-//								img: $('#SVGIcon'),
-					rotation: 50,
-					rotateWithView: true
-				})),
-				text: new ol.style.Text({
-					font: '12px Calibri,sans-serif',
-					text: feature.get('identifier'),
+//				image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+//					anchor: [0.5, 46],
+//					anchorXUnits: 'fraction',
+//					anchorYUnits: 'pixels',
+//					opacity: 0.75,
+//					src: 'data/light-bulb-1-32x32.png',
+////								src: 'data/shop.svg',
+////								img: $('#SVGIcon'),
+//					rotation: 50,
+//					rotateWithView: true
+//				})),
+				image: new ol.style.Circle({
+					radius: styleSet.width * 2,
 					fill: new ol.style.Fill({
-						color: 'red'
+						color: styleSet.bgColor
 					}),
 					stroke: new ol.style.Stroke({
-						color: 'black',
-						width: 2
+						color: styleSet.lineColor,
+						width: styleSet.width / 3
 					})
-				})
-			})];
+				}),
+//				text: new ol.style.Text({
+//					font: '12px Calibri,sans-serif',
+//					text: feature.get('identifier'),
+//					fill: new ol.style.Fill({
+//						color: 'red'
+//					}),
+//					stroke: new ol.style.Stroke({
+//						color: 'black',
+//						width: 2
+//					})
+//				})
+			})
+		];
 	};
 })();

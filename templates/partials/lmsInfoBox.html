@@ -17,9 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
-<div class="row">
-	<ng-include src="'./partials/lmsControlPanel.html'"></ng-include>
-	<div class="col-md-3 col-sm-4 col-xs-12">
+<div layout="row" layout-margin layout-sm="column" class="row" >
+	<div flex flex-order-sm="2" >
+		<ng-include src="'./partials/lmsControlPanel.html'"></ng-include>
+	</div>
+	<div flex="33" flex-sm="100" flex-order-sm="1" >
 		<div class="info-box" ng-controller="lmsLuxMeter">
 			<!-- Apply any bg-* class to to the icon to color it -->
 			<span class="info-box-icon bg-red"><i class="fa fa-mobile"></i></span>

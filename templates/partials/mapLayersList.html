@@ -17,18 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
-<form>
-	<ul>
-		<li ng-repeat="layer in layers">
-			<label><span class="layer-{{layer.active}}"></span>
-				<input type="radio" ng-model="layer.active" value="{{layer.active}}">
-				{{layer.title}}
-			</label>
-		</li>
-		<li ng-repeat="layer in layers">
-			<input type="checkbox" ng-model="layer.active">
-			<span class="layer-{{layer.active}}">{{layer.title}}</span>
-		</li>
-	</ul>
-	<!--{{ olLayers | json }}-->
-</form>
+<section layout="row" layout-sm="column" layout-align="center center">
+	<md-button ng-repeat="layer in layers" class="md-button md-raised" ng-click="toggleLayer(layer)" ng-class="layer.active ? 'md-primary' : ''">{{layer.title}}</md-button>
+</section>

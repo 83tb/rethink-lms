@@ -159,14 +159,19 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 //			//lampsLayer: {},
 			markers: []
 		});
+		$scope.toggleLayer = function(layer) {
+			// just a tmp solution
+			layer.active = !layer.active;
+		}
 
 		$scope.setLampsLayer = function (data) {
 			// we don't need this any more(?)
 			console.log('setLampsLayer data');
 			console.log(data);
 
-			if (!$scope.appHelpers.isResponse(data))
+			if (!$scope.appHelpers.isResponse(data)) {
 				return;
+			}
 
 			//
 			// get source get features if they exist

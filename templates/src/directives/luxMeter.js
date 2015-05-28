@@ -24,7 +24,6 @@ app.controller('lmsLuxMeter', ['$scope', function($scope){
 
 			window.addEventListener('devicelight', function (e) {
 				var luxRaw = e.value.toString();
-				console.log(luxRaw.length);
 				if (luxRaw.length < 4) {
 					lux = '';
 					for (i = 0; i < (4 - luxRaw.length); i++)
@@ -41,6 +40,8 @@ app.controller('lmsLuxMeter', ['$scope', function($scope){
 					}
 				}
 				screenValue = lux.replace('1', ' 1');
-				$scope.currentLuxVal = lux;
+				$scope.$apply(function(){
+					$scope.currentLuxVal = lux;
+				});
 			});
 }]);
