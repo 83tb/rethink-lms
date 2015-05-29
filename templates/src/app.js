@@ -34,12 +34,15 @@ app.run(function ($rootScope) {
 	});
 });
 
-app.config(function($mdThemingProvider) {
-  $mdThemingProvider.theme('default')
-    .primaryPalette('blue')
-    .accentPalette('cyan')
-		.warnPalette('deep-orange')
+app.config(function ($mdThemingProvider, $interpolateProvider) {
+	$mdThemingProvider.theme('default')
+					.primaryPalette('blue')
+					.accentPalette('cyan')
+					.warnPalette('deep-orange');
 //		.backgroundPalette('blue-grey')
+	$interpolateProvider
+					.startSymbol('{[{')
+					.endSymbol('}]}');
 });
 
 //app.config(['$routeProvider', function ($routeProvider) {
@@ -159,7 +162,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 //			//lampsLayer: {},
 			markers: []
 		});
-		$scope.toggleLayer = function(layer) {
+		$scope.toggleLayer = function (layer) {
 			// just a tmp solution
 			layer.active = !layer.active;
 		}
@@ -428,7 +431,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			console.log('on adjustmentsUpdate - $scope.selectedFeatures');
 			console.log($scope.selectedFeatures);
 
-			driver_value = Math.round(255 * parseFloat(adjsServis.driver_value/100));
+			driver_value = Math.round(255 * parseFloat(adjsServis.driver_value / 100));
 			dataSet = [];
 			var prioritySet = function () {
 				switch (adjsServis.flag) {

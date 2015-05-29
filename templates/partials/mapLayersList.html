@@ -18,5 +18,5 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
 <section layout="row" layout-sm="column" layout-align="center center">
-	<md-button ng-repeat="layer in layers" class="md-button md-raised" ng-click="toggleLayer(layer)" ng-class="layer.active ? 'md-primary' : ''">{{layer.title}}</md-button>
+	<md-button ng-repeat="layer in layers" class="md-button md-raised" ng-click="toggleLayer(layer)" ng-class="layer.active ? 'md-primary' : ''">{[{layer.title}]}</md-button>
 </section>

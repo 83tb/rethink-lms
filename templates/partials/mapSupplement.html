@@ -29,17 +29,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	</div>
 
 	<div id="overlaybox" class="info overlay">
-		<div>{{popupFeatureProperties.identifier}}
-			<div ng-show="popupFeatureProperties.presence_flag">{{popupFeatureProperties.presence_l_setting}}</div>
-			<div ng-show="popupFeatureProperties.special_flag">{{popupFeatureProperties.special_l_setting}}</div>
-			<div ng-show="popupFeatureProperties.working_flag">{{popupFeatureProperties.working_l_setting}}</div>
-			{{popupFeatureProperties.group}}
-			{{popupFeatureProperties.virtual_sensor}}
-			{{popupFeatureProperties.hardware}}
-			{{popupFeatureProperties.wanted_l_level}}
-			{{popupFeatureProperties.actual_driver_value}}
-			{{popupFeatureProperties.change_required}}
-			<!--<pre>{{popupFeatureProperties | json}}</pre>-->
+		<div>{[{popupFeatureProperties.identifier}]}
+			<div ng-show="popupFeatureProperties.presence_flag">{[{popupFeatureProperties.presence_l_setting}]}</div>
+			<div ng-show="popupFeatureProperties.special_flag">{[{popupFeatureProperties.special_l_setting}]}</div>
+			<div ng-show="popupFeatureProperties.working_flag">{[{popupFeatureProperties.working_l_setting}]}</div>
+			{[{popupFeatureProperties.group}]}
+			{[{popupFeatureProperties.virtual_sensor}]}
+			{[{popupFeatureProperties.hardware}]}
+			{[{popupFeatureProperties.wanted_l_level}]}
+			{[{popupFeatureProperties.actual_driver_value}]}
+			{[{popupFeatureProperties.change_required}]}
+			<!--<pre>{[{popupFeatureProperties | json}]}</pre>-->
 		</div>
 	</div>
 </div>
