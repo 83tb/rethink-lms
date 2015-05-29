@@ -102,17 +102,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <li class="dropdown messages-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-envelope-o"></i>
-                  <span class="label label-success">{{user.messages}}</span>
+                  <span class="label label-success">{{!user.messages}}</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header">You have {{user.messages}} messages</li>
+                  <li class="header">You have {{!user.messages}} messages</li>
                   <li>
                     <!-- inner menu: contains the actual data -->
                     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
 												<li><!-- start message -->
 													<a href="#">
 														<div class="pull-left">
-															<img ng-src="{{user.img}}" class="img-circle" alt="User Image">
+															<img ng-src="{{!user.img}}" class="img-circle" alt="User Image">
 														</div>
 														<h4>
 															Support Team
@@ -130,16 +130,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-bell-o"></i>
-                  <span class="label label-warning">{{user.notifications}}</span>
+                  <span class="label label-warning">{{!user.notifications}}</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header">You have {{user.notifications}} notifications</li>
+                  <li class="header">You have {{!user.notifications}} notifications</li>
                   <li>
                     <!-- inner menu: contains the actual data -->
                     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
 												<li>
 													<a href="#">
-														<i class="fa fa-users text-aqua"></i> {{user.notifications}} new members joined today
+														<i class="fa fa-users text-aqua"></i> {{!user.notifications}} new members joined today
 													</a>
 												</li>
 											</ul><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
@@ -151,10 +151,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <li class="dropdown tasks-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-flag-o"></i>
-                  <span class="label label-danger">{{user.tasks}}</span>
+                  <span class="label label-danger">{{!user.tasks}}</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header">You have {{user.tasks}} tasks</li>
+                  <li class="header">You have {{!user.tasks}} tasks</li>
                   <li>
                     <!-- inner menu: contains the actual data -->
                     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
@@ -181,16 +181,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img ng-src="{{user.img}}" class="user-image" alt="User Image">
-                  <span class="hidden-xs">{{user.name}}</span>
+                  <img ng-src="{{!user.img}}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">{{!user.name}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img ng-src="{{user.img}}" class="img-circle" alt="User Image">
+                    <img ng-src="{{!user.img}}" class="img-circle" alt="User Image">
                     <p>
-                      {{user.name}}
-                      <small>{{user.role}}</small>
+                      {{!user.name}}
+                      <small>{{!user.role}}</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -232,11 +232,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<!-- user panel (Optional) -->
 						<div class="user-panel">
 							<div class="pull-left image">
-								<img ng-src="{{user.img}}" class="img-circle" alt="User Image" />
+								<img ng-src="{{!user.img}}" class="img-circle" alt="User Image" />
 							</div>
 							<div class="pull-left info">
 								<p>User Name</p>
-								<a href="#"><i class="fa fa-circle text-success"></i>{{user.status}}</a>
+								<a href="#"><i class="fa fa-circle text-success"></i>{{!user.status}}</a>
 							</div>
 						</div><!-- /.user-panel -->
 
@@ -264,9 +264,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 					</section><!-- /.sidebar -->
 
-					<video width="230px" controls autoplay>
-						<source src="http://localhost:8080/stream.ogg"  type="video/ogg" />
-					</video>
+					<img width="230px" src="http://10.1.2.51:8081" />
 
 				</aside><!-- /.main-sidebar -->
 			</div>

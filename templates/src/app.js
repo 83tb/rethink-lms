@@ -243,7 +243,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		$scope.$on("centerUrlHash", function (event, centerHash) {
 			// set location by name and set location active!
 			//set from url&r=rotation =>  Math.PI / rotation
-			var rotation = $location.search().r
+			var rotation = $location.search().r;
 			if (rotation) {
 				$scope.defaults.view.rotation = rotation * Math.PI / 180;
 			}
