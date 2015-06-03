@@ -140,10 +140,13 @@ class LampsHandler(BaseHandler):
         else:
             lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.insert(lamp).run(self.db))
+
+        self.write(dict(response=lamps))
         
     @gen.coroutine
     def patch(self):
         resource_doc = json.loads(self.request.body)
+
 
         if isinstance(resource_doc, list):
             for lamp_json in resource_doc:
@@ -153,6 +156,8 @@ class LampsHandler(BaseHandler):
         else:
             lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.update(lamp).run(self.db))
+
+        self.write(dict(response=lamps))
 
 
 class LampFeedHandler(BaseHandler):

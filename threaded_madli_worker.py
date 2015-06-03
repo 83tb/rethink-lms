@@ -41,7 +41,7 @@ def slow_commands():
     while True:
         if not lock.locked():
             with lock:
-                task = slow.reads.pop()
+                task = slow_reads.pop()
                 if task:
                     # execute task
                     # write to rethink

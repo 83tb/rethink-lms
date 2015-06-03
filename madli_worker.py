@@ -23,4 +23,15 @@ for feed in cursor:
 
 
 
+# futures, two threads, one reading from a list
+# second writing from cursor to the list
+
+# logic
+# get every task from the list that is not read
+# if there is no task in the list that write, do one read task
+
+# list can be implemented as an rethinkdb object/table
+# one task i only adding so no problem
+# one task is executing and marking objects are done
+
 

@@ -91,7 +91,7 @@ old_changed_lamp['actual_driver_value'] = 992
 old_another_lamp['actual_driver_value'] = 993
 
 print "patching multi!"
-requests.patch(url=url,  data=json.dumps([old_changed_lamp, old_another_lamp]))
+print requests.patch(url=url,  data=json.dumps([old_changed_lamp, old_another_lamp]))
 
 
 lamps = requests.get(url)
