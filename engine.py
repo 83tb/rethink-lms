@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import  logging
+import logging
 from tornado.ioloop import IOLoop
 import tornado.web
 import os.path
@@ -15,15 +15,14 @@ from tornado.escape import json_decode
 define("port", default=8888, help="run on the given port", type=int)
 define("debug", default=True, help="run in debug mode")
 
-def setup_db(db_name="engine", tables=['lamps',]):
+
+def setup_db(db_name="engine", tables=['lamps', ]):
     connection = r.connect(host="localhost")
     try:
         r.db_create(db_name).run(connection)
         for tbl in tables:
             r.db(db_name).table_create(tbl, durability="hard").run(connection)
         logging.info('Database setup completed.')
-
-
 
     except r.RqlRuntimeError:
         logging.warn('Database/Table already exists.')
@@ -33,12 +32,9 @@ def setup_db(db_name="engine", tables=['lamps',]):
         connection.close()
 
 
-
 class EngineApp(tornado.web.Application):
 
     def __init__(self, db):
-
-
 
         handlers = [
             (r"/", MainHandler),
@@ -72,6 +68,7 @@ class MainHandler(BaseHandler):
     def get(self):
         return self.render('index.html')
 
+
 class GeoLampsHandler(BaseHandler):
 
     @gen.coroutine
@@ -79,8 +76,7 @@ class GeoLampsHandler(BaseHandler):
         resource_doc = self.request.body
 
         bbox_json = json.loads(resource_doc.replace("'", "\""))
-        bbox = r.polygon(bbox_json[0],bbox_json[1],bbox_json[2],bbox_json[3])
-
+        bbox = r.polygon(bbox_json[0], bbox_json[1], bbox_json[2], bbox_json[3])
 
         curs = yield self.lamps.get_intersecting(bbox, index='location').run(self.db)
         lamps = []
@@ -97,8 +93,7 @@ class GeoLampsHandler(BaseHandler):
         resource_doc = self.request.body
 
         bbox_json = json.loads(resource_doc.replace("'", "\""))
-        bbox = r.polygon(bbox_json[0],bbox_json[1],bbox_json[2],bbox_json[3])
-
+        bbox = r.polygon(bbox_json[0], bbox_json[1], bbox_json[2], bbox_json[3])
 
         curs = yield self.lamps.get_intersecting(bbox, index='location').run(self.db)
         lamps = []
@@ -126,8 +121,6 @@ class LampsHandler(BaseHandler):
 
         self.write(dict(response=lamps))
 
-
-
     @gen.coroutine
     def post(self):
         resource_doc = json.loads(self.request.body)
@@ -141,11 +134,9 @@ class LampsHandler(BaseHandler):
             lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.insert(lamp).run(self.db))
 
-        
     @gen.coroutine
     def patch(self):
         resource_doc = json.loads(self.request.body)
-
 
         if isinstance(resource_doc, list):
             for lamp_json in resource_doc:
@@ -155,7 +146,6 @@ class LampsHandler(BaseHandler):
         else:
             lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.update(lamp).run(self.db))
-
 
 
 class LampFeedHandler(BaseHandler):

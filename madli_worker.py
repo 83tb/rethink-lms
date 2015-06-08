@@ -3,7 +3,7 @@
 from madli import *
 
 import rethinkdb as r
-conn = r.connect( "localhost").repl()
+conn = r.connect("localhost").repl()
 
 lamps_table = r.db("engine").table("lamps")
 
@@ -21,8 +21,6 @@ for feed in cursor:
             setDim(lamp['hardware']['address'], lamp['wanted_l_level'])
 
 
-
-
 # futures, two threads, one reading from a list
 # second writing from cursor to the list
 
@@ -33,5 +31,3 @@ for feed in cursor:
 # list can be implemented as an rethinkdb object/table
 # one task i only adding so no problem
 # one task is executing and marking objects are done
-
-

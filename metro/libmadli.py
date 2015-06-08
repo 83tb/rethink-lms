@@ -5,24 +5,23 @@ Place to hold static info about configs
 """
 
 
-
 commands = {
-    'On' : 0,
-    'Off' : 1,
-    'GetRam' : 2,
-    'GetEE' : 3,
-    'SetAddr' : 4,
-    'SetGrp0' : 5,
-    'SetGrp1' : 6,
-    'SetGrp2' : 7,
-    'SetGrp3' : 8,
-    'Lock' : 9,
-    'WriteAddr' : 10,
-    'SetEEAddr' : 11,
-    'SetEEData' : 12,
-    'Test' : 13,
-    'Prefix' : 14,
-    }
+    'On': 0,
+    'Off': 1,
+    'GetRam': 2,
+    'GetEE': 3,
+    'SetAddr': 4,
+    'SetGrp0': 5,
+    'SetGrp1': 6,
+    'SetGrp2': 7,
+    'SetGrp3': 8,
+    'Lock': 9,
+    'WriteAddr': 10,
+    'SetEEAddr': 11,
+    'SetEEData': 12,
+    'Test': 13,
+    'Prefix': 14,
+}
 
 
 st7st4 = {
@@ -50,13 +49,14 @@ st3st0 = {
 
 }
 
+
 def getSt3st0(number):
     return st3st0[number]
+
 
 def getSt7st4(number):
     return st7st4[number]
 
+
 def getCommandNumber(name):
     return commands[name]
-
-
