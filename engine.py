@@ -141,7 +141,6 @@ class LampsHandler(BaseHandler):
             lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.insert(lamp).run(self.db))
 
-        self.write(dict(response=lamps))
         
     @gen.coroutine
     def patch(self):
@@ -157,7 +156,6 @@ class LampsHandler(BaseHandler):
             lamp = json.loads(resource_doc)
             lamps = (yield self.lamps.update(lamp).run(self.db))
 
-        self.write(dict(response=lamps))
 
 
 class LampFeedHandler(BaseHandler):
