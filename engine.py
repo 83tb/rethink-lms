@@ -6,7 +6,6 @@ import tornado.web
 import os.path
 import rethinkdb as r
 from tornado import httpserver
-from time import time
 from tornado import gen
 from tornado.options import define, options, parse_command_line
 import json
