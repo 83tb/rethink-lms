@@ -69,7 +69,11 @@ def worker():
 
         # execute one slow task
         if cmd_low:
-            read_task(task_low)
+            try:
+                read_task(task_low)
+            except Exception, e:
+                logger.error(e)
+
 
 
 
