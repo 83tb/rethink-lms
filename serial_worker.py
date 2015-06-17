@@ -30,17 +30,18 @@ def read_task(task):
 
         logger.debug('Uploaded value was: ' + str(actual_driver_value))
         command_table.get(task['id']).delete().run(conn)
-    except Exception(), e:
+    except Exception, e:
         logger.error('Error: ' + e)
-
+        command_table.get(task['id']).delete().run(conn)
 
 def write_task(task):
     try:
         logger.debug('Trying send fast command')
         call(task['command'], task['lampNumber'], task['address'])
         command_table.get(task['id']).delete().run(conn)
-    except Exception(), e:
+    except Exception, e:
         logger.error('Error: ' + e)
+        command_table.get(task['id']).delete().run(conn)
 
 
 def worker():
@@ -60,19 +61,19 @@ def worker():
             task = task_high
             if task:
                 logger.debug('Detected a task scheduled')
-                try:
-                    write_task(task)
-                except Exception, e:
-                    logger.error(e)
+                #try:
+                write_task(task)
+                #except Exception, e:
+                #    logger.error(e)
 
 
 
         # execute one slow task
         if cmd_low:
-            try:
-                read_task(task_low)
-            except Exception, e:
-                logger.error(e)
+            #try:
+            read_task(task_low)
+        #   except Exception, e:
+        #       logger.error(e)
 
 
 
