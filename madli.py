@@ -39,6 +39,7 @@ def executeCommand(command_string, device_number, memory_range):
             value = shxNR(hexstr, serObj)
         else:
             value = shx(hexstr, serObj)
+            return readCommand(value)
 
 
 def setDim(lamp_number, dim_level):
@@ -49,3 +50,7 @@ def setDim(lamp_number, dim_level):
 def Off(lamp_number, dim_level):
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
+
+def readValue(lamp_number, address):
+    return executeCommand('GetRam', lamp_number, address)
+
