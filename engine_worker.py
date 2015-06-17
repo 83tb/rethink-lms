@@ -47,7 +47,7 @@ def quick_commands():
 
             else:
                 logging.debug('Turning lamp on')
-                command_table.insert(dict(command="SetDim", prio='high',
+                command_table.insert(dict(command="On", prio='high',
                                           lampNumber=lamp['hardware']['address'], address=lamp['wanted_l_level'],
                                           lamp_id=lamp['id'])).run(conn)
 
