@@ -17,7 +17,7 @@ def shx(arg, serObj):
 import serial
 
 
-def executeCommand(command_string, device_number, memory_range):
+def executeCommand(command_string, device_number, memory_range, fast=True):
 
     serObj = serial.Serial('/dev/ttyUSB0',
                            baudrate=4800,
@@ -35,8 +35,8 @@ def executeCommand(command_string, device_number, memory_range):
         # print memory_addres
         hexstr = makeCommand(command_number, 0, device_number, memory_address)
 
-        if command_string == "SetAddr" or command_string == "WriteAddr":
-            value = shxNR(hexstr, serObj)
+        if fast:
+            shxNR(hexstr, serObj)
         else:
             value = shx(hexstr, serObj)
             return readCommand(value)
@@ -51,6 +51,8 @@ def Off(lamp_number, dim_level):
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
 
-def readValue(command, lamp_number, address):
-    return executeCommand(command, lamp_number, range(address, address+1))
-
+def call(command, lamp_number, address):
+    if command == "Off" and command == "SetDim":
+        executeCommand(command, lamp_number, range(address, address+1))
+    else:
+        return executeCommand(command, lamp_number, range(address, address+1), fast=False)
