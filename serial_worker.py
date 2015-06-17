@@ -5,6 +5,7 @@ from madli import *
 
 import logging
 logger = logging.getLogger('serial_worker')
+logger.setLevel(logging.DEBUG)
 format='[%(levelname)s] (%(threadName)-10s) %(message)s'
 hdlr = logging.FileHandler('logs/serial_worker.log')
 hdlr.setFormatter(format)
