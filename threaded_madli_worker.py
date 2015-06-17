@@ -61,42 +61,45 @@ def slow_commands():
         time.sleep(10)
         logging.debug('Waking up!')
 
-        with lock:
-            slow_reads = command_table.run(conn)
-            logging.debug('slow reads: ' + str(slow_reads))
-            if slow_reads:
-                logging.debug('Detected a task scheduled')
-                task = None
-                try:
-                    task = slow_reads.pop()
-                except IndexError:
-                    pass
-
+        cmd = command_table.limit(1).run(conn)
+        
+        
+        try:
+            task = cmd.next()
+        except:
+            pass
+        
+        else:
+            with lock:
                 if task:
-                    logging.debug('Task is: ' + str(task))
+                    logging.debug('Detected a task scheduled')
+                
+                    if task:
+                        logging.debug('Task is: ' + str(task))
 
-                    try:
-                        logging.debug('Trying to read the value')
-                        actual_driver_value = readValue(task['command'], task['lampNumber'], task['address']).get('data1')
-                        lamp = dict(id=task['lamp_id'], actual_driver_value=actual_driver_value)
-                        logging.debug('Uploading value to rethink')
-                        lamps_table.update(lamp).run(conn)
+                        try:
+                            logging.debug('Trying to read the value')
+                            actual_driver_value = readValue(task['command'], task['lampNumber'], task['address']).get('data1')
+                            lamp = dict(id=task['lamp_id'], actual_driver_value=actual_driver_value)
+                            logging.debug('Uploading value to rethink')
+                            lamps_table.update(lamp).run(conn)
 
-                        logging.debug('Uploaded value was: ' + actual_driver_value)
-                    except Exception(), e:
-                        logging.error('Error: ' + e)
+                            logging.debug('Uploaded value was: ' + str(actual_driver_value))
+                            command_table.get(task['id']).delete().run(conn)
+                        except Exception(), e:
+                            logging.error('Error: ' + e)
 
 
 
 
-def writes():
-    logging.debug('Starting')
+def reads():
+    logging.debug('Starting Read Process')
     slow_commands()
     logging.debug('Exiting')
 
 
-def reads():
-    logging.debug('Starting')
+def writes():
+    logging.debug('Starting Write Process')
     quick_commands()
     logging.debug('Exiting')
 
@@ -104,6 +107,7 @@ writes = threading.Thread(name='writes', target=writes)
 reads = threading.Thread(name='reads', target=reads)
 
 writes.start()
+
 reads.start()
 
 

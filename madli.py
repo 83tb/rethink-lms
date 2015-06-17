@@ -51,6 +51,6 @@ def Off(lamp_number, dim_level):
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
 
-def readValue(lamp_number, address):
-    return executeCommand('GetRam', lamp_number, address)
+def readValue(command, lamp_number, address):
+    return executeCommand(command, lamp_number, range(address, address+1))
 
