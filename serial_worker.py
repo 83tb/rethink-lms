@@ -31,7 +31,7 @@ def read_task(task):
         logger.debug('Uploaded value was: ' + str(actual_driver_value))
         command_table.get(task['id']).delete().run(conn)
     except Exception, e:
-        logger.error('Error: ' + e)
+        logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
 
 def write_task(task):
@@ -40,7 +40,7 @@ def write_task(task):
         call(task['command'], task['lampNumber'], task['address'])
         command_table.get(task['id']).delete().run(conn)
     except Exception, e:
-        logger.error('Error: ' + e)
+        logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
 
 
