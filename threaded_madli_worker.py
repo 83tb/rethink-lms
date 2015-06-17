@@ -21,6 +21,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 def quick_commands():
+    global slow_reads
     for feed in cursor:
         logging.debug('New change in Rethink DB detected!')
         with lock:
@@ -44,7 +45,7 @@ def quick_commands():
 
                 if lamp['wanted_l_level'] == 0:
                     logging.debug('Turning lamp off')
-                    # Off(lamp['hardware']['address'], lamp['wanted_l_level'])
+                    Off(lamp['hardware']['address'], lamp['wanted_l_level'])
                 else:
                     logging.debug('Turning lamp on')
                     setDim(lamp['hardware']['address'], lamp['wanted_l_level'])
