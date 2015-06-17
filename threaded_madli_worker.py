@@ -13,7 +13,7 @@ import logging
 import threading
 
 lock = threading.Lock()
-slow_reads = []
+global slow_reads = []
 
 logging.basicConfig(level=logging.DEBUG,
                     format='[%(levelname)s] (%(threadName)-10s) %(message)s',
@@ -54,7 +54,7 @@ def quick_commands():
 
 import time
 def slow_commands():
-
+    global slow_reads
     while True:
         logging.debug('Going to sleep for 10 seconds')
         time.sleep(10)
