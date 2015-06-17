@@ -41,8 +41,8 @@ def worker():
 
     while True:
 
-        cmd_low = command_table.filter(prio='low').limit(1).run(conn)
-        cmd_high = command_table.filter(prio='high').run(conn)
+        cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn)
+        cmd_high = command_table.filter({'prio': 'high'}).run(conn)
 
         try:
             task_low = cmd_low.next()
