@@ -23,8 +23,6 @@ def quick_commands():
 
     for feed in cursor:
         logging.debug('New change in Rethink DB detected!')
-
-        logging.debug('Obtaining lock for a quick command!')
         old_lamp = feed['old_val']
         lamp = feed['new_val']
 
