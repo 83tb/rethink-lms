@@ -155,14 +155,9 @@ class LampFeedHandler(BaseHandler):
 
         while (yield curs.fetch_next()):
             feed = yield curs.next()
-            lamp = {
-                'id': feed['new_val']['id'],
-                'html': tornado.escape.to_basestring(
-                    self.render_string("lamp.html",
-                                       lamp=feed['new_val']))}
-            break
 
-        self.finish(dict(lamps=[lamp]))
+
+        self.finish(dict(lamps=[feed]))
 
 
 @gen.coroutine
