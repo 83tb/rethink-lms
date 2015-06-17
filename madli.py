@@ -52,7 +52,7 @@ def Off(lamp_number, dim_level):
     executeCommand('Off', lamp_number, range(dim_level, dim_level + 1))
 
 def call(command, lamp_number, address):
-    if command == "Off" and command == "SetDim":
+    if command == "Off" and command == "On":
         executeCommand(command, lamp_number, range(address, address+1))
     else:
         return executeCommand(command, lamp_number, range(address, address+1), fast=False)
