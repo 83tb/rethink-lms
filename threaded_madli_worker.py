@@ -61,7 +61,12 @@ def slow_commands():
         with lock:
             if slow_reads:
                 logging.debug('Detected a task scheduled')
-                task = slow_reads.pop()
+                task = None
+                try:
+                    task = slow_reads.pop()
+                except IndexError:
+                    pass
+
                 if task:
                     logging.debug('Task is: ' + str(task))
 
