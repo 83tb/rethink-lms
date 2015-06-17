@@ -19,7 +19,7 @@ import serial
 
 def executeCommand(command_string, device_number, memory_range):
 
-    serObj = serial.Serial('/dev/ttyUSB1',
+    serObj = serial.Serial('/dev/ttyUSB0',
                            baudrate=4800,
                            bytesize=serial.EIGHTBITS,
                            parity=serial.PARITY_NONE,
