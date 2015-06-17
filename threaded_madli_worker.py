@@ -7,13 +7,14 @@ conn = r.connect("localhost").repl()
 
 db = r.db("engine")
 lamps_table = db.table("lamps")
+command_table = db.table("commands")
 cursor = lamps_table.changes().run(conn)
 
 import logging
 import threading
 
 lock = threading.Lock()
-slow_reads = []
+
 
 logging.basicConfig(level=logging.DEBUG,
                     format='[%(levelname)s] (%(threadName)-10s) %(message)s',
@@ -21,7 +22,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 def quick_commands():
-    global slow_reads
+
     for feed in cursor:
         logging.debug('New change in Rethink DB detected!')
         with lock:
@@ -33,7 +34,7 @@ def quick_commands():
             if lamp['scheduled_read']:
                 logging.debug('Read scheduled detected')
 
-                slow_reads.append(dict(command="GetRam", lampNumber=lamp['hardware']['address'], address=1, id=lamp['id']))
+                command_table.insert(dict(command="GetRam", lampNumber=lamp['hardware']['address'], address=1, lamp_id=lamp['id'])).run(conn)
                 lamp['scheduled_read'] = False
                 lamp['change_required'] = False
 
@@ -54,13 +55,14 @@ def quick_commands():
 
 import time
 def slow_commands():
-    global slow_reads
+
     while True:
         logging.debug('Going to sleep for 10 seconds')
         time.sleep(10)
         logging.debug('Waking up!')
         logging.debug('slow reads: ' + str(slow_reads))
         with lock:
+            slow_reads = command_table.run(conn)
             if slow_reads:
                 logging.debug('Detected a task scheduled')
                 task = None
@@ -75,7 +77,7 @@ def slow_commands():
                     try:
                         logging.debug('Trying to read the value')
                         actual_driver_value = readValue(task['command'], task['lampNumber'], task['address']).get('data1')
-                        lamp = dict(id=task['id'], actual_driver_value=actual_driver_value)
+                        lamp = dict(id=task['lamp_id'], actual_driver_value=actual_driver_value)
                         logging.debug('Uploading value to rethink')
                         lamps_table.update(lamp).run(conn)
 

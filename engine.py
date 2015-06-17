@@ -15,7 +15,7 @@ define("port", default=8888, help="run on the given port", type=int)
 define("debug", default=True, help="run in debug mode")
 
 
-def setup_db(db_name="engine", tables=['lamps', ]):
+def setup_db(db_name="engine", tables=['lamps','settings','commands' ]):
     connection = r.connect(host="localhost")
     try:
         r.db_create(db_name).run(connection)
