@@ -60,8 +60,12 @@ def worker():
             task = task_high
             if task:
                 logger.debug('Detected a task scheduled')
+                try:
+                    write_task(task)
+                except Exception, e:
+                    logger.error(e)
 
-                write_task(task)
+
 
         # execute one slow task
         if cmd_low:
