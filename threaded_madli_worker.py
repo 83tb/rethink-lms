@@ -60,9 +60,10 @@ def slow_commands():
         logging.debug('Going to sleep for 10 seconds')
         time.sleep(10)
         logging.debug('Waking up!')
-        logging.debug('slow reads: ' + str(slow_reads))
+
         with lock:
             slow_reads = command_table.run(conn)
+            logging.debug('slow reads: ' + str(slow_reads))
             if slow_reads:
                 logging.debug('Detected a task scheduled')
                 task = None
