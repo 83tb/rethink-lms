@@ -37,7 +37,7 @@ def read_task(task):
 def write_task(task):
     try:
         logger.debug('Trying send fast command')
-        call(task['command'], task['lampNumber'], task['address']).get('data1')
+        call(task['command'], task['lampNumber'], task['address'])
         command_table.get(task['id']).delete().run(conn)
     except Exception(), e:
         logger.error('Error: ' + e)
