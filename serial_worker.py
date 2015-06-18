@@ -23,7 +23,7 @@ cursor = lamps_table.changes().run(conn)
 def read_task(task):
     try:
         logger.debug('Trying to read the value')
-        actual_driver_value = call(task['command'], task['lampNumber'], task['address']).get('data1')
+        actual_driver_value = call(task['command'], task['lampNumber'], task['address'])
         lamp = dict(id=task['lamp_id'], actual_driver_value=actual_driver_value)
         logger.debug('Uploading value to rethink')
         lamps_table.update(lamp).run(conn)

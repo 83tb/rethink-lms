@@ -31,7 +31,7 @@ def quick_commands():
         if lamp['scheduled_read']:
             logger.debug('Read scheduled detected')
 
-            command_table.insert(dict(command="GetRam", prio='low', lampNumber=lamp['hardware']['address'], address=1, lamp_id=lamp['id'])).run(conn)
+            command_table.insert(dict(command="GetRam", prio='low', lampNumber=lamp['hardware']['address'], address=25, lamp_id=lamp['id'])).run(conn)
             lamp['scheduled_read'] = False
             lamp['change_required'] = False
 
