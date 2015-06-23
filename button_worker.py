@@ -1,13 +1,55 @@
+import rethinkdb as r
+conn = r.connect("localhost").repl()
+
+db = r.db("engine")
+lamps_table = db.table("lamps")
+
+import logging
+logger = logging.getLogger('button_worker')
+logger.setLevel(logging.DEBUG)
+
+hdlr = logging.FileHandler('logs/button_worker.log')
+
+logger.addHandler(hdlr)
+
 import wiringpi2
+import time
 
 wiringpi2.wiringPiSetup()
-print "Pin 29 (21 -40) - " + str(wiringpi2.digitalRead(29)) # Read pin 21
-print "Pin 25 (26 - 37) - " + str(wiringpi2.digitalRead(25)) # Read pin 13
-print "Pin 24 (19 - 35) - " + str(wiringpi2.digitalRead(24)) # Read pin 19
-print "Pin 23 (13 - 33) - " + str(wiringpi2.digitalRead(23)) # Read pin 26
-print "Pin 22 (6 - 31) - " + str(wiringpi2.digitalRead(22)) # Read pin 26
-print "Pin 21 (5 - 29) - " + str(wiringpi2.digitalRead(21)) # Read pin 26
-print "Pin 14 (11 - 23) - " + str(wiringpi2.digitalRead(14)) # Read pin 26
-print "Pin 13 (9 - 21) - " + str(wiringpi2.digitalRead(13)) # Read pin 26
 
 
+button_lamp_mapping = {
+    '19': [191,]
+}
+
+button_states = {
+    '19': 0
+}
+
+def change(button, state):
+    lamp_numbers = button_lamp_mapping[button]
+    for lamp_number in lamp_numbers:
+        special_l_setting = 255
+        if state:
+            special_l_setting = 0
+
+        new = dict(
+            special_l_setting=special_l_setting,
+            change_required=True
+        )
+        lamps_table.filter({'address' : lamp_number}).update(new)
+
+
+def check_pin(button):
+    return wiringpi2.digitalRead(button)
+
+
+def listen_on_pins():
+    for button, state in button_states.items():
+        if check_pin(button) != state:
+            change(button, state)
+            button_states[button] = state
+
+while True:
+    listen_on_pins()
+    time.sleep(1)
