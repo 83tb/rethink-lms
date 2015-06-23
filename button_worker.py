@@ -52,8 +52,8 @@ def change(button, current_state):
             change_required=True
         )
 
-        print lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new)
-        print lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
+
+        lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
 
 
 def check_pin(button):
