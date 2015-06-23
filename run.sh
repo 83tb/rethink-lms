@@ -2,6 +2,7 @@
 python engine.py &
 python engine_worker.py &
 python serial_worker.py &
+python button_worker.py &
 
 
 

@@ -18,12 +18,26 @@ import time
 wiringpi2.wiringPiSetup()
 
 
+pin_mapping = {
+
+    '1': [16, 23, 4, 'use '],
+    '2': [18, 24, 5, 'use '],
+    '3': [22, 25, 6, 'use '],
+    '4': [29, 5, 21, 'use used'],
+    '5': [31, 6, 22, 'use used'],
+    '6': [33, 13, 23, 'use used'],
+    '7': [36, 16, 27, 'use '],
+    '8': [37, 26, 25, 'use used'],
+
+}
+
+
 button_lamp_mapping = {
-    '19': [191,]
+    '1': [191,]
 }
 
 button_states = {
-    '19': 0
+    '1': 0
 }
 
 def change(button, state):
@@ -41,7 +55,8 @@ def change(button, state):
 
 
 def check_pin(button):
-    return wiringpi2.digitalRead(button)
+    pin = pin_mapping['button']
+    return wiringpi2.digitalRead(pin)
 
 
 def listen_on_pins():
