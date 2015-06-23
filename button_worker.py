@@ -24,6 +24,10 @@ button_lamp_mapping = config['button_lamp_mapping']
 # temporary, this is not a configuration
 button_states = {}
 
+ON_VALUE = 255
+OFF_VALUE = 0
+
+
 
 def set_initial_button_states():
     for button, pin_config in pin_mapping.items():
@@ -43,9 +47,9 @@ def change(button, current_state):
     state = judge_rules(active_state, current_state)
 
     for lamp_number in lamp_numbers:
-        special_l_setting = 0
+        special_l_setting = OFF_VALUE
         if state:
-            special_l_setting = 255
+            special_l_setting = ON_VALUE
 
         new = dict(
             special_l_setting=special_l_setting,
