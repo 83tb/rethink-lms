@@ -2,13 +2,9 @@
 
 config = {
 
-	'serial_port' : "/dev/ttyAMA0"
+	'serial_port' : "/dev/ttyAMA0",
 
-}
-
-
-
-pin_mapping = {
+    'pin_mapping' : {
 
     '1': [16, 23, 4, 'use '],
     '2': [18, 24, 5, 'use '],
@@ -19,13 +15,19 @@ pin_mapping = {
     '7': [36, 16, 27, 'use '],
     '8': [37, 26, 25, 'use used'],
 
+    },
+
+
+    'button_lamp_mapping' : {
+        '1': ['984',]
+    },
+
+    'button_states' : {
+        '1': 1
+    },
+
 }
 
 
-button_lamp_mapping = {
-    '1': ['984',]
-}
 
-button_states = {
-    '1': 1
-}
+
