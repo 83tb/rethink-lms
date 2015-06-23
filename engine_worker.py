@@ -11,12 +11,13 @@ command_table = db.table("commands")
 cursor = lamps_table.changes().run(conn)
 
 import logging
-logging.basicConfig(format='%(asctime)s %(message)s')
+
 logger = logging.getLogger('engine_worker')
 logger.setLevel(logging.DEBUG)
 
 hdlr = logging.FileHandler('logs/engine_worker.log')
-
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 
 
