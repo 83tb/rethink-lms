@@ -33,7 +33,7 @@ pin_mapping = {
 
 
 button_lamp_mapping = {
-    '1': ['93655fab-e13f-4e1c-8053-529115dc0ff5',]
+    '1': ['984',]
 }
 
 button_states = {
@@ -41,8 +41,8 @@ button_states = {
 }
 
 def change(button, state):
-    lamp_ids = button_lamp_mapping[button]
-    for lamp_id in lamp_ids:
+    lamp_numbers = button_lamp_mapping[button]
+    for lamp_number in lamp_numbers:
         special_l_setting = 255
         if state:
             special_l_setting = 0
@@ -51,7 +51,7 @@ def change(button, state):
             special_l_setting=special_l_setting,
             change_required=True
         )
-        print lamps_table.filter({'id' : lamp_id}).update(new).run(conn)
+        print lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
 
 
 def check_pin(button):
