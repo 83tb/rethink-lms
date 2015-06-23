@@ -8,6 +8,8 @@ import logging
 logger = logging.getLogger('button_worker')
 logger.setLevel(logging.DEBUG)
 
+logger.basicConfig(format='%(asctime)s %(message)s')
+
 hdlr = logging.FileHandler('logs/button_worker.log')
 
 logger.addHandler(hdlr)

@@ -13,7 +13,7 @@ cursor = lamps_table.changes().run(conn)
 import logging
 logger = logging.getLogger('engine_worker')
 logger.setLevel(logging.DEBUG)
-
+logger.basicConfig(format='%(asctime)s %(message)s')
 hdlr = logging.FileHandler('logs/engine_worker.log')
 
 logger.addHandler(hdlr)
