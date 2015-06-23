@@ -20,7 +20,7 @@ wiringpi2.wiringPiSetup()
 
 pin_mapping = config['pin_mapping']
 button_lamp_mapping = config['button_lamp_mapping']
-button_states = config['states']
+button_states = config['button_states']
 
 def change(button, state):
     lamp_numbers = button_lamp_mapping[button]
