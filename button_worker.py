@@ -55,7 +55,7 @@ def change(button, state):
 
 
 def check_pin(button):
-    pin = pin_mapping['button']
+    pin = pin_mapping[button]
     return wiringpi2.digitalRead(pin)
 
 
