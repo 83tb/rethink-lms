@@ -7,10 +7,11 @@ Example of a Metro Daemon with 10 priority queues
 
 import serial
 from metro.metro import sendHex, sendHexNoReturn, makeCommand, readCommand
+from config import config
 
 from metro.libmadli import getCommandNumber
 
-serObj = serial.Serial('/dev/ttyUSB0',
+serObj = serial.Serial(config['serial_port'],
                        baudrate=4800,
                        bytesize=serial.EIGHTBITS,
                        parity=serial.PARITY_NONE,
