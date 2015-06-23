@@ -78,6 +78,7 @@ def listen_on_pins():
 
 
 set_initial_button_states()
+logger.info(str(button_states))
 while True:
     listen_on_pins()
     time.sleep(1)
