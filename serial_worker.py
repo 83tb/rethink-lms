@@ -4,11 +4,12 @@ from madli import *
 
 
 import logging
+logging.basicConfig(format='%(asctime)s %(message)s')
 logger = logging.getLogger('serial_worker')
 logger.setLevel(logging.DEBUG)
 
 hdlr = logging.FileHandler('logs/serial_worker.log')
-logger.basicConfig(format='%(asctime)s %(message)s')
+
 logger.addHandler(hdlr)
 
 import rethinkdb as r

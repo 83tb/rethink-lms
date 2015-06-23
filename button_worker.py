@@ -5,10 +5,12 @@ db = r.db("engine")
 lamps_table = db.table("lamps")
 
 import logging
+logging.basicConfig(format='%(asctime)s %(message)s')
+
 logger = logging.getLogger('button_worker')
 logger.setLevel(logging.DEBUG)
 
-logger.basicConfig(format='%(asctime)s %(message)s')
+
 
 hdlr = logging.FileHandler('logs/button_worker.log')
 
