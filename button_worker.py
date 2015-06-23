@@ -20,14 +20,32 @@ wiringpi2.wiringPiSetup()
 
 pin_mapping = config['pin_mapping']
 button_lamp_mapping = config['button_lamp_mapping']
-button_states = config['button_states']
 
-def change(button, state):
+# temporary, this is not a configuration
+button_states = {}
+
+
+def set_initial_button_states():
+    for button, pin_config in pin_mapping.items():
+        button_states[button] = wiringpi2.digitalRead(pin_config[2])
+
+def judge_rules(active_state, current_state):
+    if active_state:
+        return current_state
+    else:
+        return not current_state
+
+
+
+def change(button, current_state):
     lamp_numbers = button_lamp_mapping[button]
+    active_state = pin_mapping[button][3]
+    state = judge_rules(active_state, current_state)
+
     for lamp_number in lamp_numbers:
-        special_l_setting = 255
+        special_l_setting = 0
         if state:
-            special_l_setting = 0
+            special_l_setting = 255
 
         new = dict(
             special_l_setting=special_l_setting,
@@ -50,6 +68,8 @@ def listen_on_pins():
             change(button, pin_now)
             button_states[button] = pin_now
 
+
+set_initial_button_states()
 while True:
     listen_on_pins()
     time.sleep(1)
