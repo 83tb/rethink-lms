@@ -51,6 +51,7 @@ def change(button, state):
             special_l_setting=special_l_setting,
             change_required=True
         )
+        
         print lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new)
         print lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
 
