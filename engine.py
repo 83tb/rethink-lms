@@ -15,12 +15,24 @@ define("port", default=8888, help="run on the given port", type=int)
 define("debug", default=True, help="run in debug mode")
 
 
+
+logger = logging.getLogger('engine')
+logger.setLevel(logging.DEBUG)
+
+hdlr = logging.FileHandler('logs/engine.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
+
+
+
+
 def setup_db(db_name="engine", tables=['lamps','settings','commands' ]):
     connection = r.connect(host="localhost")
     try:
         r.db_create(db_name).run(connection)
     except r.RqlRuntimeError:
-        logging.warn('Database already exists.')
+        logger.warn('Database already exists.')
 
 
 
@@ -29,12 +41,12 @@ def setup_db(db_name="engine", tables=['lamps','settings','commands' ]):
         try:
             r.db(db_name).table_create(tbl, durability="hard").run(connection)
         except r.RqlRuntimeError:
-            logging.warn('Table already exists.')
-    logging.info('Database setup completed.')
+            logger.warn('Table already exists.')
+    logger.info('Database setup completed.')
     try:
         r.db(db_name).table('lamps').index_create('location', geo=True).run(connection)
     except r.RqlRuntimeError:
-            logging.warn('Index already exists.')
+            logger.warn('Index already exists.')
     connection.close()
 
 
@@ -57,7 +69,7 @@ class EngineApp(tornado.web.Application):
                         xsrf_cookies=False,
                         debug=options.debug)
         self.db = db
-        logging.info(db)
+        logger.info(db)
         tornado.web.Application.__init__(self, handlers, **settings)
 
 
