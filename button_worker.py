@@ -14,31 +14,13 @@ logger.addHandler(hdlr)
 
 import wiringpi2
 import time
+from config import config
 
 wiringpi2.wiringPiSetup()
 
-
-pin_mapping = {
-
-    '1': [16, 23, 4, 'use '],
-    '2': [18, 24, 5, 'use '],
-    '3': [22, 25, 6, 'use '],
-    '4': [29, 5, 21, 'use used'],
-    '5': [31, 6, 22, 'use used'],
-    '6': [33, 13, 23, 'use used'],
-    '7': [36, 16, 27, 'use '],
-    '8': [37, 26, 25, 'use used'],
-
-}
-
-
-button_lamp_mapping = {
-    '1': ['984',]
-}
-
-button_states = {
-    '1': 1
-}
+pin_mapping = config['pin_mapping']
+button_lamp_mapping = config['button_lamp_mapping']
+button_states = config['states']
 
 def change(button, state):
     lamp_numbers = button_lamp_mapping[button]
