@@ -24,8 +24,8 @@ button_lamp_mapping = config['button_lamp_mapping']
 # temporary, this is not a configuration
 button_states = {}
 
-ON_VALUE = 255
-OFF_VALUE = 0
+ON_VALUE = config['ON_VALUE']
+OFF_VALUE = config['OFF_VALUE']
 
 
 

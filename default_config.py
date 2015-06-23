@@ -17,6 +17,9 @@ config = {
 
     },
 
+	'ON_VALUE' : 255,
+	'OFF_VALUE' : 0,
+
 
     'button_lamp_mapping' : {
         '1': ['984',]
