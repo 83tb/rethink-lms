@@ -26,7 +26,7 @@ def read_task(task):
         lamp = dict(
             id=task['lamp_id'], actual_driver_value=actual_driver_value)
         logger.debug('Uploading value to rethink')
-        lamps_table.filter(id=task['lamp_id']).update(lamp).run(conn)
+        lamps_table.filter(dict(id=task['lamp_id'])).update(lamp).run(conn)
 
         logger.debug('Uploaded value was: ' + str(actual_driver_value))
         command_table.get(task['id']).delete().run(conn)
