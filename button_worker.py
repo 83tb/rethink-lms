@@ -61,9 +61,9 @@ def change(button, current_state):
             change_required=True
         )
 
-
-        lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
-
+        logger.debug("Sent to rethinkdb: %s", str(lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new)))
+        a = lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
+        logger.debug("Received from rethinkdb: %s", str(a))
 
 def check_pin(button):
     pin = pin_mapping[button]
