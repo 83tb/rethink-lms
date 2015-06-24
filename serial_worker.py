@@ -80,5 +80,5 @@ def worker():
 
 
 
-
+logger.warn('Initializing Serial Worker.')
 worker()

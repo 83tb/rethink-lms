@@ -55,5 +55,5 @@ def quick_commands():
                                           lamp_id=lamp['id'])).run(conn)
 
 
-
+logger.warn('Initializing Engine Worker.')
 quick_commands()
