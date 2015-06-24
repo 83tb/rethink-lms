@@ -51,6 +51,7 @@ def change(button, current_state):
     state = judge_rules(active_state, current_state)
 
     for lamp_number in lamp_numbers:
+        logger.info("changing setting for lamp %s", lamp_number)
         special_l_setting = OFF_VALUE
         if state:
             special_l_setting = ON_VALUE
@@ -73,6 +74,7 @@ def listen_on_pins():
     for button, state in button_states.items():
         pin_now = check_pin(button)
         if pin_now != state:
+            logger.info("change on pin %s", button)
             change(button, pin_now)
             button_states[button] = pin_now
 
