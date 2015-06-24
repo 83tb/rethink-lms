@@ -1,9 +1,7 @@
-
-
 from madli import *
-
-
+import rethinkdb as r
 import logging
+
 logger = logging.getLogger('serial_worker')
 logger.setLevel(logging.DEBUG)
 
@@ -12,7 +10,6 @@ formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 
-import rethinkdb as r
 conn = r.connect("localhost").repl()
 
 db = r.db("engine")
@@ -24,8 +21,10 @@ cursor = lamps_table.changes().run(conn)
 def read_task(task):
     try:
         logger.debug('Trying to read the value')
-        actual_driver_value = call(task['command'], task['lampNumber'], task['address'])
-        lamp = dict(id=task['lamp_id'], actual_driver_value=actual_driver_value)
+        actual_driver_value = call(
+            task['command'], task['lampNumber'], task['address'])
+        lamp = dict(
+            id=task['lamp_id'], actual_driver_value=actual_driver_value)
         logger.debug('Uploading value to rethink')
         lamps_table.update(lamp).run(conn)
 
@@ -34,6 +33,7 @@ def read_task(task):
     except Exception, e:
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
+
 
 def write_task(task):
     try:
@@ -62,22 +62,17 @@ def worker():
             task = task_high
             if task:
                 logger.debug('Detected a task scheduled')
-                #try:
+                # try:
                 write_task(task)
-                #except Exception, e:
+                # except Exception, e:
                 #    logger.error(e)
-
-
 
         # execute one slow task
         if cmd_low:
-            #try:
+            # try:
             read_task(task_low)
         #   except Exception, e:
         #       logger.error(e)
-
-
-
 
 
 logger.warn('Initializing Serial Worker.')

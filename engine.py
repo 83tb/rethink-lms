@@ -15,7 +15,6 @@ define("port", default=8888, help="run on the given port", type=int)
 define("debug", default=True, help="run in debug mode")
 
 
-
 logger = logging.getLogger('engine')
 logger.setLevel(logging.DEBUG)
 
@@ -25,17 +24,12 @@ hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 
 
-
-
-def setup_db(db_name="engine", tables=['lamps','settings','commands' ]):
+def setup_db(db_name="engine", tables=['lamps', 'settings', 'commands']):
     connection = r.connect(host="localhost")
     try:
         r.db_create(db_name).run(connection)
     except r.RqlRuntimeError:
         logger.warn('Database already exists.')
-
-
-
 
     for tbl in tables:
         try:
@@ -44,9 +38,10 @@ def setup_db(db_name="engine", tables=['lamps','settings','commands' ]):
             logger.warn('Table already exists.')
     logger.info('Database setup completed.')
     try:
-        r.db(db_name).table('lamps').index_create('location', geo=True).run(connection)
+        r.db(db_name).table('lamps').index_create(
+            'location', geo=True).run(connection)
     except r.RqlRuntimeError:
-            logger.warn('Index already exists.')
+        logger.warn('Index already exists.')
     connection.close()
 
 
@@ -94,7 +89,8 @@ class GeoLampsHandler(BaseHandler):
         resource_doc = self.request.body
 
         bbox_json = json.loads(resource_doc.replace("'", "\""))
-        bbox = r.polygon(bbox_json[0], bbox_json[1], bbox_json[2], bbox_json[3])
+        bbox = r.polygon(
+            bbox_json[0], bbox_json[1], bbox_json[2], bbox_json[3])
 
         curs = yield self.lamps.get_intersecting(bbox, index='location').run(self.db)
         lamps = []
@@ -111,7 +107,8 @@ class GeoLampsHandler(BaseHandler):
         resource_doc = self.request.body
 
         bbox_json = json.loads(resource_doc.replace("'", "\""))
-        bbox = r.polygon(bbox_json[0], bbox_json[1], bbox_json[2], bbox_json[3])
+        bbox = r.polygon(
+            bbox_json[0], bbox_json[1], bbox_json[2], bbox_json[3])
 
         curs = yield self.lamps.get_intersecting(bbox, index='location').run(self.db)
         lamps = []
@@ -174,7 +171,6 @@ class LampFeedHandler(BaseHandler):
 
         while (yield curs.fetch_next()):
             feed = yield curs.next()
-
 
         self.finish(dict(lamps=[feed]))
 

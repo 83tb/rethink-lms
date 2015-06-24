@@ -1,25 +1,20 @@
 # coding: utf-8
 
-
-
+import logging
 import rethinkdb as r
-conn = r.connect("localhost").repl()
 
+conn = r.connect("localhost").repl()
 db = r.db("engine")
 lamps_table = db.table("lamps")
 command_table = db.table("commands")
 cursor = lamps_table.changes().run(conn)
 
-import logging
-
 logger = logging.getLogger('engine_worker')
 logger.setLevel(logging.DEBUG)
-
 hdlr = logging.FileHandler('logs/engine_worker.log')
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
-
 
 
 def quick_commands():
@@ -33,7 +28,8 @@ def quick_commands():
         if lamp['scheduled_read']:
             logger.debug('Read scheduled detected')
 
-            command_table.insert(dict(command="GetRam", prio='low', lampNumber=lamp['hardware']['address'], address=25, lamp_id=lamp['id'])).run(conn)
+            command_table.insert(dict(command="GetRam", prio='low', lampNumber=lamp[
+                                 'hardware']['address'], address=25, lamp_id=lamp['id'])).run(conn)
             lamp['scheduled_read'] = False
             lamp['change_required'] = False
 
@@ -45,13 +41,14 @@ def quick_commands():
 
             if lamp['wanted_l_level'] == 0:
                 logger.debug('Turning lamp off')
-                command_table.insert(dict(command="Off", prio='high', lampNumber=lamp['hardware']['address'], address=1, lamp_id=lamp['id'])).run(conn)
-
+                command_table.insert(dict(command="Off", prio='high', lampNumber=lamp[
+                                     'hardware']['address'], address=1, lamp_id=lamp['id'])).run(conn)
 
             else:
                 logger.debug('Turning lamp on')
                 command_table.insert(dict(command="On", prio='high',
-                                          lampNumber=lamp['hardware']['address'], address=lamp['wanted_l_level'],
+                                          lampNumber=lamp['hardware'][
+                                              'address'], address=lamp['wanted_l_level'],
                                           lamp_id=lamp['id'])).run(conn)
 
 

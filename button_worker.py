@@ -1,24 +1,19 @@
 import rethinkdb as r
-conn = r.connect("localhost").repl()
-
-db = r.db("engine")
-lamps_table = db.table("lamps")
-
 import logging
-
-
-logger = logging.getLogger('button_worker')
-logger.setLevel(logging.DEBUG)
-
-hdlr = logging.FileHandler('logs/button_worker.log')
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-hdlr.setFormatter(formatter)
-
-logger.addHandler(hdlr)
-
 import wiringpi2
 import time
 from config import config
+
+conn = r.connect("localhost").repl()
+db = r.db("engine")
+lamps_table = db.table("lamps")
+
+logger = logging.getLogger('button_worker')
+logger.setLevel(logging.DEBUG)
+hdlr = logging.FileHandler('logs/button_worker.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
 
 wiringpi2.wiringPiSetup()
 
@@ -32,17 +27,17 @@ ON_VALUE = config['ON_VALUE']
 OFF_VALUE = config['OFF_VALUE']
 
 
-
 def set_initial_button_states():
     for button, pin_config in pin_mapping.items():
         button_states[button] = wiringpi2.digitalRead(pin_config[2])
+        change(button, button_states[button])
+
 
 def judge_rules(active_state, current_state):
     if active_state:
         return current_state
     else:
         return not current_state
-
 
 
 def change(button, current_state):
@@ -61,9 +56,12 @@ def change(button, current_state):
             change_required=True
         )
 
-        logger.debug("Sent to rethinkdb: %s", str(lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new)))
-        a = lamps_table.filter({'hardware':{'address':str(lamp_number)}}).update(new).run(conn)
+        logger.debug("Sent to rethinkdb: %s", str(
+            lamps_table.filter({'hardware': {'address': str(lamp_number)}}).update(new)))
+        a = lamps_table.filter(
+            {'hardware': {'address': str(lamp_number)}}).update(new).run(conn)
         logger.debug("Received from rethinkdb: %s", str(a))
+
 
 def check_pin(button):
     pin = pin_mapping[button]
