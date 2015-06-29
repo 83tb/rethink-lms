@@ -41,3 +41,13 @@ If you need to access database for debuging purposes, web admin is here
 http://127.0.0.1:8080 or http://10.1.2.55:8080
 ```
 
+## Supervisord
+```
+sudo apt-get install -y supervisor
+
+sudo ln -s ~/rethink-lms/supervisor/rethink-lms.conf /etc/supervisor/conf.d/rethink-lms.conf
+
+sudo supervisorctl reread
+
+sudo supervisorctl update
+```
