@@ -10,7 +10,7 @@ from metro import sendHex, sendHexNoReturn, makeCommand, readCommand
 
 from libmadli import getCommandNumber
 
-serObj = serial.Serial('/dev/ttyUSB0',
+serObj = serial.Serial('/dev/ttyAMA0',
                        baudrate=4800,
                        bytesize=serial.EIGHTBITS,
                        parity=serial.PARITY_NONE,
@@ -115,8 +115,8 @@ Turn on
 """
 
 
-#turnOff(126)
-turnOn(126, 255)
+turnOff(126)
+#turnOn(126, 255)
 
 
 #setDim(lamp_num, 0, 244)

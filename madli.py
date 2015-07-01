@@ -17,6 +17,9 @@ serObj = serial.Serial(config['serial_port'],
                        parity=serial.PARITY_NONE,
                        stopbits=serial.STOPBITS_ONE,
                        timeout=1,
+                       # Below works in madli test/madliscan
+                       #timeout=0.04,
+                       #writeTimeout=0.1,
                        xonxoff=0,
                        rtscts=0
                        )
@@ -111,15 +114,15 @@ logger.addHandler(hdlr)
 
 def call(command, lamp_number, address):
     logger.debug("Executing command: " + str(command))
-    executeCommand(command, lamp_number, range(address-1, address))
-    executeCommand(command, lamp_number, range(address-1, address))
+    executeCommand(command, lamp_number, range(address - 1, address))
+    executeCommand(command, lamp_number, range(address - 1, address))
 
 
 
 
 
-#setDim(lamp_num, 0, 244)
-#setDim(lamp_num, 0, 244)
+# setDim(lamp_num, 0, 244)
+# setDim(lamp_num, 0, 244)
 
 """
 Reads Ram Value from a Lamp
