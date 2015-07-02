@@ -39,7 +39,7 @@ def write_task(task):
     try:
         logger.debug('Trying send fast command')
         call(task['command'], task['lampNumber'], task['address'])
-        command_table.get(task['id']).delete().run(conn)
+        command_table.get(task['id']).delete().run(conn) # move it to worker?!?!?!?
     except Exception, e:
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)

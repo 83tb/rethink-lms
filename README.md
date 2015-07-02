@@ -51,3 +51,9 @@ sudo supervisorctl reread
 
 sudo supervisorctl update
 ```
+
+## Rethink DB setup
+Follow: http://rethinkdb.com/docs/start-on-startup/
+```
+sudo update-rc.d service_name defaults
+```

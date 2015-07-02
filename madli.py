@@ -16,10 +16,10 @@ serObj = serial.Serial(config['serial_port'],
                        bytesize=serial.EIGHTBITS,
                        parity=serial.PARITY_NONE,
                        stopbits=serial.STOPBITS_ONE,
-                       timeout=1,
+                       #timeout=1,
                        # Below works in madli test/madliscan
-                       #timeout=0.04,
-                       #writeTimeout=0.1,
+                       timeout=0.04,
+                       writeTimeout=0.1,
                        xonxoff=0,
                        rtscts=0
                        )
@@ -65,7 +65,9 @@ def executeCommand(command_string, device_number, memory_range):
 
         value = shx(hexstr)
             # print readCommand(value)
-        return readCommand(value)
+        # Check if value is returned before reading it
+        if(value):
+            return readCommand(value)
         # print "Getting: " + value
 
         # print value
