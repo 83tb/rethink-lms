@@ -12,6 +12,7 @@ logger.addHandler(hdlr)
 
 conn = r.connect("localhost").repl()
 
+
 db = r.db("engine")
 lamps_table = db.table("lamps")
 command_table = db.table("commands")
@@ -27,9 +28,11 @@ def read_task(task):
             id=task['lamp_id'], actual_driver_value=actual_driver_value)
         logger.debug('Uploading value to rethink')
         lamps_table.filter(dict(id=task['lamp_id'])).update(lamp).run(conn)
+#        lamps_table.filter(dict(id=task['lamp_id'])).update(lamp).run(conn, durability="soft", noreply=True)
 
         logger.debug('Uploaded value was: ' + str(actual_driver_value))
         command_table.get(task['id']).delete().run(conn)
+#        command_table.get(task['id']).delete().run(conn, durability="soft", noreply=True)
     except Exception, e:
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
@@ -39,7 +42,8 @@ def write_task(task):
     try:
         logger.debug('Trying send fast command')
         call(task['command'], task['lampNumber'], task['address'])
-        command_table.get(task['id']).delete().run(conn) # move it to worker?!?!?!?
+        command_table.get(task['id']).delete().run(conn)
+#        command_table.get(task['id']).delete().run(conn, durability="soft", noreply=True) # move it to worker?!?!?!? + #durability="soft" or noreply=True??
     except Exception, e:
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
@@ -49,8 +53,8 @@ def worker():
 
     while True:
 
-        cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn)
-        cmd_high = command_table.filter({'prio': 'high'}).run(conn)
+        cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn) #slow?!?!?!
+        cmd_high = command_table.filter({'prio': 'high'}).run(conn) #slow?!?!?!?!
 
         try:
             task_low = cmd_low.next()
