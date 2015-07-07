@@ -50,6 +50,10 @@ sudo ln -s ~/rethink-lms/supervisor/rethink-lms.conf /etc/supervisor/conf.d/reth
 sudo supervisorctl reread
 
 sudo supervisorctl update
+
+# Restart lms workers
+sudo supervisorctl restart rethink-lms:*
+
 ```
 
 ## Rethink DB setup
