@@ -65,8 +65,14 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
-import wiringpi2
+from config import config
+button_wPi_map = {}
+for button, bmap in config['pin_mapping'].iteritems():
+    #'7': [31, 6, 22, True]
+    button_wPi_map[bmap[2]] = button
+print button_wPi_map
 
+import wiringpi2
 wiringpi2.wiringPiSetup()
 #wiringpi2.wiringPiSetupGpio()
 #wiringpi2.wiringPiSetupSys()
@@ -74,7 +80,6 @@ wiringpi2.wiringPiSetup()
 
 for pin in pins:
 #	[Physical, BCM, wPi]
-    print pin[0]
     rpin = pin[2]
     wiringpi2.pinMode(rpin, 0);
     IOstate = wiringpi2.digitalRead(rpin);
@@ -82,6 +87,6 @@ for pin in pins:
 	IO = color.BOLD + str(IOstate) + color.END
     else:
 	IO = str(IOstate)
-    print "Pin Physical " + str(pin[0]).rjust(2) + " (wPi " + str(pin[2]).rjust(2) + " BCM " + str(pin[1]).rjust(2) + ") - state: " + IO + " " + pin[3].ljust(8) + " " + str(wiringpi2.wpiPinToGpio(rpin)).rjust(2)
+    print "Button: " + str(button_wPi_map[pin[2]]).rjust(2) + " Pin Physical " + str(pin[0]).rjust(2) + " (wPi " + str(pin[2]).rjust(2) + " BCM " + str(pin[1]).rjust(2) + ") - state: " + IO + " " + pin[3].ljust(8) + " " + str(wiringpi2.wpiPinToGpio(rpin)).rjust(2)
 
 

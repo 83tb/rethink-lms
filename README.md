@@ -45,7 +45,7 @@ http://127.0.0.1:8080 or http://10.1.2.55:8080
 ```
 sudo apt-get install -y supervisor
 
-sudo ln -s ~/rethink-lms/supervisor/rethink-lms.conf /etc/supervisor/conf.d/rethink-lms.conf
+sudo ln -s ~/rethink-lms/ubuntu/supervisor/rethink-lms.conf /etc/supervisor/conf.d/rethink-lms.conf
 
 sudo supervisorctl reread
 
