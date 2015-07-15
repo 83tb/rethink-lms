@@ -116,9 +116,11 @@ logger.addHandler(hdlr)
 
 def call(command, lamp_number, address):
     logger.debug("Executing command: " + str(command))
-    executeCommand(command, lamp_number, range(address - 1, address))
-    executeCommand(command, lamp_number, range(address - 1, address))
-
+    if command == "On" or command == "Off":
+        executeCommand(command, lamp_number, range(address - 1, address))
+        executeCommand(command, lamp_number, range(address - 1, address))
+    else:
+        return executeCommand(command, lamp_number, range(address - 1, address))
 
 
 
