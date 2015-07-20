@@ -27,12 +27,9 @@ def read_task(task):
         lamp = dict(
             id=task['lamp_id'], actual_driver_value=actual_driver_value)
         logger.debug('Uploading value to rethink')
-        lamps_table.filter(dict(id=task['lamp_id'])).update(lamp).run(conn)
-#        lamps_table.filter(dict(id=task['lamp_id'])).update(lamp).run(conn, durability="soft", noreply=True)
-
+        lamps_table.get(task['lamp_id']).update(lamp).run(conn)
         logger.debug('Uploaded value was: ' + str(actual_driver_value))
         command_table.get(task['id']).delete().run(conn)
-#        command_table.get(task['id']).delete().run(conn, durability="soft", noreply=True)
     except Exception, e:
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
@@ -43,19 +40,19 @@ def write_task(task):
         logger.debug('Trying send fast command')
         call(task['command'], task['lampNumber'], task['address'])
         command_table.get(task['id']).delete().run(conn)
-#        command_table.get(task['id']).delete().run(conn, durability="soft", noreply=True) # move it to worker?!?!?!? + #durability="soft" or noreply=True??
     except Exception, e:
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
 
-
+from time import time
 def worker():
 
     while True:
-
+        t0 = time()
         cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn) #slow?!?!?!
         cmd_high = command_table.filter({'prio': 'high'}).run(conn) #slow?!?!?!?!
-
+        t1 = time()
+        logger.debug('[ Sending command took %f sec ]' % (t1 - t0))
         try:
             task_low = cmd_low.next()
         except:
@@ -66,17 +63,14 @@ def worker():
             task = task_high
             if task:
                 logger.debug('Detected a task scheduled')
-                # try:
+
                 write_task(task)
-                # except Exception, e:
-                #    logger.error(e)
+
 
         # execute one slow task
         if cmd_low:
-            # try:
             read_task(task_low)
-        #   except Exception, e:
-        #       logger.error(e)
+
 
 
 logger.warn('Initializing Serial Worker.')
