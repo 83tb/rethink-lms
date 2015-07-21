@@ -24,7 +24,7 @@ hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 
 
-def setup_db(db_name="engine", tables=['lamps', 'settings', 'commands']):
+def setup_db(db_name="engine", tables=['lamps', 'settings', 'commands', 'sensors', 'sensor_reads']):
     connection = r.connect(host="localhost")
     try:
         r.db_create(db_name).run(connection)

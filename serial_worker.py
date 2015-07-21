@@ -16,6 +16,9 @@ conn = r.connect("localhost").repl()
 db = r.db("engine")
 lamps_table = db.table("lamps")
 command_table = db.table("commands")
+sensor_table = db.table("sensors")
+sensor_reads_table = db.table("sensor_reads")
+
 cursor = lamps_table.changes().run(conn)
 
 
@@ -35,6 +38,30 @@ def read_task(task):
         command_table.get(task['id']).delete().run(conn)
 
 
+def sense(task):
+    try:
+        logger.debug('Trying to read the value')
+        sensor_value = call(
+            task['command'], task['lampNumber'], task['address']).get('data1', None)
+
+        sensor = dict(
+            id=task['sensor_id'], sensor_value=sensor_value)
+        logger.debug('Uploading value to rethink')
+        try:
+            sensor_table.get(task['sensor_id']).update(sensor).run(conn)
+        except:
+            del sensor['id']
+            sensor_table.insert(sensor)
+
+        logger.debug('Uploaded value was: ' + str(sensor_value))
+        command_table.get(task['id']).delete().run(conn)
+    except Exception, e:
+        logger.error('Error: ' + str(e))
+        command_table.get(task['id']).delete().run(conn)
+
+
+
+
 def write_task(task):
     try:
         logger.debug('Trying send fast command')
@@ -51,12 +78,19 @@ def worker():
         t0 = time()
         cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn) #slow?!?!?!
         cmd_high = command_table.filter({'prio': 'high'}).run(conn) #slow?!?!?!?!
+        sensors = sensor_reads_table.get_all().limit(1).run(conn)
+
         t1 = time()
         logger.debug('[ Sending command took %f sec ]' % (t1 - t0))
         try:
             task_low = cmd_low.next()
         except:
             cmd_low = None
+
+        try:
+            sensor_read = sensors.next()
+        except:
+            sensor_read = None
 
         # execute all fast tasks
         for task_high in cmd_high:
@@ -71,6 +105,8 @@ def worker():
         if cmd_low:
             read_task(task_low)
 
+        if sensor_read:
+            sense(sensor_read)
 
 
 logger.warn('Initializing Serial Worker.')
