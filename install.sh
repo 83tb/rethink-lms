@@ -4,4 +4,6 @@ wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install rethinkdb python-pip rabbitmq-server
 pip install rethinkdb kombu
+sudo rabbitmq-plugins enable rabbitmq_management
+sudo service rabbitmq-server restart
 
