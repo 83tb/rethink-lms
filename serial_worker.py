@@ -74,11 +74,12 @@ def write(task):
     except Exception, e:
         logger.error('Error: ' + str(e))
 
+def cb(body, msg):
+    yield msg.body
+    msg.ack()
 
 def worker():
-    def cb(body, msg):
-        yield msg.body
-        msg.ack()
+
     rec.subscribe(topic)
     rec.register_callback(cb)
     with rec:
