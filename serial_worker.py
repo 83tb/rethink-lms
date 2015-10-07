@@ -16,10 +16,11 @@ conn = r.connect("localhost").repl()
 from config import config
 
 # NEW PUB SUB BEGIN
+q = Queue(name="serial_worker")
 amqp_address = config['rabbit_url']
 from pubsub.notification_rec import NotificationReceiver
-rec = NotificationReceiver(amqp_address)
-topic = "commands"
+topic = commands
+rec = NotificationReceiver(amqp_address, q)
 #
 
 
@@ -75,6 +76,11 @@ def write(task):
 
 
 def worker():
+    def cb(body, msg):
+        yield msg.body
+        msg.ack()
+    rec.subscribe(topic)
+    rec.register_callback(cb)
     with rec:
         task = rec.listen()
         if task['type'] == "write":
