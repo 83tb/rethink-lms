@@ -37,8 +37,8 @@ def quick_commands():
         if lamp['scheduled_read']:
             logger.debug('Read scheduled detected')
 
-            emitter.notify(topic, dict(type="write", command="GetRam", prio='low', lampNumber=lamp[
-                                 'hardware']['address'], address=25, lamp_id=lamp['id']))
+            #emitter.notify(topic, dict(type="write", command="GetRam", prio='low', lampNumber=lamp[
+            #                     'hardware']['address'], address=25, lamp_id=lamp['id']))
 
             lamp['scheduled_read'] = False
             lamp['change_required'] = False
