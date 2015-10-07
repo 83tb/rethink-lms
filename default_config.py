@@ -1,7 +1,7 @@
 
 
 config = {
-
+	'rabbit_url' : '',
 	'serial_port' : "/dev/ttyAMA0",
 
     'pin_mapping' : {
