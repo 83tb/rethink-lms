@@ -13,9 +13,10 @@ logger.addHandler(hdlr)
 
 conn = r.connect("localhost").repl()
 
+from config import config
 
 # NEW PUB SUB BEGIN
-amqp_address = "amqp://guest:guest@192.168.99.100:32769"
+amqp_address = config['rabbit_url']
 from pubsub.notification_rec import NotificationReceiver
 rec = NotificationReceiver(amqp_address)
 topic = "commands"
