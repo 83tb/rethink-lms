@@ -75,9 +75,9 @@ def write(task):
         logger.error('Error: ' + str(e))
 
 def cb(body, msg):
-    yield msg.body
     msg.ack()
-
+    return msg.body
+    
 def worker():
 
     rec.subscribe(topic)
