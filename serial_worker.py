@@ -2,6 +2,7 @@ from madli import *
 import rethinkdb as r
 import logging
 
+
 logger = logging.getLogger('serial_worker')
 logger.setLevel(logging.DEBUG)
 
@@ -13,16 +14,22 @@ logger.addHandler(hdlr)
 conn = r.connect("localhost").repl()
 
 
+# NEW PUB SUB BEGIN
+amqp_address = "amqp://guest:guest@192.168.99.100:32769"
+from pubsub.notification_rec import NotificationReceiver
+rec = NotificationReceiver(amqp_address)
+topic = "commands"
+#
+
+
 db = r.db("engine")
 lamps_table = db.table("lamps")
-command_table = db.table("commands")
 sensor_table = db.table("sensors")
-sensor_reads_table = db.table("sensor_reads")
 
 cursor = lamps_table.changes().run(conn)
 
 
-def read_task(task):
+def read(task):
     try:
         logger.debug('Trying to read the value')
         actual_driver_value = call(
@@ -32,10 +39,8 @@ def read_task(task):
         logger.debug('Uploading value to rethink')
         lamps_table.get(task['lamp_id']).update(lamp).run(conn)
         logger.debug('Uploaded value was: ' + str(actual_driver_value))
-        command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
-        command_table.get(task['id']).delete().run(conn)
 
 
 def sense(task):
@@ -54,60 +59,29 @@ def sense(task):
             sensor_table.insert(sensor)
 
         logger.debug('Uploaded value was: ' + str(sensor_value))
-        command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
-        command_table.get(task['id']).delete().run(conn)
 
 
 
 
-def write_task(task):
+def write(task):
     try:
         logger.debug('Trying send fast command')
         call(task['command'], task['lampNumber'], task['address'])
-        command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
-        command_table.get(task['id']).delete().run(conn)
 
-from time import time
+
 def worker():
-
-    while True:
-        t0 = time()
-        cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn) #slow?!?!?!
-        cmd_high = command_table.filter({'prio': 'high'}).run(conn) #slow?!?!?!?!
-        sensors = sensor_reads_table.get_all().limit(1).run(conn)
-
-        t1 = time()
-        logger.debug('[ Sending command took %f sec ]' % (t1 - t0))
-        try:
-            task_low = cmd_low.next()
-        except:
-            cmd_low = None
-
-        try:
-            sensor_read = sensors.next()
-        except:
-            sensor_read = None
-
-        # execute all fast tasks
-        for task_high in cmd_high:
-            task = task_high
-            if task:
-                logger.debug('Detected a task scheduled')
-
-                write_task(task)
-
-
-        # execute one slow task
-        if cmd_low:
-            read_task(task_low)
-
-        if sensor_read:
-            sense(sensor_read)
-
+    with rec:
+        task = rec.listen()
+        if task['type'] == "write":
+            write(task)
+        if task['type'] == "read":
+            read(task)
+        if task['type'] == "sense":
+            sense(task)
 
 logger.warn('Initializing Serial Worker.')
 worker()

@@ -9,7 +9,7 @@ from tornado import httpserver
 from tornado import gen
 from tornado.options import define, options, parse_command_line
 import json
-from tornado.escape import json_decode
+
 
 define("port", default=8888, help="run on the given port", type=int)
 define("debug", default=True, help="run in debug mode")
@@ -24,7 +24,7 @@ hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 
 
-def setup_db(db_name="engine", tables=['lamps', 'settings', 'commands', 'sensors', 'sensor_reads']):
+def setup_db(db_name="engine", tables=['lamps', 'settings', 'sensors']):
     connection = r.connect(host="localhost")
     try:
         r.db_create(db_name).run(connection)

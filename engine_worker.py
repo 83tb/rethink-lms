@@ -3,10 +3,18 @@
 import logging
 import rethinkdb as r
 
+# NEW PUB SUB BEGIN
+amqp_address = "amqp://guest:guest@192.168.99.100:32769"
+from pubsub.notification_emiter import NotificationEmiter
+emitter = NotificationEmiter(amqp_address)
+topic = "commands"
+#
+
 conn = r.connect("localhost").repl()
 db = r.db("engine")
 lamps_table = db.table("lamps")
-command_table = db.table("commands")
+
+
 cursor = lamps_table.changes().run(conn)
 
 logger = logging.getLogger('engine_worker')
@@ -28,8 +36,9 @@ def quick_commands():
         if lamp['scheduled_read']:
             logger.debug('Read scheduled detected')
 
-            command_table.insert(dict(command="GetRam", prio='low', lampNumber=lamp[
-                                 'hardware']['address'], address=25, lamp_id=lamp['id'])).run(conn)
+            emitter.notify(topic, dict(type="write", command="GetRam", prio='low', lampNumber=lamp[
+                                 'hardware']['address'], address=25, lamp_id=lamp['id']))
+
             lamp['scheduled_read'] = False
             lamp['change_required'] = False
 
@@ -41,15 +50,15 @@ def quick_commands():
 
             if lamp['wanted_l_level'] == 0:
                 logger.debug('Turning lamp off')
-                command_table.insert(dict(command="Off", prio='high', lampNumber=lamp[
-                                     'hardware']['address'], address=1, lamp_id=lamp['id'])).run(conn)
+                emitter.notify(topic, dict(type="write", command="Off", prio='high', lampNumber=lamp[
+                                     'hardware']['address'], address=1, lamp_id=lamp['id']))
 
             else:
                 logger.debug('Turning lamp on')
-                command_table.insert(dict(command="On", prio='high',
+                emitter.notify(topic, dict(type="write", command="On", prio='high',
                                           lampNumber=lamp['hardware'][
                                               'address'], address=lamp['wanted_l_level'],
-                                          lamp_id=lamp['id'])).run(conn)
+                                          lamp_id=lamp['id']))
 
 
 logger.warn('Initializing Engine Worker.')
