@@ -4,7 +4,8 @@ import logging
 import rethinkdb as r
 
 # NEW PUB SUB BEGIN
-amqp_address = "amqp://guest:guest@192.168.99.100:32769"
+from config import config
+amqp_address = config['rabbit_url']
 from pubsub.notification_emiter import NotificationEmiter
 emitter = NotificationEmiter(amqp_address)
 topic = "commands"
