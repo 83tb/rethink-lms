@@ -1,7 +1,7 @@
 from madli import *
 import rethinkdb as r
 import logging
-
+from kombu import Queue
 
 logger = logging.getLogger('serial_worker')
 logger.setLevel(logging.DEBUG)
