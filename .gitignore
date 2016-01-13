@@ -3,5 +3,8 @@
 .idea/
 /nbproject/*
 /nbproject/private/
+.project
+.pydevproject
+.tern-project
 /logs/*
 config.py
