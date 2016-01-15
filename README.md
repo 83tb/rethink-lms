@@ -107,3 +107,5 @@ Edit: /etc/default/grub
 GRUB_TERMINAL=console
 
 ```
+# To do
+ - boot from system image
