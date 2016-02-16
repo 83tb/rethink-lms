@@ -6,16 +6,36 @@ Example of a Metro Daemon with 10 priority queues
 """
 
 import serial
-from metro import sendHex, sendHexNoReturn, makeCommand, readCommand
-
-from libmadli import getCommandNumber
 
 from time import time, sleep
+import itertools, sys, os
 
-import itertools, sys
+lib_path = os.path.abspath(os.path.join('..', 'metro'))
+sys.path.append(lib_path)
+
+from metro import sendHex, sendHexNoReturn, makeCommand, readCommand
+from libmadli import getCommandNumber
+
+'''
+Get serial port USB device
+
+http://pyserial.readthedocs.org/en/latest/tools.html#module-serial.tools.list_ports
+'''
+
+from serial.tools import list_ports
+
+#ports = list_ports.comports()
+ports = list(list_ports.grep("Madli"))
+
+for port in ports:
+#    print vars(port)
+    devTTY = port.device
+    product = str(port.manufacturer) + " - " + str(port.product)
+
+print "Using: " + str(product) + " on " + str(devTTY)
 
 
-serObj = serial.Serial('/dev/ttyAMA0',
+serObj = serial.Serial(devTTY,
                        baudrate=4800,
                        bytesize=serial.EIGHTBITS,
                        parity=serial.PARITY_NONE,
