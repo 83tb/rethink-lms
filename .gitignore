@@ -8,3 +8,6 @@
 .tern-project
 /logs/*
 config.py
+
+nb-configuration.xml
+setup.py
