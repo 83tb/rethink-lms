@@ -1,7 +1,7 @@
 ### Engine
 * światłomierz / zbieranie stanu lamp
 * grupy u nas
-   - grupy madli
+* - grupy madli
 * automatyka światła
 
 * obsługa czujek różnych w tym I/O ->
