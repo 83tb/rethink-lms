@@ -1,9 +1,8 @@
 ### Engine
 * światłomierz / zbieranie stanu lamp
 * grupy u nas
-* - grupy madli
+   - grupy madli
 * automatyka światła
-
 * obsługa czujek różnych w tym I/O ->
 * obsługa flag
 * kalendarz
@@ -12,3 +11,4 @@
 * interface do grup
    - warstwy/grupy na warstwach i współrzędne gps?
 * wstawianie parametrów świecenia - krzywe idt.
+* Desktop app with http://electron.atom.io/#built-on-electron
