@@ -1,7 +1,8 @@
 #!/usr/bin/python
-"""Testing File
-
-Example of a Metro Daemon with 10 priority queues
+"""
+Madli scanner
+ - Scan for devices on given range
+ - Read device state, turn device on or off
 
 """
 
@@ -154,8 +155,6 @@ def scanMadli(scanRange = range(1, 1023), skipLamps = []):
     print "Found: " + str(found) + " lamps"
 
 
-lamp_num = 9
-
 
 """
 Scan for lamps on madli
@@ -170,10 +169,22 @@ skipLamps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 
 """
 Turn on
 """
-turnOff(126)
 #turnOn(126, 255)
-#setDim(lamp_num, 0, 244)
-#setDim(lamp_num, 0, 244)
+
+#turnOn(7, 100)
+#turnOn(29, 100)
+
+#turnOn(7, 255)
+#turnOn(29, 255)
+
+#turnOff(126)
+
+turnOff(7)
+turnOff(29)
+
+#setDim(7, 0, 144)
+#setDim(29, 0, 144)
+
 #for lamp in [126, 862, 984, 843]:
 #    turnOn(lamp, 255)
 #    turnOff(lamp)

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) Error: on line 4, column 33 in Templates/Licenses/license-gpl30.txt
  The string doesn't match the expected date/time format. The string to parse was: "07-May-2015". The expected format was: "MMM d, yyyy". miko
  *
@@ -197,7 +197,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 						identifier: lamp.identifier,
 						//
 						// Gropus - combine lamps (extents + margin) with same group id
-						//  -> create poligon 
+						//  -> create poligon
 						//  -> add to groups Layer as a feature!!!
 						//
 						group: lamp.group,
@@ -220,7 +220,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 			console.log($scope.lampsSrc);
 
 			$scope.lampsLayer = {
-//							clustering: true, 
+//							clustering: true,
 //							clusteringDistance: 40,
 				name: 'lampsLayer',
 				source: {
@@ -423,7 +423,7 @@ app.controller('lmsController', ['$scope', '$location', '$timeout', '$http', 'ol
 		$scope.$on('adjustmentsUpdate', function () {
 			if (angular.equals({}, $scope.lampsLayer))
 				return;
-			// 
+			//
 			// $emit event settings changed -> mod main obj -> emit event -> send to server -> // receve from server emit event
 			//
 			console.log('on adjustmentsUpdate - adjsServis');
