@@ -12,3 +12,6 @@
    - warstwy/grupy na warstwach i współrzędne gps?
 * wstawianie parametrów świecenia - krzywe idt.
 * Desktop app with http://electron.atom.io/#built-on-electron
+* WebUI - przenieść do samodzielnego repo/oddzielnej aplikacji
+   - engine-app - zajmuje się ew serwowaniem "domyślnych" ustawień?
+   - webiu-app - może być "budowane" do apki na urządzenia mobilne, desktopy (eg. Electron), serwowane przez inny server (po rozwiązaniu Cross-domain)
