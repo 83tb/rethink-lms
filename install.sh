@@ -22,4 +22,7 @@ then
     sudo usermod -a -G dialout $USER
 fi
 
-# Phrase, copy and symlink rethink and supervisor config files
+# Phrase, copy and symlink rethink and supervisord config files
+#...
+#... ;)
+#...

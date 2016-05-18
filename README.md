@@ -66,7 +66,9 @@ http://127.0.0.1:8080 or http://10.1.2.55:8080
 ```
 sudo apt-get install -y supervisor
 
-sudo ln -s $HOME/rethink-lms/ubuntu/supervisor/rethink-lms.conf /etc/supervisor/conf.d/rethink-lms.conf
+sudo ln -s $HOME/rethink-lms/config_ubuntu/supervisor/rethink-lms.conf /etc/supervisor/conf.d/rethink-lms.conf
+
+# change $HOME to echo $PWD or any dir lms is installed
 
 sudo supervisorctl reread
 
@@ -85,8 +87,8 @@ https://www.bitpi.co/2015/02/11/how-to-change-raspberry-pis-swapfile-size-on-ras
 sudo adduser --system --quiet --group --no-create-home rethinkdb
 sudo invoke-rc.d rethinkdb start
 sudo update-rc.d rethinkdb defaults
-sudo service rethinkdb start 
-sudo service rethinkdb stop 
+sudo service rethinkdb start
+sudo service rethinkdb stop
 
 ```
 
