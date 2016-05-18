@@ -18,16 +18,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
 <li layout="column" layout-align="center center">
-	<button class="md-button md-default-theme md-primary" ng-click="center.autodiscover = true"><i class="fa fa-location-arrow"></i> Discover position</button>
+<button class="md-button md-default-theme md-primary" ng-click="center.autodiscover = true">
+    <i class="fa fa-location-arrow"></i>
+    Discover position</button>
 </li>
-<li ng-repeat="loc in locations" ng-class="loc.current? 'active' : ''" >
-	<!-- SET LOCATION ACTIVE ON CLICK!!!! -->
-	<a href="#/?c={[{loc.lat}]}:{[{loc.lon}]}:{[{loc.zoom}]}{[{(loc.rotation) && '&r=' + loc.rotation}]}" ng-click=""><i class="fa fa-star"></i> {[{loc.title}]}</a>
+<li ng-repeat="loc in locations" ng-class="loc.current? 'active' : ''">
+<!-- SET LOCATION ACTIVE ON CLICK!!!! -->
+<a href="#/?c={[{loc.lat}]}:{[{loc.lon}]}:{[{loc.zoom}]}{[{(loc.rotation) && '&r=' + loc.rotation}]}" ng-click="">
+    <i class="fa fa-star"></i>
+    {[{loc.title}]}</a>
 </li>
 <li layout="column" layout-align="center center">
-	<button class="md-button" ng-click="postDataFile()" >postDataFile</button>
-	<button class="md-button" ng-click="setExt()" >setExt</button>
-	<!--	<form>
+<button class="md-button" ng-click="postDataFile()">postDataFile</button>
+<button class="md-button" ng-click="setExt()">setExt</button>
+<!--	<form>
 			Latitude : <input type="number" step="any" ng-model="center.lat" />
 			Longitude : <input type="number" step="any" ng-model="center.lon" />
 			Zoom : <input type="number" step="any" ng-model="center.zoom" />
@@ -36,5 +40,3 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 			OffsetFactor: {[{ offsetFactor}]} <input type="range" min="-1" max="1" step="0.01" ng-model="offsetFactor" />
 		</form>-->
 </li>
-
-

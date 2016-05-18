@@ -18,46 +18,51 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
 <div class="info-box" ng-controller="lmsControlPanel">
-	<!-- Apply any bg-* class to to the icon to color it -->
-	<span class="info-box-icon" ng-class="adj.isDisabled.form ? 'bg-gray disabled' : 'bg - aqua'"><i class="fa fa-tachometer"></i></span>
-	<div class="info-box-content">
-		<md-content id="lmsControlPanel">
-			<section layout>
-				<div flex layout>
-					<div flex="10" layout layout-align="center center" >
-						<label for="lampFlag">Flag: </label>
-					</div>
-					<md-radio-group flex layout layout-align="center center" ng-disabled="adj.isDisabled.form" ng-model="adj.flag" class="md-primary">
-						<md-radio-button ng-disabled="adj.isDisabled.working" name="lampFlag" class="md-primary" value="working_flag">Working</md-radio-button>
-						<md-radio-button ng-disabled="adj.isDisabled.presence" name="lampFlag" class="md-primary" value="presence_flag">Presence</md-radio-button>
-						<md-radio-button ng-disabled="adj.isDisabled.special" name="lampFlag" class="md-primary" value="special_flag">Special</md-radio-button>
-					</md-radio-group>
-				</div>
+    <!-- Apply any bg-* class to to the icon to color it -->
+    <span class="info-box-icon" ng-class="adj.isDisabled.form ? 'bg-gray disabled' : 'bg - aqua'">
+        <i class="fa fa-tachometer"></i>
+    </span>
+    <div class="info-box-content">
+        <md-content id="lmsControlPanel">
+            <section layout>
+                <div flex layout>
+                    <div flex="10" layout layout-align="center center">
+                        <label for="lampFlag">Flag:
+                        </label>
+                    </div>
+                    <md-radio-group flex layout layout-align="center center" ng-disabled="adj.isDisabled.form" ng-model="adj.flag" class="md-primary">
+                        <md-radio-button ng-disabled="adj.isDisabled.working" name="lampFlag" class="md-primary" value="working_flag">Working</md-radio-button>
+                        <md-radio-button ng-disabled="adj.isDisabled.presence" name="lampFlag" class="md-primary" value="presence_flag">Presence</md-radio-button>
+                        <md-radio-button ng-disabled="adj.isDisabled.special" name="lampFlag" class="md-primary" value="special_flag">Special</md-radio-button>
+                    </md-radio-group>
+                </div>
 
-				<div flex layout>
-					<div flex="15" layout layout-align="center center" >
-						<label for="lampStatus">Lamp:</label>
-					</div>
-					<md-switch flex name="lampStatus" id="lampStatus" class="md-primary" ng-disabled="adj.isDisabled.form" ng-model="adj.driver_state" ng-change="updateState(adj.driver_state)" ng-true-value="'On'" ng-false-value="'Off'" aria-label="Lamp On/Off"> {[{ adj.driver_state}]}</md-switch>
-				</div>
-			</section>
+                <div flex layout>
+                    <div flex="15" layout layout-align="center center">
+                        <label for="lampStatus">Lamp:</label>
+                    </div>
+                    <md-switch flex name="lampStatus" id="lampStatus" class="md-primary" ng-disabled="adj.isDisabled.form" ng-model="adj.driver_state" ng-change="updateState(adj.driver_state)" ng-true-value="'On'" ng-false-value="'Off'" aria-label="Lamp On/Off">
+                        {[{ adj.driver_state}]}</md-switch>
+                </div>
+            </section>
 
-			<section layout>
-				<div flex="15" layout layout-align="center center">
-					<label for="driver_value">Brightness: </label>
-				</div>
-				<md-slider flex md-discrete ng-disabled="adj.isDisabled.form" ng-model="adj.driver_value" ng-change="updateState()" step="1" min="0" max="100" aria-label="% brightness" id="brightSlider" class="md-primary"></md-slider>
-				<div flex="10" layout layout-align="center center">
-					<input type="number" ng-disabled="adj.isDisabled.form" ng-model="adj.driver_value" aria-label="% brightness" aria-controls="brightSlider">
-				</div>
-			</section>
+            <section layout>
+                <div flex="15" layout layout-align="center center">
+                    <label for="driver_value">Brightness:
+                    </label>
+                </div>
+                <md-slider flex md-discrete ng-disabled="adj.isDisabled.form" ng-model="adj.driver_value" ng-change="updateState()" step="1" min="0" max="100" aria-label="% brightness" id="brightSlider" class="md-primary"></md-slider>
+                <div flex="10" layout layout-align="center center">
+                    <input type="number" ng-disabled="adj.isDisabled.form" ng-model="adj.driver_value" aria-label="% brightness" aria-controls="brightSlider">
+                </div>
+            </section>
 
-			<section layout="row" layout-sm="column" layout-align="center center">
-				<md-button ng-disabled="adj.isDisabled.form" class="md-primary" ng-click="setAdjs()">Set!</md-button>
-			</section>
-		</md-content>
+            <section layout="row" layout-sm="column" layout-align="center center">
+                <md-button ng-disabled="adj.isDisabled.form" class="md-primary" ng-click="setAdjs()">Set!</md-button>
+            </section>
+        </md-content>
 
-		<!--
+        <!--
 				id
 				identifier
 				actual_driver_value
@@ -80,18 +85,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				location.coordinates
 		-->
 
-		<!--				adjustment.driver_value
+        <!--				adjustment.driver_value
 						adjustment.flag
-		
+
 						Time
 						Day
 						Repeat event
 						From - to Date
 						From - to Time
 						days of week-->
-		</form>
-	</div><!-- /.info-box-content -->
-</div><!-- /.info-box -->
+    </form>
+</div>
+<!-- /.info-box-content -->
+</div>
+<!-- /.info-box -->
 <!--				adjustment.driver_value
 				adjustment.flag
 

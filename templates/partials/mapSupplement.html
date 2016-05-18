@@ -18,29 +18,22 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
 <div style="display: none;">
-	<div id="marker" title="Marker">
-		<svg id="SVGIcon" height="200" width="510">
-		<polygon points="0,0 0,200 150,200 150,100 250,100 250,0" style="fill:#7d3d8a;stroke:purple;stroke-width:1" />
-		<rect class="lampBri" id="rect1" x="10" y="10" width="100" height="10"
-					style="stroke:#428bca; fill:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
-		<rect class="lampLux" id="rect1" x="10" y="35" width="56" height="10"
-					style="stroke:#f0ad4e; fill:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
-		</svg>
-	</div>
+    <div id="marker" title="Marker">
+        <svg id="SVGIcon" height="200" width="510">
+            <polygon points="0,0 0,200 150,200 150,100 250,100 250,0" style="fill:#7d3d8a;stroke:purple;stroke-width:1"/>
+            <rect class="lampBri" id="rect1" x="10" y="10" width="100" height="10" style="stroke:#428bca; fill:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+            <rect class="lampLux" id="rect1" x="10" y="35" width="56" height="10" style="stroke:#f0ad4e; fill:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+        </svg>
+    </div>
 
-	<div id="overlaybox" class="info overlay">
-		<div>{[{popupFeatureProperties.identifier}]}
-			<div ng-show="popupFeatureProperties.presence_flag">{[{popupFeatureProperties.presence_l_setting}]}</div>
-			<div ng-show="popupFeatureProperties.special_flag">{[{popupFeatureProperties.special_l_setting}]}</div>
-			<div ng-show="popupFeatureProperties.working_flag">{[{popupFeatureProperties.working_l_setting}]}</div>
-			{[{popupFeatureProperties.group}]}
-			{[{popupFeatureProperties.virtual_sensor}]}
-			{[{popupFeatureProperties.hardware}]}
-			{[{popupFeatureProperties.wanted_l_level}]}
-			{[{popupFeatureProperties.actual_driver_value}]}
-			{[{popupFeatureProperties.change_required}]}
-			<!--<pre>{[{popupFeatureProperties | json}]}</pre>-->
-		</div>
-	</div>
+    <div id="overlaybox" class="info overlay">
+        <div>{[{popupFeatureProperties.identifier}]}
+            <div ng-show="popupFeatureProperties.presence_flag">{[{popupFeatureProperties.presence_l_setting}]}</div>
+            <div ng-show="popupFeatureProperties.special_flag">{[{popupFeatureProperties.special_l_setting}]}</div>
+            <div ng-show="popupFeatureProperties.working_flag">{[{popupFeatureProperties.working_l_setting}]}</div>
+            {[{popupFeatureProperties.group}]} {[{popupFeatureProperties.virtual_sensor}]} {[{popupFeatureProperties.hardware}]} {[{popupFeatureProperties.wanted_l_level}]} {[{popupFeatureProperties.actual_driver_value}]}
+            {[{popupFeatureProperties.change_required}]}
+            <!--<pre>{[{popupFeatureProperties | json}]}</pre>-->
+        </div>
+    </div>
 </div>
-
