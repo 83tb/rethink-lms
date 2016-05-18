@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) Error: on line 4, column 33 in Templates/Licenses/license-wp-gpl20.txt
  The string doesn't match the expected date/time format. The string to parse was: "25-May-2015". The expected format was: "MMM d, yyyy". miko
  *

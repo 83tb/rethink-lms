@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) Error: on line 4, column 33 in Templates/Licenses/license-wp-gpl20.txt
  The string doesn't match the expected date/time format. The string to parse was: "25-May-2015". The expected format was: "MMM d, yyyy". miko
  *
@@ -18,30 +18,30 @@
  */
 
 // chenge to directive
-app.controller('lmsLuxMeter', ['$scope', function($scope){
-			var lux;
-			var luxTooBig = 0;
+app.controller('lmsLuxMeter', ['$scope', function($scope) {
+    var lux;
+    var luxTooBig = 0;
 
-			window.addEventListener('devicelight', function (e) {
-				var luxRaw = e.value.toString();
-				if (luxRaw.length < 4) {
-					lux = '';
-					for (i = 0; i < (4 - luxRaw.length); i++)
-						lux += '0';
-					lux += luxRaw;
-					luxTooBig = 0;
-				} else {
-					if (luxRaw.length > 4) {
-						lux = luxRaw.substring(0, 4);
-						luxTooBig = 1;
-					} else {
-						lux = luxRaw;
-						luxTooBig = 0;
-					}
-				}
-				screenValue = lux.replace('1', ' 1');
-				$scope.$apply(function(){
-					$scope.currentLuxVal = lux;
-				});
-			});
+    window.addEventListener('devicelight', function(e) {
+        var luxRaw = e.value.toString();
+        if (luxRaw.length < 4) {
+            lux = '';
+            for (i = 0; i < (4 - luxRaw.length); i++)
+                lux += '0';
+            lux += luxRaw;
+            luxTooBig = 0;
+        } else {
+            if (luxRaw.length > 4) {
+                lux = luxRaw.substring(0, 4);
+                luxTooBig = 1;
+            } else {
+                lux = luxRaw;
+                luxTooBig = 0;
+            }
+        }
+        screenValue = lux.replace('1', ' 1');
+        $scope.$apply(function() {
+            $scope.currentLuxVal = lux;
+        });
+    });
 }]);

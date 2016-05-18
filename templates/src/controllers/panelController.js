@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) Error: on line 4, column 33 in Templates/Licenses/license-gpl30.txt
  The string doesn't match the expected date/time format. The string to parse was: "13-May-2015". The expected format was: "MMM d, yyyy". miko
  *
@@ -36,70 +36,70 @@
 //			location.type
 //			location.coordinates
 
-app.factory('adjsServis', ['$rootScope', function ($rootScope) {
-		var adjustments = {
-			"isDisabled": {
-				"form": true,
-				"special": true,
-				"working": true,
-				"presence": true,
-			},
-			"flag": 'special_flag',
-			"driver_value": 0,
-			"driver_state": 'Off',
-			"enable": function () {
-				adjustments.isDisabled.form = false;
-				adjustments.isDisabled.special = false;
-				$rootScope.$broadcast('adjustmentsEnabled');
-				console.log("Adjs form enable");
-			},
-			"disable": function () {
-				adjustments.isDisabled.form = true;
-				adjustments.isDisabled.special = true;
-				$rootScope.$broadcast('adjustmentsDisabled');
-				console.log("Adjs form disable");
-			},
-			"setAdjs": function () {
-				$rootScope.$broadcast('adjustmentsUpdate');
-				console.log("Adjs form update!");
-			}
-		};
-		return adjustments;
-	}]);
+app.factory('adjsServis', ['$rootScope', function($rootScope) {
+    var adjustments = {
+        "isDisabled": {
+            "form": true,
+            "special": true,
+            "working": true,
+            "presence": true,
+        },
+        "flag": 'special_flag',
+        "driver_value": 0,
+        "driver_state": 'Off',
+        "enable": function() {
+            adjustments.isDisabled.form = false;
+            adjustments.isDisabled.special = false;
+            $rootScope.$broadcast('adjustmentsEnabled');
+            console.log("Adjs form enable");
+        },
+        "disable": function() {
+            adjustments.isDisabled.form = true;
+            adjustments.isDisabled.special = true;
+            $rootScope.$broadcast('adjustmentsDisabled');
+            console.log("Adjs form disable");
+        },
+        "setAdjs": function() {
+            $rootScope.$broadcast('adjustmentsUpdate');
+            console.log("Adjs form update!");
+        }
+    };
+    return adjustments;
+}]);
 
-app.controller('lmsControlPanel', ['$scope', 'adjsServis', function ($scope, adjsServis) {
-		var updateAdjs = function () {
-			$scope.adj = adjsServis;
-			updateState();
-		};
-		var updateState = function (state) {
-			if (state === undefined) {
-				state = false;
-				if ($scope.adj.driver_value > 0) {
-					$scope.adj.driver_state = 'On';
-				}else{
-					$scope.adj.driver_state = 'Off';
-				}
-				return;
-			}
-			if (state === "Off") {
-				$scope.adj.driver_value = 0;
-				return;
-			}else if (state === "On" && $scope.adj.driver_value === 0) {
-				$scope.adj.driver_value++;
-			}
-		}
+app.controller('lmsControlPanel', ['$scope', 'adjsServis', function($scope, adjsServis) {
+    var updateAdjs = function() {
+        $scope.adj = adjsServis;
+        updateState();
+    };
+    var updateState = function(state) {
+        if (state === undefined) {
+            state = false;
+            if ($scope.adj.driver_value > 0) {
+                $scope.adj.driver_state = 'On';
+            } else {
+                $scope.adj.driver_state = 'Off';
+            }
+            return;
+        }
+        if (state === "Off") {
+            $scope.adj.driver_value = 0;
+            return;
+        } else if (state === "On" && $scope.adj.driver_value === 0) {
+            $scope.adj.driver_value++;
+        }
+    }
 
 
-		$scope.$on('adjustmentsEnabled', function () {
-			//$scope.$watch('adjustment', function () {
-			console.log("$scope.adjsServis just changed!!!");
-			$scope.$apply(updateAdjs());
-			console.log($scope);
-		});
+    $scope.$on('adjustmentsEnabled', function() {
+        //$scope.$watch('adjustment', function () {
+        console.log("$scope.adjsServis just changed!!!");
+        $scope.$apply(updateAdjs());
+        console.log($scope);
+    });
 
-		updateAdjs();
+    updateAdjs();
 
-		$scope.setAdjs = adjsServis.setAdjs;
-		$scope.updateState = updateState;
-	}]);
+    $scope.setAdjs = adjsServis.setAdjs;
+    $scope.updateState = updateState;
+}]);
