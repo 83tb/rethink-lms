@@ -15,13 +15,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* 
+/*
     Created on : 28-Jan-2015, 16:37:36
     Author     : miko
 */
-
-html{height:100%}
-body{height:100%}
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+}
 .map {
 	/*	height: 80%;
 		width: 100%;*/
@@ -31,7 +34,7 @@ body{height:100%}
 	vertical-align: top;
 	width: 20px;
 	height: 20px;
-/*	background: transparent url(./../data/sprite-744a47d8e7557a935eed556a66605e5e.png) no-repeat 0 0;
+	/*	background: transparent url(./../data/sprite-744a47d8e7557a935eed556a66605e5e.png) no-repeat 0 0;
 	text-indent: -9999px;*/
 	overflow: hidden;
 }
@@ -40,13 +43,15 @@ body{height:100%}
 	button {
 		background-color: #333;
 		background-color: rgba(0,0,0,0.6);
-		&:hover, &:focus {
+		&:focus,
+		&:hover {
 			background-color: #000;
 			background-color: rgba(0,0,0,0.9);
 		}
 	}
 }
-.ol-scale-line, .ol-scale-line:not([ie8andbelow]) {
+.ol-scale-line,
+.ol-scale-line:not([ie8andbelow]) {
 	background-color: #333;
 	background-color: rgba(0,0,0,0.6);
 	padding: 5px;
@@ -57,28 +62,27 @@ body{height:100%}
 }
 .ol-full-screen {
 	left: auto;
-	right: .5em;
+	right: 0.5em;
 	top: 3em;
 }
 .ol-control-location {
 	bottom: auto;
-	left: .5em;
+	left: 0.5em;
 	right: suto;
 	top: 4em;
 }
 .icon.geolocate {
 	background-position: -80px 0;
 }
-
 .ol-zoom-extent {
-  top: 6em;
-  left: .5em;
+	top: 6em;
+	left: 0.5em;
 }
 .ol-zoomslider {
 	background-color: #333;
 	background-color: rgba(0,0,0,0.6);
 	top: 8em;
-  left: .5em;
+	left: 0.5em;
 }
 .ol-rotate {
 	button {
@@ -88,7 +92,7 @@ body{height:100%}
 		width: 32px;
 	}
 	.ol-compass {
-		background: url(./../data/Compass_Nord-32.png);
+		background: url("./../data/Compass_Nord-32.png");
 		height: 32px;
 		width: 32px;
 		text-indent: 10em;
@@ -96,26 +100,23 @@ body{height:100%}
 }
 .ol-custom-overviewmap,
 .ol-custom-overviewmap.ol-uncollapsible {
-  bottom: .5em;
-  left: auto;
-  right: .5em;
-  top: auto;
+	bottom: 0.5em;
+	left: auto;
+	right: 0.5em;
+	top: auto;
 }
-
 .ol-custom-overviewmap {
 	.ol-overviewmap-map {
 		border: none;
 		width: 300px;
 	}
-
 	.ol-overviewmap-box {
 		border: 2px solid red;
 	}
 }
-.ol-custom-overviewmap:not(.ol-collapsed)  {
-  border: 1px solid black;
-
-	button{
+.ol-custom-overviewmap:not(.ol-collapsed) {
+	border: 1px solid black;
+	button {
 		bottom: 1px;
 		left: auto;
 		right: 2px;
