@@ -36,6 +36,9 @@ for port in ports:
 print "Using: " + str(product) + " on " + str(devTTY)
 
 
+'''
+Create serial object
+'''
 serObj = serial.Serial(devTTY,
                        baudrate=4800,
                        bytesize=serial.EIGHTBITS,
