@@ -7,6 +7,7 @@ lamps_table = db.table("lamps")
 ON_VALUE = 255
 OFF_VALUE = 0
 
+
 def change(lamp_numbers, state):
     for lamp_number in lamp_numbers:
         special_l_setting = OFF_VALUE
@@ -19,15 +20,16 @@ def change(lamp_numbers, state):
         )
 
         print str(lamps_table.filter({'hardware': {'address': str(lamp_number)}}).update(new))
-        a = lamps_table.filter({'hardware': {'address': str(lamp_number)}}).update(new).run(conn)
+        a = lamps_table.filter(
+            {'hardware': {'address': str(lamp_number)}}).update(new).run(conn)
         print "Received from rethinkdb: %s", str(a)
 
 
 lampsOff = [
-	682,700,959, 100, 696, 687, 364, 432,
-	789, 556, 707, 421, 972, 693,
-	770, 77, 319, 603,	711, 878, 391, 93,
-	54, 876, 880, 94, 105, 297
+    682, 700, 959, 100, 696, 687, 364, 432,
+    789, 556, 707, 421, 972, 693,
+    770, 77, 319, 603,	711, 878, 391, 93,
+    54, 876, 880, 94, 105, 297
 ]
 
 change(lampsOff, False)

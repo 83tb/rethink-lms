@@ -9,7 +9,9 @@ Madli scanner
 import serial
 
 from time import time, sleep
-import itertools, sys, os
+import itertools
+import sys
+import os
 
 lib_path = os.path.abspath(os.path.join('..', 'metro'))
 sys.path.append(lib_path)
@@ -29,7 +31,7 @@ from serial.tools import list_ports
 ports = list(list_ports.grep("Madli"))
 
 for port in ports:
-#    print vars(port)
+    #    print vars(port)
     devTTY = port.device
     product = str(port.manufacturer) + " - " + str(port.product)
 
@@ -44,7 +46,7 @@ serObj = serial.Serial(devTTY,
                        bytesize=serial.EIGHTBITS,
                        parity=serial.PARITY_NONE,
                        stopbits=serial.STOPBITS_ONE,
-#                        timeout=1,
+                       #                        timeout=1,
                        timeout=0.04,
                        writeTimeout=0.1,
                        xonxoff=0,
@@ -63,6 +65,7 @@ def shx(arg):
     hexstr = arg
     # print "Sending: " + hexstr
     return sendHex(hexstr, serObj)
+
 
 def turnOn(lamp_number, dim_level):
     executeCommand('On', lamp_number, range(dim_level, dim_level + 1))
@@ -101,21 +104,21 @@ def executeCommand(command_string, device_number, memory_range):
 
     t0 = time()
     for memory_address in memory_range:
-        #print "memory_address " + str(memory_address)
+        # print "memory_address " + str(memory_address)
         hexstr = makeCommand(command_number, 0, device_number, memory_address)
 
 #        print "Lamp: " + str(device_number)
         lampData = ''
 #        print "what we're sending"
-        #print "Send: " + hexstr
+        # print "Send: " + hexstr
 
         if command_string == "SetAddr" or command_string == "WriteAddr":
             value = shxNR(hexstr)
-            #print "Getting: " + value
+            # print "Getting: " + value
         else:
             value = shx(hexstr)
             # print readCommand(value)
-            #print "Get: " + value
+            # print "Get: " + value
             if(value):
                 lampData = readCommand(value)
 
@@ -134,21 +137,22 @@ def executeCommand(command_string, device_number, memory_range):
     return lampData
 
 
-def scanMadli(scanRange = range(1, 1023), skipLamps = []):
+def scanMadli(scanRange=range(1, 1023), skipLamps=[]):
     scanSet = sorted(set(scanRange).difference(skipLamps))
     scanned = 0
     found = 0
 #    dic = {}
     for lId in scanSet:
-        slamp = executeCommand('GetRam', lId, range(0,1)) # Why range?!?!?!?!?!? - loop is exec only once!!!!!
+        # Why range?!?!?!?!?!? - loop is exec only once!!!!!
+        slamp = executeCommand('GetRam', lId, range(0, 1))
         if(slamp):
-#            dic[i] = "Lamp id: " + str(i) + " " + str(slamp)
+            #            dic[i] = "Lamp id: " + str(i) + " " + str(slamp)
             print "Lamp id: " + str(lId) + " " + str(slamp)
             found += 1
         msg = "Checking lamp " + str(lId)
         sys.stdout.write(msg)  # write the next character
         sys.stdout.flush()  # flush stdout buffer (actual character display)
-        sys.stdout.write('\b' * (len(msg)-1))  # erase the last written char
+        sys.stdout.write('\b' * (len(msg) - 1))  # erase the last written char
         scanned += 1
 #        if(i % 10 == 0):
 #            print i % 100
@@ -158,14 +162,14 @@ def scanMadli(scanRange = range(1, 1023), skipLamps = []):
     print "Found: " + str(found) + " lamps"
 
 
-
 """
 Scan for lamps on madli
 """
-scanFor = [111, 126, 862, 984, 843] # Default: range(1,1023)
-skip = [111] # Empty by default
+scanFor = [111, 126, 862, 984, 843]  # Default: range(1,1023)
+skip = [111]  # Empty by default
 
-skipLamps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 54, 61, 63, 77, 91, 93, 94, 96, 100, 105, 124, 125, 127, 128, 129, 130, 131, 132, 139, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 163, 164, 165, 166, 167, 168, 169, 170, 171, 202, 257, 264, 295, 297, 319, 326, 331, 335, 339, 341, 342, 343, 344, 346, 348, 349, 350, 353, 354, 355, 356, 357, 359, 360, 364, 391, 407, 409, 418, 421, 431, 432, 535, 539, 541, 556, 603, 622, 623, 625, 627, 666, 682, 687, 693, 696, 700, 707, 709, 711, 743, 770, 776, 785, 789, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 812, 813, 814, 815, 816, 817, 818, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 833, 834, 835, 836, 837, 838, 839, 841, 843, 844, 847, 848, 849, 850, 852, 853, 854, 876, 878, 880, 887, 893, 959, 969, 972]
+skipLamps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 54, 61, 63, 77, 91, 93, 94, 96, 100, 105, 124, 125, 127, 128, 129, 130, 131, 132, 139, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 163, 164, 165, 166, 167, 168, 169, 170, 171, 202, 257, 264, 295, 297, 319, 326, 331, 335, 339, 341, 342,
+             343, 344, 346, 348, 349, 350, 353, 354, 355, 356, 357, 359, 360, 364, 391, 407, 409, 418, 421, 431, 432, 535, 539, 541, 556, 603, 622, 623, 625, 627, 666, 682, 687, 693, 696, 700, 707, 709, 711, 743, 770, 776, 785, 789, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 812, 813, 814, 815, 816, 817, 818, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 833, 834, 835, 836, 837, 838, 839, 841, 843, 844, 847, 848, 849, 850, 852, 853, 854, 876, 878, 880, 887, 893, 959, 969, 972]
 #scanMadli(scanFor, skip)
 
 
@@ -180,7 +184,7 @@ Turn on
 #turnOn(7, 255)
 #turnOn(29, 255)
 
-#turnOff(126)
+# turnOff(126)
 
 turnOff(7)
 turnOff(29)
@@ -188,14 +192,14 @@ turnOff(29)
 #setDim(7, 0, 144)
 #setDim(29, 0, 144)
 
-#for lamp in [126, 862, 984, 843]:
+# for lamp in [126, 862, 984, 843]:
 #    turnOn(lamp, 255)
 #    turnOff(lamp)
 
 """
 Reads Ram Value from a Lamp
 """
-#getRamValue(843,0)
+# getRamValue(843,0)
 
 
 """
