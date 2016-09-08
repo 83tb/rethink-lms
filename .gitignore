@@ -6,8 +6,9 @@
 .project
 .pydevproject
 .tern-project
-/logs/*
 config.py
+*-old
+*.log 
 
 nb-configuration.xml
 setup.py
