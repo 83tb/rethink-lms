@@ -41,7 +41,6 @@ location2 = {
 
 geo_position2 = r.geojson(location2)
 
-
 lamp = {
     "identifier": "Lamp Test",
     "group": [],
