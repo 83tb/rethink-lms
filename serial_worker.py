@@ -1,6 +1,7 @@
 from madli import *
 import rethinkdb as r
 import logging
+from time import time
 
 logger = logging.getLogger('serial_worker')
 logger.setLevel(logging.DEBUG)
@@ -60,8 +61,6 @@ def sense(task):
         command_table.get(task['id']).delete().run(conn)
 
 
-
-
 def write_task(task):
     try:
         logger.debug('Trying send fast command')
@@ -71,13 +70,14 @@ def write_task(task):
         logger.error('Error: ' + str(e))
         command_table.get(task['id']).delete().run(conn)
 
-from time import time
-def worker():
 
+def worker():
     while True:
         t0 = time()
-        cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn) #slow?!?!?!
-        cmd_high = command_table.filter({'prio': 'high'}).run(conn) #slow?!?!?!?!
+        cmd_low = command_table.filter(
+            {'prio': 'low'}).limit(1).run(conn)  # slow?!?!?!
+        cmd_high = command_table.filter(
+            {'prio': 'high'}).run(conn)  # slow?!?!?!?!
 #        sensors = sensor_reads_table.get_all().limit(1).run(conn)
 
         t1 = time()
@@ -106,7 +106,6 @@ def worker():
 
         if sensor_read:
             sense(sensor_read)
-
 
 logger.warn('Initializing Serial Worker.')
 worker()

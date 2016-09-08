@@ -6,9 +6,13 @@
 .project
 .pydevproject
 .tern-project
-config.py
-*-old
-*.log 
-
 nb-configuration.xml
+
+# Project specific
+*-old
+*.log
+config.py
+local/
+
+# Package specific
 setup.py
