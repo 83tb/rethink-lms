@@ -100,7 +100,6 @@ def worker():
 
                 write_task(task)
 
-
         # execute one slow task
         if cmd_low:
             read_task(task_low)
