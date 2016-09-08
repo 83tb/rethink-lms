@@ -78,10 +78,10 @@ def worker():
         t0 = time()
         cmd_low = command_table.filter({'prio': 'low'}).limit(1).run(conn) #slow?!?!?!
         cmd_high = command_table.filter({'prio': 'high'}).run(conn) #slow?!?!?!?!
-        sensors = sensor_reads_table.get_all().limit(1).run(conn)
+#        sensors = sensor_reads_table.get_all().limit(1).run(conn)
 
         t1 = time()
-        logger.debug('[ Sending command took %f sec ]' % (t1 - t0))
+#        logger.debug('[ Sending command took %f sec ]' % (t1 - t0))
         try:
             task_low = cmd_low.next()
         except:
