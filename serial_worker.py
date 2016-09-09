@@ -1,7 +1,7 @@
 from madli import *
 import rethinkdb as r
 import logging
-from time import time
+from time import time, sleep
 
 logger = logging.getLogger('serial_worker')
 logger.setLevel(logging.DEBUG)
@@ -27,7 +27,8 @@ def read_task(task):
     try:
         logger.debug('Trying to read the value')
         actual_driver_value = call(
-            task['command'], task['lampNumber'], task['address']).get('data1', None)
+                task['command'], task['lampNumber'], task['address']
+            ).get('data1', None)
         lamp = dict(
             id=task['lamp_id'], actual_driver_value=actual_driver_value)
         logger.debug('Uploading value to rethink')
@@ -64,10 +65,20 @@ def sense(task):
 def write_task(task):
     try:
         logger.debug('Trying send fast command')
+        logger.info('Trying set lamp id: {} cmd: {} task: {}'.format(task['lampNumber'], task['command'], task['address']))
+
         call(task['command'], task['lampNumber'], task['address'])
         command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
+        try:
+            logger.info('Trying again!'.format(task['command'], task['lampNumber'], task['address']))
+            sleep(1)
+            call(task['command'], task['lampNumber'], task['address'])
+        except Exception, e:
+            logger.error('Failed again!')
+            logger.error('Error: ' + str(e))
+
         command_table.get(task['id']).delete().run(conn)
 
 
