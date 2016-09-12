@@ -72,7 +72,7 @@ def write_task(task):
     except Exception, e:
         logger.error('Error: ' + str(e))
         try:
-            logger.info('Trying again!'.format(task['command'], task['lampNumber'], task['address']))
+            logger.info('Trying again! set lamp id: {} cmd: {} task: {}'.format(task['command'], task['lampNumber'], task['address']))
             sleep(1)
             call(task['command'], task['lampNumber'], task['address'])
         except Exception, e:
