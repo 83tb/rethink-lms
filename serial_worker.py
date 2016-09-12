@@ -98,10 +98,10 @@ def worker():
         except:
             cmd_low = None
 
-        try:
-            sensor_read = sensors.next()
-        except:
-            sensor_read = None
+        # try:
+        #     sensor_read = sensors.next()
+        # except:
+        #     sensor_read = None
 
         # execute all fast tasks
         for task_high in cmd_high:
@@ -115,8 +115,8 @@ def worker():
         if cmd_low:
             read_task(task_low)
 
-        if sensor_read:
-            sense(sensor_read)
+        # if sensor_read:
+        #     sense(sensor_read)
 
 logger.warn('Initializing Serial Worker.')
 worker()
