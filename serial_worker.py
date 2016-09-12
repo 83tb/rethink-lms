@@ -107,13 +107,16 @@ def worker():
         for task_high in cmd_high:
             task = task_high
             if task:
-                logger.debug('Detected a task scheduled')
+                # logger.debug('Detected a task scheduled')
+                logger.debug('RUNNING task HIHG')
 
                 write_task(task)
 
         # execute one slow task
         if cmd_low:
+            logger.debug('RUNNING task LOW')
             read_task(task_low)
+            # sleep(0.1)
 
         # if sensor_read:
         #     sense(sensor_read)
