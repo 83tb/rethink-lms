@@ -17,7 +17,7 @@ lib_path = os.path.abspath(os.path.join('..', 'metro'))
 sys.path.append(lib_path)
 
 from metro import sendHex, sendHexNoReturn, makeCommand, readCommand
-from libmadli import getCommandNumber
+from libmadli import getCommandNumber, getSt3st0, getSt7st4
 
 '''
 Get serial port USB device

@@ -26,7 +26,7 @@ def quick_commands():
 
         lamp['scheduled_read'] = lamp['change_required']
         if lamp['scheduled_read']:
-            logger.debug('Read scheduled detected')
+#            logger.debug('Read scheduled detected')
 
             command_table.insert(dict(command="GetRam", prio='low', lampNumber=lamp[
                                  'hardware']['address'], address=25, lamp_id=lamp['id'])).run(conn)
@@ -35,17 +35,17 @@ def quick_commands():
 
             lamps_table.update(lamp).run(conn)
         if old_lamp['special_l_setting'] != lamp['special_l_setting']:
-            logger.debug('User wants to change the lightning level!')
+            logger.debug('User wants to change lamp {} the lightning level!'.format(lamp['id']))
 
             lamp['wanted_l_level'] = lamp['special_l_setting']
 
             if lamp['wanted_l_level'] == 0:
-                logger.debug('Turning lamp off')
+                logger.debug('Turning off')
                 command_table.insert(dict(command="Off", prio='high', lampNumber=lamp[
                                      'hardware']['address'], address=1, lamp_id=lamp['id'])).run(conn)
 
             else:
-                logger.debug('Turning lamp on')
+                logger.debug('Turning on')
                 command_table.insert(dict(command="On", prio='high',
                                           lampNumber=lamp['hardware'][
                                               'address'], address=lamp['wanted_l_level'],

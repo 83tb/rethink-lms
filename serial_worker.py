@@ -25,15 +25,15 @@ cursor = lamps_table.changes().run(conn)
 
 def read_task(task):
     try:
-        logger.debug('Trying to read the value')
+        logger.debug('read value')
         actual_driver_value = call(
                 task['command'], task['lampNumber'], task['address']
             ).get('data1', None)
         lamp = dict(
             id=task['lamp_id'], actual_driver_value=actual_driver_value)
-        logger.debug('Uploading value to rethink')
+        logger.debug('Upload value to rethink')
         lamps_table.get(task['lamp_id']).update(lamp).run(conn)
-        logger.debug('Uploaded value was: ' + str(actual_driver_value))
+        logger.debug('ok, value was: ' + str(actual_driver_value))
         command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
@@ -42,20 +42,20 @@ def read_task(task):
 
 def sense(task):
     try:
-        logger.debug('Trying to read the value')
+        logger.debug('read value')
         sensor_value = call(
             task['command'], task['lampNumber'], task['address']).get('data1', None)
 
         sensor = dict(
             id=task['sensor_id'], sensor_value=sensor_value)
-        logger.debug('Uploading value to rethink')
+        logger.debug('Upload value to rethink')
         try:
             sensor_table.get(task['sensor_id']).update(sensor).run(conn)
         except:
             del sensor['id']
             sensor_table.insert(sensor)
 
-        logger.debug('Uploaded value was: ' + str(sensor_value))
+        logger.debug('ok, value was: ' + str(sensor_value))
         command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
@@ -64,20 +64,21 @@ def sense(task):
 
 def write_task(task):
     try:
-        logger.debug('Trying send fast command')
-        logger.info('Trying set lamp id: {} cmd: {} task: {}'.format(task['lampNumber'], task['command'], task['address']))
+        # logger.debug('Trying send fast command')
+        logger.info('Trying set lamp id: {} cmd: {} task: {}'.format(
+            task['lampNumber'], task['command'], task['address']))
 
         call(task['command'], task['lampNumber'], task['address'])
         command_table.get(task['id']).delete().run(conn)
     except Exception, e:
         logger.error('Error: ' + str(e))
         try:
-            logger.info('Trying again! set lamp id: {} cmd: {} task: {}'.format(task['command'], task['lampNumber'], task['address']))
+            logger.info('retry! lamp id: {} cmd: {} task: {}'.format(
+                task['command'], task['lampNumber'], task['address']))
             sleep(1)
             call(task['command'], task['lampNumber'], task['address'])
         except Exception, e:
-            logger.error('Failed again!')
-            logger.error('Error: ' + str(e))
+            logger.error('Failed again! Error: ' + str(e))
 
         command_table.get(task['id']).delete().run(conn)
 
